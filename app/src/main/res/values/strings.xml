@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">Water App</string>
+    <string name="signup">SignUp</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="already_have_an_account">Already have an account</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="electricity">Electricity</string>
+    <string name="water">Water</string>
+    <string name="support">Support</string>
+    <string name="account">Account</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="change_password">Change Password</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="enter_otp_send_to_your_email">Enter OTP send to your email</string>
+    <string name="resend_send_otp">Resend send OTP</string>
+    <string name="verify">Verify</string>
+    <string name="set_new_password">Set New Password</string>
+    <string name="must_be_atleast_8_character">Must be at least 8 character</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="new_password">New Password</string>
+    <string name="submit">Submit</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="no_worries_we_ll_send_you_reset_instruction">No worries, we\'ll send you reset instruction</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="send_otp">Send Otp</string>
+    <string name="notification">Notification</string>
+    <string name="report_details">Report Details</string>
+    <string name="generate_report">Generate Report</string>
+    <string name="description">Description</string>
+    <string name="enter_city">Enter City</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="faq">Faq</string>
+    <string name="enter_date">Enter Date</string>
+    <string name="enter_street">Enter Street</string>
+    <string name="account_history">Account History</string>
+    <string name="announcements">Announcements</string>
+    <string name="check_balance">Check Balance</string>
+    <string name="logout_app">Logout App</string>
+    <string name="old_password">Old Password</string>
+    <string name="yuor_service_request_has_been_placed_successfully">yuor service request has been placed successfully</string>
+    <string name="hello_users">Hello Users</string>
+    <string name="message">Message :</string>
+    <string name="announcement">Announcement</string>
+    <string name="electricity_will_cut_from_10_am_to_11_am_today">Electricity will cut from 10 am to 11 am today</string>
+    <string name="can_i_get_a_breakdown_of_my_charges">Can I get a breakdown of my charges? Can I get a breakdown of my charges?</string>
+    <string name="yes_a_detailed_breakdown_is_available_on_your_bill_statement_you_can_also_view_it_in_your_account_dashboard_under_billing_details">Yes, a detailed breakdown is available on your bill statement. You can also view it in your account dashboard under \'Billing Details</string>
+    <string name="service_request">Service Request</string>
+    <string name="home">Home</string>
+
+    <string-array name="courses">
+        <item>Problem Type</item>
+        <item>Fallen Pole</item>
+        <item>Damaged Cable</item>
+        <item>Power Outage</item>
+        <item>Water Leak</item>
+    </string-array>
+
+    <style name="Style_Dialog_Rounded_Corner" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowMinWidthMinor">75%</item>`
+    </style>
+
+    <string name="Please_enter_OTP">Please Enter OTP</string>
+    <string name="unable_to_connect">Unable to connect to the internet please try again\n</string>
+    <string name="server_error">Server Error</string>
+    <string name="please_wait">Please Wait…\n</string>
+    <string name="OK">OK</string>
+</resources>
