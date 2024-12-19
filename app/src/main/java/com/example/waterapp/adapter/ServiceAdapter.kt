@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.waterapp.R
+import com.example.waterapp.serviceModel.ServiceResponse
 
 class ServiceAdapter(
-    private val context: Context
+    private val context: Context,
+    private val serviceList: List<ServiceResponse.AllService>
 ): RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -21,13 +23,14 @@ class ServiceAdapter(
         return ServiceViewHolder(itemView)    }
 
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
-        holder.serviceName.text.toString().trim()
-        holder.unitPrice.text.toString().trim()
+        val myFaqList = serviceList[position]
+        holder.serviceName.text = serviceList[position].serviceType.toString()
+        holder.unitPrice.text = serviceList[position].ratePerUnit.toString()
 
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return serviceList.size
     }
 
     class ServiceViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)  {

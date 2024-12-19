@@ -47,7 +47,7 @@
     <string name="hello_users">Hello Users</string>
     <string name="message">Message :</string>
     <string name="announcement">Announcement</string>
-    <string name="electricity_will_cut_from_10_am_to_11_am_today">Electricity will cut from 10 am to 11 am today</string>
+    <string name="electricity_will_cut_from_10_am_to_11_am_today">water</string>
     <string name="can_i_get_a_breakdown_of_my_charges">Can I get a breakdown of my charges? Can I get a breakdown of my charges?</string>
     <string name="yes_a_detailed_breakdown_is_available_on_your_bill_statement_you_can_also_view_it_in_your_account_dashboard_under_billing_details">Yes, a detailed breakdown is available on your bill statement. You can also view it in your account dashboard under \'Billing Details</string>
     <string name="service_request">Service Request</string>

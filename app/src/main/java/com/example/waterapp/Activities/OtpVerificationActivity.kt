@@ -1,17 +1,30 @@
 package com.example.waterapp.Activities
 
+import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.waterapp.R
+import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityOtpVerificationBinding
+import com.example.waterapp.otpVerificationModel.OtpVerificationViewModel
+import com.example.waterapp.otpVerificationModel.OtpVerifiicationBody
+import com.example.waterapp.utils.ErrorUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OtpVerificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOtpVerificationBinding
+    private val otpVerifiicationViewModel: OtpVerificationViewModel by viewModels()
+    private lateinit var progressDialog: CustomProgressDialog
+    private lateinit var activity: Activity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtpVerificationBinding.inflate(layoutInflater)
@@ -19,6 +32,9 @@ class OtpVerificationActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.arrowBack.setOnClickListener { finish() }
+
+        progressDialog = CustomProgressDialog(this)
+        activity = this
 
         binding.verifyBtn.setOnClickListener {
             val otpFields = listOf(
@@ -37,9 +53,9 @@ class OtpVerificationActivity : AppCompatActivity() {
                     "${binding.box5.text}${binding.box1.text}${binding.box2.text}${binding.box3.text}${binding.box4.text}${binding.box6.text}"
 
                 //here call the Api
-                 otpVerificationApi()
+                 otpVerificationApi(verificationCode)
 
-                // otpVerficationObserver()
+                otpVerficationObserver()
             }
         }
 
@@ -198,8 +214,31 @@ class OtpVerificationActivity : AppCompatActivity() {
             false
         }
     }
-    private fun otpVerificationApi() {
-        val intent = Intent(this@OtpVerificationActivity, ResetPasswordActivity::class.java)
-        startActivity(intent)
+
+    private fun otpVerficationObserver() {
+        otpVerifiicationViewModel.progressIndicator.observe(this){
+
+        }
+        otpVerifiicationViewModel.mRejectResponse.observe(this){
+            val status = it.peekContent().success
+            val message = it.peekContent().message
+
+            if (status == true){
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@OtpVerificationActivity, ResetPasswordActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        otpVerifiicationViewModel.errorResponse.observe(this){
+            ErrorUtil.handlerGeneralError(this@OtpVerificationActivity, it)
+        }
+
+    }
+
+    private fun otpVerificationApi(verificationCode: String) {
+        val otpVerifiicationBody = OtpVerifiicationBody(
+            otp = verificationCode
+        )
+        otpVerifiicationViewModel.otpVerificationAccount(otpVerifiicationBody, activity, progressDialog)
     }
 }

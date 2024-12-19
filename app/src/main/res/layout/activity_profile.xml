@@ -42,7 +42,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
         app:layout_constraintTop_toBottomOf="@+id/profileCons"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -55,6 +54,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:padding="6dp"
+                android:layout_marginTop="10dp"
                 app:civ_border_width="1dp"
                 app:civ_border_color="@color/black"
                 android:src="@drawable/download"
@@ -234,7 +234,7 @@
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:src="@drawable/pin"
+                    android:src="@drawable/passwordlock"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -245,8 +245,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint=" Address"
-                    android:inputType="textPostalAddress"
+                    android:hint=" Password"
+                    android:inputType="textPassword"
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="#A5A5A5"
@@ -258,14 +258,133 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cityContainer4"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/only_button_corner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textContainer4"
+                app:layout_constraintWidth_percent="0.9">
+
+                <ImageView
+                    android:id="@+id/cityImage"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/passwordlock"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/green" />
+
+                <EditText
+                    android:id="@+id/cityText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint=" City"
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#A5A5A5"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cityImage"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/streetContainer4"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/only_button_corner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cityContainer4"
+                app:layout_constraintWidth_percent="0.9">
+
+                <ImageView
+                    android:id="@+id/streetImage"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/passwordlock"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/green" />
+
+                <EditText
+                    android:id="@+id/streetText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint=" Street"
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#A5A5A5"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/streetImage"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pinContainer4"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/only_button_corner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/streetContainer4"
+                app:layout_constraintWidth_percent="0.9">
+
+                <ImageView
+                    android:id="@+id/pinImage"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/passwordlock"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/green" />
+
+                <EditText
+                    android:id="@+id/pinText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint=" Pin"
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#A5A5A5"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/pinImage"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/updateProfile"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/button_corner"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textContainer4"
+                app:layout_constraintTop_toBottomOf="@+id/pinContainer4"
                 app:layout_constraintWidth_percent="0.6">
 
                 <Button

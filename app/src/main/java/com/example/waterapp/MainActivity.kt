@@ -8,7 +8,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.example.waterapp.Activities.LoginActivity
 import com.example.waterapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashAnimation: Animation

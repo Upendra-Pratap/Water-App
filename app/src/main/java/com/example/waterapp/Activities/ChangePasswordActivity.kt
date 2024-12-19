@@ -1,21 +1,46 @@
 package com.example.waterapp.Activities
 
+import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.waterapp.R
+import com.example.waterapp.changePasswordModel.ChangePasswordBody
+import com.example.waterapp.changePasswordModel.ChangePasswordViewModel
+import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityChangePasswordBinding
+import com.example.waterapp.utils.ErrorUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
+    private val changePasswordViewModel: ChangePasswordViewModel by viewModels()
     private var isPasswordVisible = true
+    private lateinit var activity: Activity
+    private lateinit var progressDialog: CustomProgressDialog
+    private lateinit var sharedPreferences: SharedPreferences
+    private var userId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        progressDialog = CustomProgressDialog(this)
+        activity = this
+
+        sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
+        userId = sharedPreferences.getString("userId", userId).toString().trim()
+
+        Toast.makeText(this, "user id here : $userId", Toast.LENGTH_SHORT).show()
+
+        changePasswordObserver()
 
         binding.arrowBack.setOnClickListener { finish() }
 
@@ -30,6 +55,29 @@ class ChangePasswordActivity : AppCompatActivity() {
         binding.loginBtn.setOnClickListener {
             changePasswordVelidation()
         }
+    }
+
+    private fun changePasswordObserver() {
+        changePasswordViewModel.progressIndicator.observe(this){
+
+        }
+        changePasswordViewModel.mRejectResponse.observe(this){
+            val status = it.peekContent().success
+            val message = it.peekContent().message
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+            if (status == true){
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@ChangePasswordActivity, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        }
+        changePasswordViewModel.errorResponse.observe(this){
+            ErrorUtil.handlerGeneralError(this@ChangePasswordActivity, it)
+        }
+
     }
 
     private fun VelidationInputs(
@@ -61,14 +109,19 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         if (VelidationInputs(oldPassword, newPassword, confirmPassword)){
             //calling Api here
-            changePasswordApi()
+            changePasswordApi(oldPassword, newPassword, confirmPassword,userId)
 
         }
     }
 
-    private fun changePasswordApi() {
-        val intent = Intent(this@ChangePasswordActivity, LoginActivity::class.java)
-        startActivity(intent)
+    private fun changePasswordApi(oldPassword: String, newPassword: String, confirmPassword: String, userId: String) {
+        val changePasswordBody = ChangePasswordBody(
+            oldPassword = oldPassword,
+            newPassword = newPassword,
+            confirmNewPassword = confirmPassword,
+
+        )
+        changePasswordViewModel.changePassword(userId, changePasswordBody, activity, progressDialog)
     }
 
     private fun newPasswordShow() {

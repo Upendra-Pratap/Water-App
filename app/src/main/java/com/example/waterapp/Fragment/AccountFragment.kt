@@ -19,6 +19,7 @@ import com.example.waterapp.Activities.CheckBalanceActivity
 import com.example.waterapp.Activities.FaqActivity
 import com.example.waterapp.Activities.GenerateReportActivity
 import com.example.waterapp.Activities.LoginActivity
+import com.example.waterapp.Activities.MyReportActivity
 import com.example.waterapp.Activities.NotificationActivity
 import com.example.waterapp.Activities.ProfileActivity
 
@@ -73,6 +74,11 @@ class AccountFragment : Fragment() {
 
         binding.logoutApp.setOnClickListener {
             val intent = Intent(requireActivity(), CheckBalanceActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.reportApp.setOnClickListener{
+            val intent = Intent(requireActivity(), MyReportActivity::class.java)
             startActivity(intent)
         }
 

@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.waterapp.R
+import com.example.waterapp.announcementModel.AnnouncementResponse
 
 class AnnouncementAdapter(
-    private val context: Context
+    private val context: Context,
+    private val announcementList: List<AnnouncementResponse.Datum>
 ) : RecyclerView.Adapter<AnnouncementAdapter.MessageViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -22,18 +24,18 @@ class AnnouncementAdapter(
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        holder.nameTextView.text.toString().trim()
-        holder.timeTextView.text.toString().trim()
-        holder.messageTextView.text.toString().trim()
+        holder.nameTextView.text = announcementList[position].title.toString()
+        holder.timeTextView.text = announcementList[position].message.toString()
+        holder.messageTextView.text = announcementList[position].anncuncementDate.toString()
     }
 
     override fun getItemCount(): Int {
-        return 8
+        return announcementList.size
     }
 
     class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView = itemView.findViewById(R.id.titleMsg)
-        val timeTextView: TextView = itemView.findViewById(R.id.descriptionMsg)
+        val nameTextView: TextView = itemView.findViewById(R.id.titleMsgHere)
+        val timeTextView: TextView = itemView.findViewById(R.id.MessageMsg)
         val messageTextView: TextView = itemView.findViewById(R.id.dateText)
     }
 }

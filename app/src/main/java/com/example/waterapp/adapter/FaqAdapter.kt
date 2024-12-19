@@ -8,10 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.waterapp.FaqModel.FaqResponse
 import com.example.waterapp.R
 
 class FaqAdapter(
-    private val context: Context
+    private val context: Context,
+    private val faqList: List<FaqResponse.Faq>
 ) : RecyclerView.Adapter<FaqAdapter.MessageViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -24,8 +26,11 @@ class FaqAdapter(
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        holder.questionSection.text.toString().trim()
-        holder.answerHere.text.toString().trim()
+        val myFaqList = faqList[position]
+        //holder.nameTextView.text = serviceList[position].serviceName.toString()
+
+        holder.questionSection.text = faqList[position].question.toString()
+        holder.answerHere.text = faqList[position].answer.toString()
 
         holder.downArrow.setOnClickListener {
             holder.faqCardViewAnswer.visibility = View.VISIBLE
@@ -36,7 +41,7 @@ class FaqAdapter(
     }
 
     override fun getItemCount(): Int {
-        return 8
+        return faqList.size
     }
 
     class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

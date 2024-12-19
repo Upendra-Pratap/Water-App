@@ -14,8 +14,9 @@ import com.example.waterapp.Fragment.ElectricityFragment
 import com.example.waterapp.Fragment.HomeFragment
 import com.example.waterapp.Fragment.SupportFragment
 import com.example.waterapp.Fragment.WaterFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
     private var navItemIndex = 0

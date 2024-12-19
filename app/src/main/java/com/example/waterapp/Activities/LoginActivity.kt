@@ -1,7 +1,9 @@
 package com.example.waterapp.Activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
@@ -24,6 +26,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var progressDialog: CustomProgressDialog
     private lateinit var activity: Activity
     private var isPasswordVisible = true
+    private var userId =""
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -62,11 +66,21 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.mRejectResponse.observe(this){
             val status =it.peekContent().success
             val message = it.peekContent().message
+            val userDetail = it.peekContent().userDetails
 
             if (status ==  true ){
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
                 startActivity(intent)
+                if (userDetail != null) {
+                    userId = userDetail.id.toString()
+                    sharedPreferences =
+                        this@LoginActivity.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.putString("userId", userId)
+                    editor.apply()
+                    finish()
+                }
 
             }
 
@@ -109,6 +123,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginAccount(loginBody, activity, progressDialog)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun passwordShow() {
          isPasswordVisible = !isPasswordVisible
             if (isPasswordVisible){

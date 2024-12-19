@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintWidth_percent="0.96"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/productListConst"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:background="#EAECEB"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/servicesName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
+                android:text="Name :"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/servicesText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Upendra Pratap Singh"
+                android:textColor="@color/green"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintWidth_percent="0.8"
+                app:layout_constraintStart_toEndOf="@+id/servicesName"
+                app:layout_constraintTop_toTopOf="@+id/servicesName" />
+
+            <TextView
+                android:id="@+id/Dates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Problem Types :"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/servicesName"
+                app:layout_constraintTop_toBottomOf="@+id/servicesText" />
+
+            <TextView
+                android:id="@+id/servicesPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:text="Fallen Pole"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintWidth_percent="0.68"
+                app:layout_constraintStart_toEndOf="@+id/Dates"
+                app:layout_constraintTop_toBottomOf="@+id/servicesText" />
+
+            <TextView
+                android:id="@+id/customerPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Date Of Incident :"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/Dates"
+                app:layout_constraintTop_toBottomOf="@+id/servicesPrice" />
+
+            <TextView
+                android:id="@+id/servicesNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12/12/2024"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/customerPhone"
+                app:layout_constraintTop_toTopOf="@+id/customerPhone" />
+
+
+            <TextView
+                android:id="@+id/servicePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Address :"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/customerPhone"
+                app:layout_constraintTop_toBottomOf="@+id/servicesNo" />
+
+            <TextView
+                android:id="@+id/ServPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Greater Noida, Noida, zip - 223390"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/servicePrice"
+                app:layout_constraintTop_toTopOf="@+id/servicePrice" />
+
+
+            <TextView
+                android:id="@+id/customerstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Status :"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/servicePrice"
+                app:layout_constraintTop_toBottomOf="@+id/ServPrice" />
+
+            <TextView
+                android:id="@+id/custStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="pending"
+                android:textColor="@color/green_cyan"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@+id/customerstatus"
+                app:layout_constraintStart_toEndOf="@+id/customerstatus"
+                app:layout_constraintTop_toBottomOf="@+id/servicePrice"
+                app:layout_constraintWidth_percent="0.59" />
+
+
+            <Button
+                android:id="@+id/viewImageOfProblem"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="View Problem"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/custStatus"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,7 +26,7 @@ class ForgotPasswordViewModel @Inject constructor(private val application: Appli
     val mRejectResponse = MutableLiveData<Event<ForgotPasswordResponse>>()
     var context: Context? = null
 
-    fun loginAccount(
+    fun forgotPasswordAccount(
         forgotPasswordBody: ForgotPasswordBody,
         activity: Activity,
         progressDialog: CustomProgressDialog
@@ -43,13 +43,11 @@ class ForgotPasswordViewModel @Inject constructor(private val application: Appli
                     progressDialog.stop()
                     mRejectResponse.value = Event(value)
                 }
-
                 override fun onError(e: Throwable) {
                     progressIndicator.value = false
                     progressDialog.stop()
                     errorResponse.value = e
                 }
-
                 override fun onComplete() {
                     progressDialog.stop()
                     progressIndicator.value = false
