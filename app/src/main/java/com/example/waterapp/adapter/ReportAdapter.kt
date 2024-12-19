@@ -19,7 +19,6 @@ class ReportAdapter(
 
     ): RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -28,7 +27,6 @@ class ReportAdapter(
         return ReportAdapter.ReportViewHolder(itemView)
 
     }
-
     override fun onBindViewHolder(holder: ReportAdapter.ReportViewHolder, position: Int) {
         holder.serviceName.text = reportList[position].userName.toString()
         holder.problemType.text = reportList[position].problemType.toString()
@@ -37,11 +35,25 @@ class ReportAdapter(
         holder.status.text = reportList[position].status.toString()
 
         holder.viewImage.setOnClickListener {
-            val imageUrl = reportList[position].problemPhoto
 
-            val imageView = ImageView(context)
+            val imageFilename = reportList[position].problemPhoto?.firstOrNull()
+
+            val baseUrl = "http://192.168.1.22:3300/"
+            val imageUrl = baseUrl + imageFilename
+
+            val imageView = ImageView(context).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+
+                )
+                scaleType = ImageView.ScaleType.FIT_CENTER
+            }
+
             Glide.with(context)
                 .load(imageUrl)
+                .placeholder(R.drawable.electricity)
+                .error(R.drawable.water)
                 .into(imageView)
 
             val dialogBuilder = AlertDialog.Builder(context)
@@ -67,5 +79,4 @@ class ReportAdapter(
         val viewImage: Button = itemView.findViewById(R.id.viewImageOfProblem)
 
     }
-
 }

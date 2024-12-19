@@ -15,23 +15,36 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.waterapp.databinding.ActivityGenerateReportBinding
+import com.example.waterapp.generateReportModel.GenerateReportViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.util.Calendar
 
+
+@AndroidEntryPoint
 class GenerateReportActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGenerateReportBinding
+    private val generateReportViewModel: GenerateReportViewModel by viewModels()
     private var selectedImageFile: File? = null
     private val CAMERA_PERMISSION_CODE = 101
+    private var selectedDate = ""
+    private lateinit var globalSpinner: Spinner
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,6 +52,44 @@ class GenerateReportActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.arrowBack.setOnClickListener { finish() }
+
+        globalSpinner = binding.coursesspinner
+
+
+        val coursesList = listOf(
+            "Problem Types",
+            "Fallen Pole",
+            "Damaged Cable",
+            "Power Outage",
+            "Water Leak",
+            "Others")
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            coursesList
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        globalSpinner.adapter = adapter
+
+        globalSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // Handle when no item is selected (optional)
+                }
+            }
+        binding.forgotbutton.setOnClickListener {
+            formVelidation()
+        }
 
         binding.datepicker.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -49,7 +100,7 @@ class GenerateReportActivity : AppCompatActivity() {
             val datePickerDialog = DatePickerDialog(
                 this,
                 { _, selectedYear, selectedMonth, selectedDay ->
-                    val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                    selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
                     binding.datepickertext.setText(selectedDate)
                 },
                 year,
@@ -57,7 +108,9 @@ class GenerateReportActivity : AppCompatActivity() {
                 day
             )
             datePickerDialog.show()
+
         }
+
         binding.datepickertext.setOnClickListener {
             binding.datepicker.performClick()
         }
@@ -67,6 +120,62 @@ class GenerateReportActivity : AppCompatActivity() {
                 requestCameraPermission()
             }
         }
+    }
+
+    private fun velidationInput(
+        description: String,
+        date: String,
+        street: String,
+        city: String,
+        pinCode: String
+    ): Boolean {
+        return when {
+            description.isEmpty() -> {
+                binding.emailtext.error = "Please Enter Description"
+                false
+            }
+
+            date.isEmpty() -> {
+                binding.datepickertext.error = "Please Enter Date"
+                false
+            }
+
+            street.isEmpty() -> {
+                binding.streettext.error = "Please Enter Street Line"
+                false
+            }
+
+            city.isEmpty() -> {
+                binding.citytext.error = "Please Enter Your City"
+                false
+            }
+
+            pinCode.isEmpty() -> {
+                binding.pinCodeText.error = "Please Enter Your Pin Code"
+                false
+            }
+            else -> true
+        }
+    }
+
+    private fun formVelidation() {
+        val description = binding.emailtext.text.toString().trim()
+        val date = binding.datepickertext.text.toString().trim()
+        val street = binding.streettext.text.toString().trim()
+        val city = binding.citytext.text.toString().trim()
+        val pinCode = binding.pinCodeText.text.toString().trim()
+
+        if (velidationInput(description, date, street, city, pinCode)) {
+            //calling api  here
+            generateReportApi(globalSpinner, description, selectedDate,date, street, city, pinCode)
+        }
+
+    }
+
+    private fun generateReportApi(coursesList: Any?, description: String, selectedDate: String, date: String, street: String, city: String, pinCode: String
+    ) {
+        val intent = Intent(this@GenerateReportActivity, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     @RequiresApi(Build.VERSION_CODES.P)

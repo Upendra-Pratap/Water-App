@@ -7,6 +7,7 @@ import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordBody
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordResponse
+import com.example.waterapp.generateReportModel.GenerateReportResponse
 import com.example.waterapp.loginModel.LoginBody
 import com.example.waterapp.loginModel.LoginResponse
 import com.example.waterapp.notificationModel.NotificationResponse
@@ -121,5 +122,20 @@ interface ApiServices {
     fun getReport(
         @Path("Id") id: String
     ): Observable<ReportResponse>
+
+    @Multipart
+    @Headers("Accept:application/json")
+    @POST("report_problem/{Id}")
+    fun generateReport(
+        @Path("Id") id: String,
+        @Part("problemType") problemType: RequestBody,
+        @Part("description") description : RequestBody,
+        @Part("date_of_incident") date_of_incident : RequestBody,
+        @Part("street") street : RequestBody,
+        @Part("city") city : RequestBody,
+        @Part("zip") zip : RequestBody,
+        @Part reportImages: MultipartBody.Part,
+
+        ): Response<GenerateReportResponse>
 
 }

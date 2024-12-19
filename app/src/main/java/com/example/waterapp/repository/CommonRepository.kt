@@ -8,6 +8,7 @@ import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordBody
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordResponse
+import com.example.waterapp.generateReportModel.GenerateReportResponse
 import com.example.waterapp.loginModel.LoginBody
 import com.example.waterapp.loginModel.LoginResponse
 import com.example.waterapp.notificationModel.NotificationResponse
@@ -53,6 +54,20 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
         id: String
     ): Response<UpdateProfileResponse>{
         return apiServices.updateProfile(user_name, user_email, password, phone_no, street, city, zip, profileImage, id)
+    }
+
+    fun generateReport(
+        id: String,
+        problemType: RequestBody,
+        description: RequestBody,
+        date_of_incident: RequestBody,
+        street: RequestBody,
+        city: RequestBody,
+        zip: RequestBody,
+        reportImages: MultipartBody.Part,
+
+    ): Response<GenerateReportResponse>{
+        return apiServices.generateReport(id, problemType, description, date_of_incident, street, city, zip, reportImages)
     }
 
     fun forgotPassword(forgotPasswordBody: ForgotPasswordBody): Observable<ForgotPasswordResponse>{
