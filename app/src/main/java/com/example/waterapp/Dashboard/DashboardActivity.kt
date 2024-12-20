@@ -7,13 +7,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.waterapp.R
-import com.example.waterapp.databinding.ActivityDashboardBinding
 import com.example.waterapp.Fragment.AccountFragment
 import com.example.waterapp.Fragment.ElectricityFragment
 import com.example.waterapp.Fragment.HomeFragment
 import com.example.waterapp.Fragment.SupportFragment
 import com.example.waterapp.Fragment.WaterFragment
+import com.example.waterapp.R
+import com.example.waterapp.databinding.ActivityDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -157,4 +157,5 @@ class DashboardActivity : AppCompatActivity() {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
 }

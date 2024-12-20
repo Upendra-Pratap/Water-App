@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.text.Editable
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,11 +23,15 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.example.waterapp.BuildConfig
 import com.example.waterapp.R
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityProfileBinding
+import com.example.waterapp.updateProfileModel.GetUpdateProfileViewModel
 import com.example.waterapp.updateProfileModel.UpdateProfileResponse
 import com.example.waterapp.updateProfileModel.UpdateProfileViewModel
+import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -45,6 +50,7 @@ class ProfileActivity : AppCompatActivity() {
     private var selectedImageFile: File? = null
     private val CAMERA_PERMISSION_CODE = 101
     private val updateProfileViewModel: UpdateProfileViewModel by viewModels()
+    private val getUpdateProfileViewModel: GetUpdateProfileViewModel by viewModels()
     private lateinit var progressDialog: CustomProgressDialog
     private lateinit var activity: Activity
     private var userId = ""
@@ -64,10 +70,11 @@ class ProfileActivity : AppCompatActivity() {
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-        Toast.makeText(this, "user id here $userId", Toast.LENGTH_SHORT).show()
-
         progressDialog = CustomProgressDialog(this)
         activity = this
+
+        getUpdateProfileApi(userId)
+        getUpdateProfileObserver()
 
         binding.chooseImage.setOnClickListener {
             requestCameraPermission()
@@ -76,8 +83,70 @@ class ProfileActivity : AppCompatActivity() {
             profilVelidation()
         }
     }
+    private fun getUpdateProfileObserver() {
+        getUpdateProfileViewModel.progressIndicator.observe(this){
 
-        private fun setupObservers() {
+        }
+        getUpdateProfileViewModel.mCustomerResponse.observe(this){
+            val status = it.peekContent().success
+            val userData = it.peekContent().data
+            val userAddress = it.peekContent().data?.address
+
+            if (status == true){
+
+                if (userData?.userName == null) {
+
+                } else {
+                    binding.userName.text = Editable.Factory.getInstance().newEditable(userData.userName.toString())
+                }
+                if (userData?.userEmail == null){
+
+                }else{
+                    binding.email.text = Editable.Factory.getInstance().newEditable(userData.userEmail.toString())
+                }
+                if (userData?.phoneNo == null){
+
+                }else{
+                    binding.phoneNumber.text = Editable.Factory.getInstance().newEditable(userData.phoneNo.toString())
+                }
+                if (userAddress?.city == null){
+
+                }else{
+                    binding.cityText.text = Editable.Factory.getInstance().newEditable(userAddress.city.toString())
+
+                }
+                if (userAddress?.street == null){
+
+                }else{
+                    binding.streetText.text = Editable.Factory.getInstance().newEditable(userAddress.street.toString())
+
+                }
+                if (userAddress?.zip == null){
+
+                }else{
+                    binding.pinText.text = Editable.Factory.getInstance().newEditable(userAddress.zip.toString())
+                }
+                if (userData?.profileImage == null) {
+
+                } else {
+                    val url = it.peekContent().data?.profileImage
+                    Glide.with(this).load(BuildConfig.IMAGE_KEY + url).into(binding.profileImg)
+                }
+            }
+
+        }
+        getUpdateProfileViewModel.errorResponse.observe(this){
+            ErrorUtil.handlerGeneralError(this@ProfileActivity, it)
+        }
+
+    }
+
+    private fun getUpdateProfileApi(userId: String) {
+
+        getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog, activity)
+    }
+
+    private fun setupObservers() {
             updateProfileViewModel.progressIndicator.observe(this) { show ->
                 if (show) progressDialog.start(getString(R.string.please_wait)) else progressDialog.stop()
             }

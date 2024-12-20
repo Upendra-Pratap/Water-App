@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.waterapp.repository.CommonRepository
-import com.example.waterapp.updateProfileModel.UpdateProfileResponse
 import com.example.waterapp.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,8 +22,9 @@ class GenerateReportViewModel @Inject constructor(
     val progressIndicator = MutableLiveData<Boolean>()
     val errorResponse = MutableLiveData<Throwable>()
     val mRejectResponse = MutableLiveData<Event<GenerateReportResponse>>()
-    fun updateProfile(
-        id: String,
+
+    fun generateReport(
+        id: RequestBody,
         problemType: RequestBody,
         description: RequestBody,
         date_of_incident: RequestBody,

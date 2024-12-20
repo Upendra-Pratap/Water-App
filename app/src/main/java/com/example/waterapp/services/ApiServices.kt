@@ -10,6 +10,8 @@ import com.example.waterapp.forgotPasswordModel.ForgotPasswordResponse
 import com.example.waterapp.generateReportModel.GenerateReportResponse
 import com.example.waterapp.loginModel.LoginBody
 import com.example.waterapp.loginModel.LoginResponse
+import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNotificationResponse
+import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountResponse
 import com.example.waterapp.notificationModel.NotificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerifiicationBody
@@ -17,12 +19,14 @@ import com.example.waterapp.reportModel.ReportResponse
 import com.example.waterapp.resetPasswordModel.ResetPasswordBody
 import com.example.waterapp.resetPasswordModel.ResetPasswordResponse
 import com.example.waterapp.serviceModel.ServiceResponse
+import com.example.waterapp.updateProfileModel.GetUpdateProfileResponse
 import com.example.waterapp.updateProfileModel.UpdateProfileResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
@@ -30,7 +34,6 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
-
 
 interface ApiServices {
     @Multipart
@@ -52,7 +55,6 @@ interface ApiServices {
     fun userLogin(
         @Body loginBody: LoginBody
     ): Observable<LoginResponse>
-
 
     @Multipart
     @Headers("Accept:application/json")
@@ -110,7 +112,6 @@ interface ApiServices {
     fun getAnnouncement(
     ): Observable<AnnouncementResponse>
 
-
     @Headers("Accept:application/json")
     @GET("all_notification_of_user/{Id}")
     fun notificationList(
@@ -127,15 +128,40 @@ interface ApiServices {
     @Headers("Accept:application/json")
     @POST("report_problem/{Id}")
     fun generateReport(
-        @Path("Id") id: String,
+        @Path("Id") id: RequestBody,
         @Part("problemType") problemType: RequestBody,
-        @Part("description") description : RequestBody,
-        @Part("date_of_incident") date_of_incident : RequestBody,
-        @Part("street") street : RequestBody,
-        @Part("city") city : RequestBody,
-        @Part("zip") zip : RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("date_of_incident") date_of_incident: RequestBody,
+        @Part("street") street: RequestBody,
+        @Part("city") city: RequestBody,
+        @Part("zip") zip: RequestBody,
         @Part reportImages: MultipartBody.Part,
 
         ): Response<GenerateReportResponse>
+
+    @Headers("Accept:application/json")
+    @GET("get_user_data_by_id/{Id}")
+    fun getUpdateProfile(
+        @Path("Id") id: String
+    ): Observable<GetUpdateProfileResponse>
+
+    @Headers("Accept:application/json")
+    @GET("all_notification_count_of_user/{Id}")
+    fun notificationCount(
+        @Path("Id") id: String
+    ): Observable<NotificationCountResponse>
+
+    @Headers("Accept:application/json")
+    @DELETE("delete_notification/{Id}")
+    fun deleteNotification(
+        @Path("Id") id: String
+    ): Observable<DeleteNotificationResponse>
+
+    @Headers("Accept:application/json")
+    @POST("request_for_address_update/{Id}")
+    fun addressUpdate(
+        @Path("Id") id: String
+    ): Observable<NotificationResponse>
+
 
 }

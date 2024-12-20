@@ -1,4 +1,4 @@
-package com.example.waterapp.serviceModel
+package com.example.waterapp.updateProfileModel
 
 import android.app.Activity
 import android.app.Application
@@ -18,27 +18,29 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class ServicesViewModel @Inject constructor(private val application: Application, private val repository: CommonRepository
+class GetUpdateProfileViewModel @Inject constructor(application: Application, private val repository: CommonRepository
 ): AndroidViewModel(application) {
     val progressIndicator = MutableLiveData<Boolean>()
     val errorResponse = MutableLiveData<Throwable>()
-    val mRejectResponse = MutableLiveData<Event<ServiceResponse>>()
+    val mCustomerResponse = MutableLiveData<Event<GetUpdateProfileResponse>>()
     var context: Context? = null
 
-    fun setService(
+    fun getUpdateProfile(
+        id:String,
+        progressDialog: CustomProgressDialog,
         activity: Activity,
-        progressDialog: CustomProgressDialog
-    ) {
-        progressDialog.start(activity.getString(R.string.please_wait))
 
+        ) {
+        progressDialog.start(activity.getString(R.string.please_wait))
         progressIndicator.value = true
-        repository.getService(
+        repository.getUpdateProfile(
+            id
         ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : DisposableObserver<ServiceResponse>() {
-                override fun onNext(value: ServiceResponse) {
+            .subscribe(object : DisposableObserver<GetUpdateProfileResponse>() {
+                override fun onNext(value: GetUpdateProfileResponse) {
                     progressIndicator.value = false
                     progressDialog.stop()
-                    mRejectResponse.value = Event(value)
+                    mCustomerResponse.value = Event(value)
                 }
                 override fun onError(e: Throwable) {
                     progressIndicator.value = false
@@ -51,4 +53,5 @@ class ServicesViewModel @Inject constructor(private val application: Application
                 }
             })
     }
+
 }

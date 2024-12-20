@@ -11,5 +11,7 @@
     <color name="red">#B8001F</color>
     <color name="dialogBackground">#60000000</color>
     <color name="green_cyan">#00FF9C</color>
+    <color name="greyWhite">#F2F2F7</color>
+
 
 </resources>

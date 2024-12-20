@@ -59,12 +59,10 @@ class FaqActivity : AppCompatActivity() {
                 // Set the adapter to RecyclerView
                 binding.faqRecyclerView.adapter = myOrderAdapter
 
-
             } else {
 
             }
         }
-
         faqViewModel.errorResponse.observe(this) {
             ErrorUtil.handlerGeneralError(this@FaqActivity, it)
         }

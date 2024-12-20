@@ -38,8 +38,6 @@ class MyReportActivity : AppCompatActivity() {
         progressDialog = CustomProgressDialog(this)
         activity = this
 
-        Toast.makeText(this, "user id here : $userId", Toast.LENGTH_SHORT).show()
-
         reportListApi(userId)
         reportListObserver()
 

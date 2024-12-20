@@ -7,24 +7,22 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.waterapp.FaqModel.FaqResponse
-import com.example.waterapp.R
-import com.example.waterapp.adapter.AnnouncementAdapter
-import com.example.waterapp.adapter.FaqAdapter
 import com.example.waterapp.databinding.ActivityNotificationBinding
 import com.example.waterapp.adapter.NotificationAdapter
 import com.example.waterapp.classes.CustomProgressDialog
+import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNotificationViewModel
+import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountViewModel
 import com.example.waterapp.notificationModel.NotificationResponse
 import com.example.waterapp.notificationModel.NotificationViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotificationActivity : AppCompatActivity() {
+class NotificationActivity : AppCompatActivity(), NotificationClickListener {
     private lateinit var binding: ActivityNotificationBinding
     private val notificationViewModel: NotificationViewModel by viewModels()
+    private val notificationCountViewModel: NotificationCountViewModel by viewModels()
+    private val deleteNotificationViewModel: DeleteNotificationViewModel by viewModels()
     private var myOrderAdapter: NotificationAdapter? = null
     private var notificationList: List<NotificationResponse.AllNotification> = ArrayList()
     private lateinit var sharedPreferences: SharedPreferences
@@ -43,49 +41,96 @@ class NotificationActivity : AppCompatActivity() {
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-        Toast.makeText(this, "user id here : $userId", Toast.LENGTH_SHORT).show()
-
         binding.arrowBack.setOnClickListener { finish() }
-
 
         notificationListApi(userId)
         notificationObserver()
+        notificationCountObserver()
+        deleteNotificationObserver()
 
+    }
+
+    private fun deleteNotificationObserver() {
+        deleteNotificationViewModel.mDeleteNotificationResponse.observe(this) { response ->
+            val message = response.peekContent().message!!
+
+            if (response.peekContent().success == false) {
+                Toast.makeText(this, "failed: $message", Toast.LENGTH_LONG).show()
+            } else {
+                notificationListApi(userId)
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        }
+        deleteNotificationViewModel.errorResponse.observe(this) {
+            ErrorUtil.handlerGeneralError(this, it)
+        }
+    }
+
+    private fun notificationCountObserver() {
+        notificationCountViewModel.progressIndicator.observe(this) {
+
+        }
+        notificationCountViewModel.mCustomerResponse.observe(this) {
+            val status = it.peekContent().success
+            val message = it.peekContent().message
+            val notificationCount = it.peekContent().allNotificationCount
+
+            if (status == true) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                binding.notificationCount.text = notificationCount.toString()
+            }
+        }
+        notificationCountViewModel.errorResponse.observe(this) {
+            ErrorUtil.handlerGeneralError(this@NotificationActivity, it)
+        }
     }
 
     private fun notificationObserver() {
         notificationViewModel.progressIndicator.observe(this, androidx.lifecycle.Observer {
             // Show progress if needed
         })
-
         notificationViewModel.mRejectResponse.observe(this) {
             val status = it.peekContent().success
             val message = it.peekContent().message
             notificationList = it.peekContent().allNotification!!
 
-            if (notificationList.isNotEmpty()) {
 
-                binding.recyclerNotification.isVerticalScrollBarEnabled = true
-                binding.recyclerNotification.isVerticalFadingEdgeEnabled = true
-                binding.recyclerNotification.layoutManager = GridLayoutManager(this, 1)
-                myOrderAdapter = NotificationAdapter(this, notificationList)
+            if (status == true) {
+                if (notificationList.isNotEmpty()) {
+                    binding.recyclerNotification.isVerticalScrollBarEnabled = true
+                    binding.recyclerNotification.isVerticalFadingEdgeEnabled = true
+                    binding.recyclerNotification.layoutManager = GridLayoutManager(this, 1)
+                    myOrderAdapter = NotificationAdapter(this, this, notificationList)
 
-                // Set the adapter to RecyclerView
-                binding.recyclerNotification.adapter = myOrderAdapter
+                    binding.recyclerNotification.adapter = myOrderAdapter
 
+                    notificationCountApi(userId)
 
-            } else {
+                }
+            }else {
 
+                }
             }
-        }
 
         notificationViewModel.errorResponse.observe(this) {
             ErrorUtil.handlerGeneralError(this@NotificationActivity, it)
         }
     }
 
+    private fun notificationCountApi(userId: String) {
+        notificationCountViewModel.notificationCount(userId, progressDialog, activity)
+    }
 
     private fun notificationListApi(userId: String) {
         notificationViewModel.notificationList(userId, activity, progressDialog)
+    }
+
+    override fun deleteNotification(position: Int, id: String) {
+        deleteNotificationApi(id)
+    }
+
+    private fun deleteNotificationApi(notificationId: String) {
+        deleteNotificationViewModel.getDeleteNotifications(notificationId, progressDialog, activity)
+
     }
 }

@@ -11,6 +11,8 @@ import com.example.waterapp.forgotPasswordModel.ForgotPasswordResponse
 import com.example.waterapp.generateReportModel.GenerateReportResponse
 import com.example.waterapp.loginModel.LoginBody
 import com.example.waterapp.loginModel.LoginResponse
+import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNotificationResponse
+import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountResponse
 import com.example.waterapp.notificationModel.NotificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerifiicationBody
@@ -19,6 +21,7 @@ import com.example.waterapp.resetPasswordModel.ResetPasswordBody
 import com.example.waterapp.resetPasswordModel.ResetPasswordResponse
 import com.example.waterapp.serviceModel.ServiceResponse
 import com.example.waterapp.services.ApiServices
+import com.example.waterapp.updateProfileModel.GetUpdateProfileResponse
 import com.example.waterapp.updateProfileModel.UpdateProfileResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -41,7 +44,6 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
     fun customerLogin(loginBody: LoginBody): Observable<LoginResponse> {
         return apiServices.userLogin(loginBody)
     }
-
     suspend fun updateProfile(
         user_name: RequestBody,
         user_email: RequestBody,
@@ -55,9 +57,8 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
     ): Response<UpdateProfileResponse>{
         return apiServices.updateProfile(user_name, user_email, password, phone_no, street, city, zip, profileImage, id)
     }
-
     fun generateReport(
-        id: String,
+        id: RequestBody,
         problemType: RequestBody,
         description: RequestBody,
         date_of_incident: RequestBody,
@@ -66,43 +67,43 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
         zip: RequestBody,
         reportImages: MultipartBody.Part,
 
-    ): Response<GenerateReportResponse>{
+        ): Response<GenerateReportResponse>{
         return apiServices.generateReport(id, problemType, description, date_of_incident, street, city, zip, reportImages)
     }
-
     fun forgotPassword(forgotPasswordBody: ForgotPasswordBody): Observable<ForgotPasswordResponse>{
         return apiServices.forgotPassword(forgotPasswordBody)
     }
     fun changePassword(id:String, changePasswordBody: ChangePasswordBody): Observable<ChangePasswordResponse>{
         return apiServices.changePassword(id, changePasswordBody)
     }
-
     fun otpVerification(otpVerifiicationBody: OtpVerifiicationBody): Observable<OtpVerificationResponse>{
         return apiServices.otpVerification(otpVerifiicationBody)
     }
-
     fun resetPassword(resetPasswordBody: ResetPasswordBody, id: String): Observable<ResetPasswordResponse>{
         return apiServices.resetPassword(resetPasswordBody, id)
     }
-
     fun getFaq(): Observable<FaqResponse>{
         return apiServices.getFaq()
     }
-
     fun getService(): Observable<ServiceResponse>{
         return apiServices.getServices()
     }
-
     fun getAnnouncement(): Observable<AnnouncementResponse>{
         return apiServices.getAnnouncement()
     }
-
     fun notificationList(id: String): Observable<NotificationResponse>{
         return apiServices.notificationList(id)
     }
-
     fun getReport(id: String): Observable<ReportResponse>{
         return apiServices.getReport(id)
     }
-
+    fun getUpdateProfile(id: String): Observable<GetUpdateProfileResponse> {
+        return apiServices.getUpdateProfile(id)
+    }
+    fun notificationCount(id: String): Observable<NotificationCountResponse>{
+        return apiServices.notificationCount(id)
+    }
+    fun deleteNotification(id: String): Observable<DeleteNotificationResponse>{
+        return apiServices.deleteNotification(id)
+    }
 }

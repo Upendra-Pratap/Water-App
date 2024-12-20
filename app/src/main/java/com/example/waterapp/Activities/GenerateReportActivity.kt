@@ -6,6 +6,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -26,9 +27,14 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityGenerateReportBinding
 import com.example.waterapp.generateReportModel.GenerateReportViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -44,6 +50,10 @@ class GenerateReportActivity : AppCompatActivity() {
     private val CAMERA_PERMISSION_CODE = 101
     private var selectedDate = ""
     private lateinit var globalSpinner: Spinner
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var activity: Activity
+    private lateinit var progressDialog: CustomProgressDialog
+    private var userId =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +63,13 @@ class GenerateReportActivity : AppCompatActivity() {
 
         binding.arrowBack.setOnClickListener { finish() }
 
-        globalSpinner = binding.coursesspinner
+        progressDialog = CustomProgressDialog(this)
+        activity = this
 
+        sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
+        userId = sharedPreferences.getString("userId", userId).toString().trim()
+
+        globalSpinner = binding.coursesspinner
 
         val coursesList = listOf(
             "Problem Types",
@@ -167,16 +182,70 @@ class GenerateReportActivity : AppCompatActivity() {
 
         if (velidationInput(description, date, street, city, pinCode)) {
             //calling api  here
-            generateReportApi(globalSpinner, description, selectedDate,date, street, city, pinCode)
+            generateReportApi(userId, globalSpinner, description, selectedDate, street, city, pinCode)
+        }
+    }
+
+    private fun generateReportApi(
+        id: String,
+        coursesList: Spinner,
+        description: String,
+        selectedDate: String,
+        street: String,
+        city: String,
+        pinCode: String
+    ) {
+        val selectedCourse = coursesList.selectedItem.toString()
+
+        val userId = RequestBody.create("text/plain".toMediaTypeOrNull(), id)
+        val globalSpinner = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedCourse)
+        val descriptionBody = RequestBody.create("text/plain".toMediaTypeOrNull(), description)
+        val selectedDateBody = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedDate)
+        val streetBody = RequestBody.create("text/plain".toMediaTypeOrNull(), street)
+        val cityBody = RequestBody.create("text/plain".toMediaTypeOrNull(), city)
+        val pinCodeBody = RequestBody.create("text/plain".toMediaTypeOrNull(), pinCode)
+
+        // Handle the image file and convert it into a MultipartBody.Part
+        val imageFile = selectedImageFile
+        val imagePart = imageFile?.let {
+            val requestBody = it.asRequestBody("image/*".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData("profileImage", it.name, requestBody)
         }
 
+        // Call generateReportViewModel with all the necessary parameters, including the image part
+        if (imagePart != null) {
+            generateReportViewModel.generateReport(
+                userId,
+                globalSpinner,
+                descriptionBody,
+                selectedDateBody,
+                streetBody,
+                cityBody,
+                pinCodeBody,
+                imagePart
+            )
+        } else {
+            // If there's no image, call generateReport without the image part
+            if (imagePart != null) {
+                generateReportViewModel.generateReport(
+                    userId,
+                    globalSpinner,
+                    descriptionBody,
+                    selectedDateBody,
+                    streetBody,
+                    cityBody,
+                    pinCodeBody,
+                    imagePart
+                )
+            }
+        }
     }
 
-    private fun generateReportApi(coursesList: Any?, description: String, selectedDate: String, date: String, street: String, city: String, pinCode: String
-    ) {
-        val intent = Intent(this@GenerateReportActivity, LoginActivity::class.java)
-        startActivity(intent)
-    }
+
+
+
+
+
 
     @RequiresApi(Build.VERSION_CODES.P)
     private val takePictureLauncher =
@@ -299,4 +368,5 @@ class GenerateReportActivity : AppCompatActivity() {
             }
         }
 }
+
 
