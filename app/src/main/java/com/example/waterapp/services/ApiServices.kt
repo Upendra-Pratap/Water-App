@@ -163,5 +163,4 @@ interface ApiServices {
         @Path("Id") id: String
     ): Observable<NotificationResponse>
 
-
 }

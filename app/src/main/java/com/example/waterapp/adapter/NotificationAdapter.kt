@@ -38,7 +38,6 @@ class NotificationAdapter(
         holder.deleteNotification.setOnClickListener {
             openDeleteDialog(position, notificationId!!)
         }
-
     }
 
     @SuppressLint("MissingInflatedId")

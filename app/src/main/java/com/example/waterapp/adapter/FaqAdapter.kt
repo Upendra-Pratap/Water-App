@@ -27,11 +27,16 @@ class FaqAdapter(
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val myFaqList = faqList[position]
-        //holder.nameTextView.text = serviceList[position].serviceName.toString()
 
         holder.questionSection.text = faqList[position].question.toString()
         holder.answerHere.text = faqList[position].answer.toString()
 
+        holder.questionSection.setOnClickListener {
+            holder.faqCardViewAnswer.visibility = View.VISIBLE
+        }
+        holder.faqCardViewAnswer.setOnClickListener {
+            holder.faqCardViewAnswer.visibility = View.GONE
+        }
         holder.downArrow.setOnClickListener {
             holder.faqCardViewAnswer.visibility = View.VISIBLE
         }
