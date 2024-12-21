@@ -1,12 +1,19 @@
 package com.example.waterapp.Activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.waterapp.R
 import com.example.waterapp.databinding.ActivityNotificationBinding
 import com.example.waterapp.adapter.NotificationAdapter
 import com.example.waterapp.classes.CustomProgressDialog
@@ -14,6 +21,7 @@ import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNoti
 import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountViewModel
 import com.example.waterapp.notificationModel.NotificationResponse
 import com.example.waterapp.notificationModel.NotificationViewModel
+import com.example.waterapp.notificationModel.allNotificationDelete.AllNotificationDeleteVewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +31,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
     private val notificationViewModel: NotificationViewModel by viewModels()
     private val notificationCountViewModel: NotificationCountViewModel by viewModels()
     private val deleteNotificationViewModel: DeleteNotificationViewModel by viewModels()
+    private val allNotificationDeleteVewModel: AllNotificationDeleteVewModel by viewModels()
     private var myOrderAdapter: NotificationAdapter? = null
     private var notificationList: List<NotificationResponse.AllNotification> = ArrayList()
     private lateinit var sharedPreferences: SharedPreferences
@@ -43,11 +52,66 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
 
         binding.arrowBack.setOnClickListener { finish() }
 
+        binding.allClear.setOnClickListener {
+            allDeletePopup()
+        }
+
         notificationListApi(userId)
         notificationObserver()
         notificationCountObserver()
+        allNotificationDeleteObserver()
         deleteNotificationObserver()
 
+
+    }
+
+    private fun allNotificationDeleteObserver() {
+        allNotificationDeleteVewModel.progressIndicator.observe(this){
+
+        }
+        allNotificationDeleteVewModel.mDeleteNotificationResponse.observe(this){
+            val status = it.peekContent().success
+            if (status == true){
+                notificationListApi(userId)
+
+                notificationCountApi(userId)
+
+            }else{
+
+            }
+        }
+        allNotificationDeleteVewModel.errorResponse.observe(this){
+            ErrorUtil.handlerGeneralError(this@NotificationActivity, it)
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun allDeletePopup() {
+            val builder = AlertDialog.Builder(this, R.style.Style_Dialog_Rounded_Corner)
+            val dialogView = LayoutInflater.from(this).inflate(R.layout.delete_notification_popup, null)
+            builder.setView(dialogView)
+
+            val dialog = builder.create()
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            val noBtnAcceptNDel = dialogView.findViewById<TextView>(R.id.NoBtnAcceptNDel)
+            val yesBtnAcceptNdel = dialogView.findViewById<TextView>(R.id.YesBtnAcceptNdel)
+
+            noBtnAcceptNDel.setOnClickListener {
+                dialog.dismiss()
+            }
+            yesBtnAcceptNdel.setOnClickListener {
+                //calling api all notification delete
+                allNotificationDeleteApi(userId)
+                myOrderAdapter?.notifyDataSetChanged()
+                dialog.dismiss()
+            }
+
+            dialog.show()
+    }
+
+    private fun allNotificationDeleteApi(userId: String) {
+        allNotificationDeleteVewModel.allNotificationDelete(userId, progressDialog, activity)
     }
 
     private fun deleteNotificationObserver() {
@@ -76,7 +140,6 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             val notificationCount = it.peekContent().allNotificationCount
 
             if (status == true) {
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 binding.notificationCount.text = notificationCount.toString()
             }
         }
@@ -91,7 +154,6 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
         })
         notificationViewModel.mRejectResponse.observe(this) {
             val status = it.peekContent().success
-            val message = it.peekContent().message
             notificationList = it.peekContent().allNotification!!
 
 

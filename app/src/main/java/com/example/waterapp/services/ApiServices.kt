@@ -13,6 +13,7 @@ import com.example.waterapp.loginModel.LoginResponse
 import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNotificationResponse
 import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountResponse
 import com.example.waterapp.notificationModel.NotificationResponse
+import com.example.waterapp.notificationModel.allNotificationDelete.AllNotificationDeleteResponse
 import com.example.waterapp.otpVerificationModel.OtpVerificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerifiicationBody
 import com.example.waterapp.reportModel.ReportResponse
@@ -162,5 +163,11 @@ interface ApiServices {
     fun addressUpdate(
         @Path("Id") id: String
     ): Observable<NotificationResponse>
+
+    @Headers("Accept:application/json")
+    @DELETE("delete_all_notification_by_userId/{Id}")
+    fun deleteAllNotification(
+        @Path("Id") id: String
+    ): Observable<AllNotificationDeleteResponse>
 
 }
