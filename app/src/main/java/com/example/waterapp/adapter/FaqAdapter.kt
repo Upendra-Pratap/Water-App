@@ -31,17 +31,15 @@ class FaqAdapter(
         holder.questionSection.text = faqList[position].question.toString()
         holder.answerHere.text = faqList[position].answer.toString()
 
-        holder.questionSection.setOnClickListener {
-            holder.faqCardViewAnswer.visibility = View.VISIBLE
-        }
-        holder.faqCardViewAnswer.setOnClickListener {
-            holder.faqCardViewAnswer.visibility = View.GONE
-        }
         holder.downArrow.setOnClickListener {
             holder.faqCardViewAnswer.visibility = View.VISIBLE
+            holder.downArrow.visibility = View.GONE
+            holder.upArrow.visibility = View.VISIBLE
         }
         holder.upArrow.setOnClickListener {
             holder.faqCardViewAnswer.visibility = View.GONE
+            holder.upArrow.visibility = View.GONE
+            holder.downArrow.visibility = View.VISIBLE
         }
     }
 

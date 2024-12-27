@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
 
                 binding.recyclerView.isVerticalScrollBarEnabled = true
                 binding.recyclerView.isVerticalFadingEdgeEnabled = true
-                binding.recyclerView.layoutManager = GridLayoutManager(requireActivity(), 1)
+                binding.recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
                 myOrderAdapter = ServiceAdapter(requireContext(), serviceList)
 
                 // Set the adapter to RecyclerView

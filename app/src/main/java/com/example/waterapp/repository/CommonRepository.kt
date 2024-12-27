@@ -6,6 +6,9 @@ import com.example.waterapp.SignUpModel.SignUpResponse
 import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
+import com.example.waterapp.chatModel.DoChatBody
+import com.example.waterapp.chatModel.DoChatResponse
+import com.example.waterapp.chatModel.GetDoChatResponse
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordBody
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordResponse
 import com.example.waterapp.generateReportModel.GenerateReportResponse
@@ -58,8 +61,8 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
     ): Response<UpdateProfileResponse>{
         return apiServices.updateProfile(user_name, user_email, password, phone_no, street, city, zip, profileImage, id)
     }
-    fun generateReport(
-        id: RequestBody,
+    suspend fun generateReport(
+        id: String,
         problemType: RequestBody,
         description: RequestBody,
         date_of_incident: RequestBody,
@@ -110,5 +113,13 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
 
     fun allNotificationDelete(id: String): Observable<AllNotificationDeleteResponse>{
         return apiServices.deleteAllNotification(id)
+    }
+
+    fun doChat(doChatBody: DoChatBody): Observable<DoChatResponse>{
+        return apiServices.doChat(doChatBody)
+    }
+
+    fun getDoChat(id: String): Observable<GetDoChatResponse>{
+        return apiServices.getDoChat(id)
     }
 }

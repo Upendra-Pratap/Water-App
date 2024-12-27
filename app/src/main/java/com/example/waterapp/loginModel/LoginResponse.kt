@@ -47,6 +47,10 @@ class LoginResponse: Serializable {
         @Expose
         var address: Address? = null
 
+        @SerializedName("adminId")
+        @Expose
+        var adminId: String? = null
+
         inner class Address{
             @SerializedName("street")
             @Expose

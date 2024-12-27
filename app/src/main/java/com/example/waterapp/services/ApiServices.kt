@@ -5,6 +5,9 @@ import com.example.waterapp.SignUpModel.SignUpResponse
 import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
+import com.example.waterapp.chatModel.DoChatBody
+import com.example.waterapp.chatModel.DoChatResponse
+import com.example.waterapp.chatModel.GetDoChatResponse
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordBody
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordResponse
 import com.example.waterapp.generateReportModel.GenerateReportResponse
@@ -35,6 +38,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiServices {
     @Multipart
@@ -128,8 +132,8 @@ interface ApiServices {
     @Multipart
     @Headers("Accept:application/json")
     @POST("report_problem/{Id}")
-    fun generateReport(
-        @Path("Id") id: RequestBody,
+    suspend fun generateReport(
+        @Path("Id") id: String,
         @Part("problemType") problemType: RequestBody,
         @Part("description") description: RequestBody,
         @Part("date_of_incident") date_of_incident: RequestBody,
@@ -169,5 +173,17 @@ interface ApiServices {
     fun deleteAllNotification(
         @Path("Id") id: String
     ): Observable<AllNotificationDeleteResponse>
+
+    @Headers("Accept:application/json")
+    @POST("chat_support")
+    fun  doChat(
+        @Body doChatBody: DoChatBody
+    ): Observable<DoChatResponse>
+
+    @Headers("Accept:application/json")
+    @POST("get_chat_support_by_id/{Id}")
+    fun getDoChat(
+        @Path("Id") id: String,
+    ): Observable<GetDoChatResponse>
 
 }

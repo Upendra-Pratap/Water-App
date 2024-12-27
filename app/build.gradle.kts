@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("com.google.gms.google-services")
+
 }
 
 android {
@@ -42,12 +43,11 @@ android {
                         "proguard-rules.pro"
                     )
                     buildConfigField("boolean", "IS_DEBUG", "true")
-                    buildConfigField("String", "API_KEY", "\"http://192.168.1.13:3300/api/\"")
-                    buildConfigField("String", "IMAGE_KEY", "\"http://192.168.1.13:3300/\"")
+                    buildConfigField("String", "API_KEY", "\"http://192.168.1.26:3300/api/\"")
+                    buildConfigField("String", "IMAGE_KEY", "\"http://192.168.1.26:3300/\"")
                 }
             }
         }
-
 
     }
     compileOptions {
@@ -101,6 +101,11 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:23.4.1")
 
     implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    implementation ("com.google.firebase:firebase-auth:21.0.3")
+    implementation ("com.google.firebase:firebase-database:20.0.4")
+    implementation ("com.google.firebase:firebase-storage:20.0.1")
+
 
     //user permission
     implementation("com.karumi:dexter:6.2.2")
@@ -166,6 +171,5 @@ dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
             because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
         }
-
     }
 }

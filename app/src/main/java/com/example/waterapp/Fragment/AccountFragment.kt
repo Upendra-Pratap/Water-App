@@ -2,6 +2,7 @@ package com.example.waterapp.Fragment
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -111,7 +112,6 @@ class AccountFragment : Fragment() {
             val intent = Intent(requireActivity(), MyReportActivity::class.java)
             startActivity(intent)
         }
-
         return view
     }
 
@@ -137,7 +137,6 @@ class AccountFragment : Fragment() {
 
                 }
             }
-
         }
         getUpdateProfileViewModel.errorResponse.observe(viewLifecycleOwner){
             ErrorUtil.handlerGeneralError(requireActivity(), it)
@@ -165,11 +164,20 @@ class AccountFragment : Fragment() {
         }
         yesLogoutBtn.setOnClickListener {
             //Call Api
-            // logoutApi()
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
+           logoutApi()
+
         }
     }
+    private fun logoutApi() {
+        sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+
     override fun onResume() {
         super.onResume()
         getUpdateProfileApi(userId)

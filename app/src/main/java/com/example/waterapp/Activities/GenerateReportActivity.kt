@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityGenerateReportBinding
 import com.example.waterapp.generateReportModel.GenerateReportViewModel
+import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -71,13 +72,9 @@ class GenerateReportActivity : AppCompatActivity() {
 
         globalSpinner = binding.coursesspinner
 
-        val coursesList = listOf(
-            "Problem Types",
-            "Fallen Pole",
-            "Damaged Cable",
-            "Power Outage",
-            "Water Leak",
-            "Others")
+        generateReportObserver()
+
+        val coursesList = listOf("Problem Types", "Fallen Pole", "Damaged Cable", "Power Outage", "Water Leak", "Others")
 
         val adapter = ArrayAdapter(
             this,
@@ -134,6 +131,23 @@ class GenerateReportActivity : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 requestCameraPermission()
             }
+        }
+    }
+
+    private fun generateReportObserver() {
+        generateReportViewModel.progressIndicator.observe(this){
+
+        }
+        generateReportViewModel.mRejectResponse.observe(this){
+            val message = it.peekContent().message
+            val status = it.peekContent().success
+
+            if (status == true){
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        }
+        generateReportViewModel.errorResponse.observe(this){
+            ErrorUtil.handlerGeneralError(this@GenerateReportActivity, it)
         }
     }
 
@@ -197,7 +211,6 @@ class GenerateReportActivity : AppCompatActivity() {
     ) {
         val selectedCourse = coursesList.selectedItem.toString()
 
-        val userId = RequestBody.create("text/plain".toMediaTypeOrNull(), id)
         val globalSpinner = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedCourse)
         val descriptionBody = RequestBody.create("text/plain".toMediaTypeOrNull(), description)
         val selectedDateBody = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedDate)
@@ -205,17 +218,15 @@ class GenerateReportActivity : AppCompatActivity() {
         val cityBody = RequestBody.create("text/plain".toMediaTypeOrNull(), city)
         val pinCodeBody = RequestBody.create("text/plain".toMediaTypeOrNull(), pinCode)
 
-        // Handle the image file and convert it into a MultipartBody.Part
         val imageFile = selectedImageFile
         val imagePart = imageFile?.let {
             val requestBody = it.asRequestBody("image/*".toMediaTypeOrNull())
             MultipartBody.Part.createFormData("profileImage", it.name, requestBody)
         }
 
-        // Call generateReportViewModel with all the necessary parameters, including the image part
         if (imagePart != null) {
             generateReportViewModel.generateReport(
-                userId,
+                id,
                 globalSpinner,
                 descriptionBody,
                 selectedDateBody,
@@ -225,10 +236,9 @@ class GenerateReportActivity : AppCompatActivity() {
                 imagePart
             )
         } else {
-            // If there's no image, call generateReport without the image part
             if (imagePart != null) {
                 generateReportViewModel.generateReport(
-                    userId,
+                    id,
                     globalSpinner,
                     descriptionBody,
                     selectedDateBody,
@@ -240,13 +250,6 @@ class GenerateReportActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
-
-
-
-
     @RequiresApi(Build.VERSION_CODES.P)
     private val takePictureLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

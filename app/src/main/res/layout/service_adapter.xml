@@ -32,14 +32,15 @@
 
                 <ImageView
                     android:id="@+id/productImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/electricity"
+                    android:src="@drawable/energy"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/green" />
 
             </androidx.cardview.widget.CardView>
 
@@ -87,7 +88,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addServices"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_background"
@@ -95,8 +96,8 @@
                 android:paddingEnd="40dp"
                 android:text="@string/service_request"
                 android:textAllCaps="false"
+                android:textSize="10dp"
                 android:textColor="@color/white"
-                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

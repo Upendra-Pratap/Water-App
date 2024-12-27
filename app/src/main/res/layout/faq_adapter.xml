@@ -29,9 +29,22 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="end"
+            android:visibility="visible"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/downarrow" />
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/downarrowfaq"
+            app:tint="@color/red" />
+
+        <ImageView
+            android:id="@+id/upArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="end"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/arrowheadup"
+            app:tint="@color/red" />
 
 
     </androidx.cardview.widget.CardView>
@@ -40,9 +53,9 @@
         android:id="@+id/faqCardViewAnswer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="@drawable/card_border"
         android:visibility="gone"
+        android:layout_marginTop="5dp"
         app:cardBackgroundColor="#DCDADA"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,14 +70,7 @@
             android:padding="15dp"
             android:text="@string/yes_a_detailed_breakdown_is_available_on_your_bill_statement_you_can_also_view_it_in_your_account_dashboard_under_billing_details" />
 
-        <ImageView
-            android:id="@+id/upArrow"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/arrowup" />
+
 
 
     </androidx.cardview.widget.CardView>

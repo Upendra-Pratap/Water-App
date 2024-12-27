@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var activity: Activity
     private var isPasswordVisible = true
     private var userId =""
+    private var adminId = ""
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,8 @@ class LoginActivity : AppCompatActivity() {
         activity = this
 
         loginObserver()
+
+        checkLoginStatus()
 
         binding.signUpBtnCustomer.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
@@ -59,6 +62,17 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkLoginStatus() {
+        sharedPreferences = this@LoginActivity.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
+        val userId = sharedPreferences.getString("userId", null)
+
+        if (userId != null) {
+            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     private fun loginObserver() {
         loginViewModel.progressIndicator.observe(this){
 
@@ -74,10 +88,12 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 if (userDetail != null) {
                     userId = userDetail.id.toString()
+                    adminId = userDetail.adminId.toString()
                     sharedPreferences =
                         this@LoginActivity.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
                     editor.putString("userId", userId)
+                    editor.putString("adminId",adminId)
                     editor.apply()
                     finish()
                 }

@@ -44,11 +44,14 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
         val view = binding.root
         setContentView(view)
 
+
         progressDialog = CustomProgressDialog(this)
         activity = this
 
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
+
+
 
         binding.arrowBack.setOnClickListener { finish() }
 
@@ -59,9 +62,8 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
         notificationListApi(userId)
         notificationObserver()
         notificationCountObserver()
-        allNotificationDeleteObserver()
         deleteNotificationObserver()
-
+        allNotificationDeleteObserver()
 
     }
 
@@ -73,7 +75,6 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             val status = it.peekContent().success
             if (status == true){
                 notificationListApi(userId)
-
                 notificationCountApi(userId)
 
             }else{
@@ -95,14 +96,18 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val noBtnAcceptNDel = dialogView.findViewById<TextView>(R.id.NoBtnAcceptNDel)
-            val yesBtnAcceptNdel = dialogView.findViewById<TextView>(R.id.YesBtnAcceptNdel)
+            val yesBtnAcceptNDel = dialogView.findViewById<TextView>(R.id.YesBtnAcceptNdel)
 
             noBtnAcceptNDel.setOnClickListener {
                 dialog.dismiss()
             }
-            yesBtnAcceptNdel.setOnClickListener {
+
+            yesBtnAcceptNDel.setOnClickListener {
                 //calling api all notification delete
+                notificationListApi(userId)
+
                 allNotificationDeleteApi(userId)
+
                 myOrderAdapter?.notifyDataSetChanged()
                 dialog.dismiss()
             }
@@ -122,7 +127,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
                 Toast.makeText(this, "failed: $message", Toast.LENGTH_LONG).show()
             } else {
                 notificationListApi(userId)
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                notificationCountApi(userId)
             }
         }
         deleteNotificationViewModel.errorResponse.observe(this) {

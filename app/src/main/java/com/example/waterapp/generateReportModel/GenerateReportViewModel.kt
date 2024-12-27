@@ -24,7 +24,7 @@ class GenerateReportViewModel @Inject constructor(
     val mRejectResponse = MutableLiveData<Event<GenerateReportResponse>>()
 
     fun generateReport(
-        id: RequestBody,
+        id: String,
         problemType: RequestBody,
         description: RequestBody,
         date_of_incident: RequestBody,
