@@ -20,9 +20,11 @@ import com.example.waterapp.notificationModel.allNotificationDelete.AllNotificat
 import com.example.waterapp.otpVerificationModel.OtpVerificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerifiicationBody
 import com.example.waterapp.reportModel.ReportResponse
+import com.example.waterapp.requestForSupportModel.GetRequestForSupportResponse
 import com.example.waterapp.resetPasswordModel.ResetPasswordBody
 import com.example.waterapp.resetPasswordModel.ResetPasswordResponse
 import com.example.waterapp.serviceModel.ServiceResponse
+import com.example.waterapp.transactionHistory.TransactionHistoryResponse
 import com.example.waterapp.updateProfileModel.GetUpdateProfileResponse
 import com.example.waterapp.updateProfileModel.UpdateProfileResponse
 import io.reactivex.Observable
@@ -183,7 +185,19 @@ interface ApiServices {
     @Headers("Accept:application/json")
     @POST("get_chat_support_by_id/{Id}")
     fun getDoChat(
-        @Path("Id") id: String,
+        @Path("Id") id: String
     ): Observable<GetDoChatResponse>
+
+    @Headers("Accept:application/json")
+    @GET("get_user_requests_for_support/{Id}")
+    fun getRequestForSupport(
+        @Path("Id") id: String
+    ): Observable<GetRequestForSupportResponse>
+
+    @Headers("Accept:application/json")
+    @GET("transaction_history/{Id}")
+    fun transactionHistory(
+        @Path("Id") id: String
+    ): Observable<TransactionHistoryResponse>
 
 }

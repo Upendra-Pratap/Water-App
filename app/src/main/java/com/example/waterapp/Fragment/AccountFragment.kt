@@ -25,10 +25,12 @@ import com.example.waterapp.Activities.ChangePasswordActivity
 import com.example.waterapp.Activities.CheckBalanceActivity
 import com.example.waterapp.Activities.FaqActivity
 import com.example.waterapp.Activities.GenerateReportActivity
+import com.example.waterapp.Activities.GetRequestForSupportActivity
 import com.example.waterapp.Activities.LoginActivity
 import com.example.waterapp.Activities.MyReportActivity
 import com.example.waterapp.Activities.NotificationActivity
 import com.example.waterapp.Activities.ProfileActivity
+import com.example.waterapp.Activities.ViewBillActivity
 import com.example.waterapp.BuildConfig
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.updateProfileModel.GetUpdateProfileViewModel
@@ -98,13 +100,12 @@ class AccountFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.faqSectionApp.setOnClickListener {
-            val intent = Intent(requireActivity(), FaqActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.nextApp1.setOnClickListener {
             val intent = Intent(requireActivity(), AccountHistoryActivity::class.java)
+            startActivity(intent)
+        }
+        binding.billSectionApp.setOnClickListener {
+            val intent = Intent(requireActivity(), ViewBillActivity::class.java)
             startActivity(intent)
         }
 
@@ -112,6 +113,11 @@ class AccountFragment : Fragment() {
             val intent = Intent(requireActivity(), MyReportActivity::class.java)
             startActivity(intent)
         }
+        binding.myRequestApp.setOnClickListener {
+            val intent = Intent(requireActivity(), GetRequestForSupportActivity::class.java)
+            startActivity(intent)
+        }
+
         return view
     }
 

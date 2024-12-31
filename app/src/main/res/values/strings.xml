@@ -74,4 +74,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_mesage">PLease Enter Message</string>
+    <string name="balance">Balance</string>
+    <string name="recent_transaction">Recent Transaction</string>
+    <string name="top_up">Top Up</string>
+    <string name="bill_payment">Bill Payment</string>
 </resources>

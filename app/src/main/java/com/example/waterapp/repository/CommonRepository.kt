@@ -21,10 +21,12 @@ import com.example.waterapp.notificationModel.allNotificationDelete.AllNotificat
 import com.example.waterapp.otpVerificationModel.OtpVerificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerifiicationBody
 import com.example.waterapp.reportModel.ReportResponse
+import com.example.waterapp.requestForSupportModel.GetRequestForSupportResponse
 import com.example.waterapp.resetPasswordModel.ResetPasswordBody
 import com.example.waterapp.resetPasswordModel.ResetPasswordResponse
 import com.example.waterapp.serviceModel.ServiceResponse
 import com.example.waterapp.services.ApiServices
+import com.example.waterapp.transactionHistory.TransactionHistoryResponse
 import com.example.waterapp.updateProfileModel.GetUpdateProfileResponse
 import com.example.waterapp.updateProfileModel.UpdateProfileResponse
 import okhttp3.MultipartBody
@@ -110,16 +112,19 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
     fun deleteNotification(id: String): Observable<DeleteNotificationResponse>{
         return apiServices.deleteNotification(id)
     }
-
     fun allNotificationDelete(id: String): Observable<AllNotificationDeleteResponse>{
         return apiServices.deleteAllNotification(id)
     }
-
     fun doChat(doChatBody: DoChatBody): Observable<DoChatResponse>{
         return apiServices.doChat(doChatBody)
     }
-
     fun getDoChat(id: String): Observable<GetDoChatResponse>{
         return apiServices.getDoChat(id)
+    }
+    fun getRequestForSupport(id: String): Observable<GetRequestForSupportResponse>{
+        return apiServices.getRequestForSupport(id)
+    }
+    fun transactionHistory(id: String): Observable<TransactionHistoryResponse>{
+        return apiServices.transactionHistory(id)
     }
 }

@@ -59,6 +59,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             allDeletePopup()
         }
 
+        //Observer
         notificationListApi(userId)
         notificationObserver()
         notificationCountObserver()
@@ -199,5 +200,10 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
     private fun deleteNotificationApi(notificationId: String) {
         deleteNotificationViewModel.getDeleteNotifications(notificationId, progressDialog, activity)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        notificationListApi(userId)
     }
 }

@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.waterapp.BuildConfig
 import com.example.waterapp.R
 import com.example.waterapp.reportModel.ReportResponse
 
@@ -27,6 +28,7 @@ class ReportAdapter(
         return ReportAdapter.ReportViewHolder(itemView)
 
     }
+
     override fun onBindViewHolder(holder: ReportAdapter.ReportViewHolder, position: Int) {
         holder.serviceName.text = reportList[position].userName.toString()
         holder.problemType.text = reportList[position].problemType.toString()
@@ -38,7 +40,7 @@ class ReportAdapter(
 
             val imageFilename = reportList[position].problemPhoto?.firstOrNull()
 
-            val baseUrl = "http://192.168.1.22:3300/"
+            val baseUrl = BuildConfig.IMAGE_KEY
             val imageUrl = baseUrl + imageFilename
 
             val imageView = ImageView(context).apply {

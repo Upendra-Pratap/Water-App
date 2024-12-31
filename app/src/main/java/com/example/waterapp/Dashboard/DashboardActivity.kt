@@ -123,13 +123,11 @@ class DashboardActivity : AppCompatActivity() {
                 CURRENT_TAG = TAG_DASH_BOARD
                 val eventListFragment = HomeFragment()
                 replaceFragment(eventListFragment)
-
             } else {
                 if (doubleBackToExitPressedOnce) {
                     onBackPressedDispatcher.onBackPressed()
                     return
                 }
-
                 doubleBackToExitPressedOnce = true
                 Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
                 Handler(Looper.getMainLooper()).postDelayed({
