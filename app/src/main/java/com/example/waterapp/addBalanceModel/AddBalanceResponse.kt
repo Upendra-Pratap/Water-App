@@ -1,11 +1,11 @@
-package com.example.waterapp.updateProfileModel
+package com.example.waterapp.addBalanceModel
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
-class GetUpdateProfileResponse : Serializable {
+class AddBalanceResponse: Serializable {
     @SerializedName("success")
     @Expose
     var success: Boolean? = null
@@ -18,7 +18,7 @@ class GetUpdateProfileResponse : Serializable {
     @Expose
     var data: Data? = null
 
-    inner class Data {
+    inner class Data{
         @SerializedName("address")
         @Expose
         var address: Address? = null
@@ -71,7 +71,7 @@ class GetUpdateProfileResponse : Serializable {
         @Expose
         var currentBalanceElectricity: Int? = null
 
-        inner class Address {
+        inner class Address{
             @SerializedName("street")
             @Expose
             var street: String? = null

@@ -38,7 +38,6 @@ class ChangePasswordActivity : AppCompatActivity() {
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-        Toast.makeText(this, "user id here : $userId", Toast.LENGTH_SHORT).show()
 
         changePasswordObserver()
 

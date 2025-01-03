@@ -1,4 +1,4 @@
-package com.example.waterapp.transactionHistory
+package com.example.waterapp.billWaterElectricity
 
 import android.app.Activity
 import android.app.Application
@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.waterapp.R
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.repository.CommonRepository
-import com.example.waterapp.serviceModel.ServiceResponse
 import com.example.waterapp.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,30 +18,39 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class TransactionHistoryViewModel @Inject constructor(application: Application, private val repository: CommonRepository
-): AndroidViewModel(application){
+class BillElectricityViewModel @Inject constructor(application: Application, private val repository: CommonRepository
+): AndroidViewModel(application) {
     val progressIndicator = MutableLiveData<Boolean>()
     val errorResponse = MutableLiveData<Throwable>()
-    val mRejectResponse = MutableLiveData<Event<TransactionHistoryResponse>>()
+    val mRejectResponse = MutableLiveData<Event<BillElectricityResponse>>()
     var context: Context? = null
 
-    fun transactionHistory(
+    fun electricityBill(
         id: String,
+        serviceType: String,
         activity: Activity,
+        progressDialog: CustomProgressDialog
     ) {
-        repository.transactionHistory(
-            id
+        progressDialog.start(activity.getString(R.string.please_wait))
+
+        progressIndicator.value = true
+        repository.electricityBill(
+            id,
+            serviceType
         ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : DisposableObserver<TransactionHistoryResponse>() {
-                override fun onNext(value: TransactionHistoryResponse) {
+            .subscribe(object : DisposableObserver<BillElectricityResponse>() {
+                override fun onNext(value: BillElectricityResponse) {
                     progressIndicator.value = false
+                    progressDialog.stop()
                     mRejectResponse.value = Event(value)
                 }
                 override fun onError(e: Throwable) {
                     progressIndicator.value = false
+                    progressDialog.stop()
                     errorResponse.value = e
                 }
                 override fun onComplete() {
+                    progressDialog.stop()
                     progressIndicator.value = false
                 }
             })

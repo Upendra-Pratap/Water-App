@@ -43,8 +43,8 @@ android {
                         "proguard-rules.pro"
                     )
                     buildConfigField("boolean", "IS_DEBUG", "true")
-                    buildConfigField("String", "API_KEY", "\"http://192.168.1.2:3300/api/\"")
-                    buildConfigField("String", "IMAGE_KEY", "\"http://192.168.1.2:3300/\"")
+                    buildConfigField("String", "API_KEY", "\"http://192.168.1.40:3300/api/\"")
+                    buildConfigField("String", "IMAGE_KEY", "\"http://192.168.1.40:3300/\"")
                 }
             }
         }

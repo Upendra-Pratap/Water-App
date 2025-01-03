@@ -12,21 +12,35 @@
         android:padding="10dp"
         android:background="@drawable/transaction_background"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintWidth_percent="0.95"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/userProfile"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/transaction_background"
-            android:src="@drawable/img"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:backgroundTint="@color/green"/>
+            android:backgroundTint="@color/green">
+
+            <ImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_account_balance_wallet_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <TextView
             android:id="@+id/nameTextView"
@@ -123,8 +137,25 @@
             android:textColor="@color/green"
             android:textSize="13sp"
             android:textStyle="bold"
+            android:visibility="visible"
             android:padding="1dp"
             android:background="@color/green_cyan"
+            app:layout_constraintTop_toTopOf="@+id/dateTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/failedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Confirmed"
+            android:textColor="@color/red"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            android:padding="1dp"
+            android:background="#F72C5B"
             app:layout_constraintTop_toTopOf="@+id/dateTextView"
             app:layout_constraintEnd_toEndOf="parent"
             />

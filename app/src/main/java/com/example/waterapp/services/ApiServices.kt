@@ -2,7 +2,10 @@ package com.example.waterapp.services
 
 import com.example.waterapp.FaqModel.FaqResponse
 import com.example.waterapp.SignUpModel.SignUpResponse
+import com.example.waterapp.addBalanceModel.AddBalanceBody
+import com.example.waterapp.addBalanceModel.AddBalanceResponse
 import com.example.waterapp.announcementModel.AnnouncementResponse
+import com.example.waterapp.billWaterElectricity.BillElectricityResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
 import com.example.waterapp.chatModel.DoChatBody
@@ -195,9 +198,23 @@ interface ApiServices {
     ): Observable<GetRequestForSupportResponse>
 
     @Headers("Accept:application/json")
-    @GET("transaction_history/{Id}")
+    @POST("transactionHistory/{Id}")
     fun transactionHistory(
         @Path("Id") id: String
     ): Observable<TransactionHistoryResponse>
+
+    @Headers("Accept:application/json")
+    @GET("get_user_bills/{Id}")
+    fun electricityBill(
+        @Path("Id") id: String,
+        @Query("service_type") serviceType: String
+    ): Observable<BillElectricityResponse>
+
+    @Headers("Accept:application/json")
+    @POST("add_balance/{Id}")
+    fun addBalance(
+        @Path("Id") id: String,
+        @Body addBalanceBody: AddBalanceBody
+    ): Observable<AddBalanceResponse>
 
 }

@@ -46,7 +46,7 @@ class CheckBalanceActivity : AppCompatActivity() {
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-        //we will start fist this activity then call it
+
         replaceFragment(HistoryFragment())
 
         binding.historyText.setOnClickListener {

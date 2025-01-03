@@ -1,36 +1,75 @@
 package com.example.waterapp.Fragment
 
+import android.app.Activity
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.waterapp.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.waterapp.adapter.ElectricityBillAdapter
+import com.example.waterapp.billWaterElectricity.BillElectricityResponse
+import com.example.waterapp.billWaterElectricity.BillElectricityViewModel
+import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.FragmentElectricityBinding
+import com.example.waterapp.utils.ErrorUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ElectricityFragment : Fragment() {
     private lateinit var binding: FragmentElectricityBinding
+    private val billElectricityViewModel: BillElectricityViewModel by viewModels()
+    private var electricityBillAdapter: ElectricityBillAdapter? = null
+    private var electricityBillList: List<BillElectricityResponse.Bill> = ArrayList()
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var progressDialog: CustomProgressDialog
+    private lateinit var activity: Activity
+    private var serviceType = "Electricity"
+    private var userId =""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentElectricityBinding.inflate(inflater, container, false)
-        val view = binding.root
 
-        binding.historyText.setOnClickListener {
-            binding.historyText.setBackgroundResource(R.drawable.debit_background)
-            binding.historyText.setTextColor(resources.getColor(R.color.white))
-            binding.crediText.setBackgroundResource(R.drawable.creditback)
-            binding.crediText.setTextColor(resources.getColor(R.color.green))
+        sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME",
+            AppCompatActivity.MODE_PRIVATE
+        )
+        userId = sharedPreferences.getString("userId", userId).toString().trim()
+
+        activity = requireActivity()
+        progressDialog = CustomProgressDialog(requireActivity())
+
+        electricityBillApi(userId, serviceType)
+        electricityBillObserver()
+        return binding.root
+    }
+
+    private fun electricityBillObserver() {
+        billElectricityViewModel.progressIndicator.observe(viewLifecycleOwner){
+
+        }
+        billElectricityViewModel.mRejectResponse.observe(viewLifecycleOwner){
+            val status = it.peekContent().success
+            electricityBillList = it.peekContent().bill!!
+
+            if (electricityBillList.isNotEmpty()){
+                binding.electricityRecyclerView.isVerticalScrollBarEnabled = true
+                binding.electricityRecyclerView.isVerticalFadingEdgeEnabled = true
+                binding.electricityRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
+                electricityBillAdapter = ElectricityBillAdapter(requireContext(), electricityBillList)
+                binding.electricityRecyclerView.adapter = electricityBillAdapter
+            }
+        }
+        billElectricityViewModel.errorResponse.observe(viewLifecycleOwner){
+            ErrorUtil.handlerGeneralError(requireActivity(), it)
         }
 
-        binding.crediText.setOnClickListener {
-            binding.crediText.setBackgroundResource(R.drawable.debit_background)
-            binding.crediText.setTextColor(resources.getColor(R.color.white))
-            binding.historyText.setBackgroundResource(R.drawable.creditback)
-            binding.historyText.setTextColor(resources.getColor(R.color.green))
-        }
-
-        return view
+    }
+    private fun electricityBillApi(userId: String, serviceType: String) {
+        billElectricityViewModel.electricityBill(userId, serviceType, activity, progressDialog)
     }
 }

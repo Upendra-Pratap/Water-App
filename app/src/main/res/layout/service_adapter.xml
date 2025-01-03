@@ -50,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:paddingBottom="10dp"
                 android:text="Electricity"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -58,7 +59,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/prodoctImageCons" />
 
-            <TextView
+<!--            <TextView
                 android:id="@+id/servicesPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +72,6 @@
                 app:layout_constraintStart_toStartOf="@+id/servicesText"
                 app:layout_constraintTop_toBottomOf="@+id/servicesText" />
 
-
             <TextView
                 android:id="@+id/unitPrice"
                 android:layout_width="wrap_content"
@@ -82,28 +82,7 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/servicesPrice"
-                app:layout_constraintTop_toBottomOf="@+id/servicesText" />
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/addServices"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_background"
-                android:paddingStart="40dp"
-                android:paddingEnd="40dp"
-                android:text="@string/service_request"
-                android:textAllCaps="false"
-                android:textSize="10dp"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/servicesPrice">
-
-            </androidx.appcompat.widget.AppCompatButton>
+                app:layout_constraintTop_toBottomOf="@+id/servicesText" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

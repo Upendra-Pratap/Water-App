@@ -3,7 +3,10 @@ package com.example.waterapp.repository
 import com.example.waterapp.FaqModel.FaqResponse
 import io.reactivex.Observable
 import com.example.waterapp.SignUpModel.SignUpResponse
+import com.example.waterapp.addBalanceModel.AddBalanceBody
+import com.example.waterapp.addBalanceModel.AddBalanceResponse
 import com.example.waterapp.announcementModel.AnnouncementResponse
+import com.example.waterapp.billWaterElectricity.BillElectricityResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
 import com.example.waterapp.chatModel.DoChatBody
@@ -126,5 +129,11 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
     }
     fun transactionHistory(id: String): Observable<TransactionHistoryResponse>{
         return apiServices.transactionHistory(id)
+    }
+    fun electricityBill(id: String, serviceType: String): Observable<BillElectricityResponse>{
+        return apiServices.electricityBill(id, serviceType)
+    }
+    fun addBalance(id: String, addBalanceBody: AddBalanceBody): Observable<AddBalanceResponse>{
+        return apiServices.addBalance(id, addBalanceBody)
     }
 }

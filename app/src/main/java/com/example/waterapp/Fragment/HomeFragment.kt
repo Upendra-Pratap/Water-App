@@ -9,20 +9,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
-import com.example.waterapp.Activities.CheckBalanceActivity
-import com.example.waterapp.BuildConfig
-import com.example.waterapp.R
+import com.example.waterapp.Activities.AddBalanceActivity
+import com.example.waterapp.adapter.HistoryAdapter
 import com.example.waterapp.adapter.ServiceAdapter
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.FragmentHomeBinding
 import com.example.waterapp.serviceModel.ServiceResponse
 import com.example.waterapp.serviceModel.ServicesViewModel
+import com.example.waterapp.transactionHistory.TransactionHistoryResponse
+import com.example.waterapp.transactionHistory.TransactionHistoryViewModel
 import com.example.waterapp.updateProfileModel.GetUpdateProfileViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,9 +29,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val servicesViewModel: ServicesViewModel by viewModels()
+    private val transactionHistoryViewModel: TransactionHistoryViewModel by viewModels()
     private val getUpdateProfileViewModel: GetUpdateProfileViewModel by viewModels()
     private var myOrderAdapter: ServiceAdapter? = null
     private var serviceList: List<ServiceResponse.AllService> = ArrayList()
+    private var transactionAdapter: HistoryAdapter? =null
+    private var transactionHistoryList: List<TransactionHistoryResponse.Datum> = ArrayList()
     private lateinit var activity: Activity
     private lateinit var progressDialog: CustomProgressDialog
     private lateinit var sharedPreferences: SharedPreferences
@@ -52,23 +53,34 @@ class HomeFragment : Fragment() {
         progressDialog = CustomProgressDialog(requireActivity())
         activity = requireActivity()
 
-        binding.profileLayout.setOnClickListener { menuPopup() }
+        // For the Electricity Account (pass 1)
+        binding.withDrawBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), AddBalanceActivity::class.java)
+            intent.putExtra("userType", 1)
+            startActivity(intent)
+        }
+
+        // For the Water Account (pass 2)
+        binding.withDrawBtnWater.setOnClickListener {
+            val intent = Intent(requireActivity(), AddBalanceActivity::class.java)
+            intent.putExtra("userType", 2)
+            startActivity(intent)
+        }
 
         //services observer
         getServiceList()
         getServiceObserver()
 
-        //get profile observer
+        //observer
         getUpdateProfileApi(userId)
         getUpdateProfileObserver()
 
+        //call the transaction observer
+        transactionHistoryApi(userId)
+        transactionHistoryObserver()
+
         return view
     }
-
-    private fun getUpdateProfileApi(userId: String) {
-        getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog,activity)
-    }
-
     private fun getUpdateProfileObserver() {
         getUpdateProfileViewModel.progressIndicator.observe(viewLifecycleOwner){
 
@@ -78,31 +90,15 @@ class HomeFragment : Fragment() {
             val userData = it.peekContent().data
 
             if (status == true){
-                if (userData?.userName.isNullOrBlank()) {
-
-                } else {
-                    if (userData != null) {
-                        if (userData?.userName.isNullOrBlank()) {
-
-                            Toast.makeText(requireActivity(), "User name is empty or null", Toast.LENGTH_SHORT).show()
-
-                        } else {
-                            if (userData.userName?.length!! > 3) {
-
-                                val result = userData.userName!!.split("".toRegex()).take(4).joinToString("") + "..."
-
-                                binding.nameTextView.text = Editable.Factory.getInstance().newEditable(result)
-                            }
-                        }
-                    }
-                }
-
-                if (userData?.profileImage == null){
+                if (userData?.currentBalanceElectricity == null){
 
                 }else{
-                    val url = it.peekContent().data?.profileImage
-                    Glide.with(this).load(BuildConfig.IMAGE_KEY + url).into(binding.userProfile)
+                    binding.accountBalanceDri.text = Editable.Factory.getInstance().newEditable("₹" + userData.currentBalanceElectricity.toString())
+                }
+                if(userData?.currentBalanceWater == null){
 
+                }else{
+                    binding.waterAccountBalanceDri.text = Editable.Factory.getInstance().newEditable("₹" + userData.currentBalanceWater.toString())
                 }
             }
         }
@@ -110,41 +106,37 @@ class HomeFragment : Fragment() {
             ErrorUtil.handlerGeneralError(requireActivity(), it)
         }
     }
+    private fun getUpdateProfileApi(userId: String) {
+        getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog, activity)
+    }
 
-    private fun menuPopup() {
-        val popupMenu = PopupMenu(requireContext(), binding.profileLayout)
+    private fun transactionHistoryObserver() {
+        transactionHistoryViewModel.progressIndicator.observe(viewLifecycleOwner){
 
-        val inflater = popupMenu.menuInflater
-        inflater.inflate(R.menu.dashboard_popup, popupMenu.menu)
+        }
+        transactionHistoryViewModel.mRejectResponse.observe(viewLifecycleOwner){
+            transactionHistoryList = it.peekContent().data!!
 
-        popupMenu.show()
+            if (transactionHistoryList.isNotEmpty()){
 
-        popupMenu.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.balanceOfElectricityAndWater -> {
-                    //call here api of clear data
-                    //clearDataApi()
-                    true
-                }
-                R.id.recentTransaction -> {
-                    //call here api of clear data
-                    val intent = Intent(requireActivity(), CheckBalanceActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.topUp -> {
-                    //call here api
-                    //clearDataApi()
-                    true
-                }
-                R.id.billPayment -> {
-                    //call here api here
-                    //clearDataApi()
-                    true
-                }
-                else -> false
+                binding.recyclerViewTransaction.isVerticalScrollBarEnabled = true
+                binding.recyclerViewTransaction.isVerticalFadingEdgeEnabled = true
+                binding.recyclerViewTransaction.layoutManager = GridLayoutManager(requireContext(), 1)
+                transactionAdapter = HistoryAdapter(requireContext(), transactionHistoryList)
+                binding.recyclerViewTransaction.adapter = transactionAdapter
+
+            }else{
+
             }
         }
+        transactionHistoryViewModel.errorResponse.observe(viewLifecycleOwner){
+            ErrorUtil.handlerGeneralError(requireActivity(), it)
+        }
+    }
+
+    private fun transactionHistoryApi(userId: String) {
+        transactionHistoryViewModel.transactionHistory(userId, activity)
+
     }
 
     private fun getServiceObserver() {
@@ -178,10 +170,5 @@ class HomeFragment : Fragment() {
     }
     private fun getServiceList() {
         servicesViewModel.setService(activity, progressDialog)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getUpdateProfileApi(userId)
     }
 }
