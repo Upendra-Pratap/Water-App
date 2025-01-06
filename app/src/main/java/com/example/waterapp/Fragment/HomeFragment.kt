@@ -85,6 +85,7 @@ class HomeFragment : Fragment() {
         getUpdateProfileViewModel.progressIndicator.observe(viewLifecycleOwner){
 
         }
+
         getUpdateProfileViewModel.mCustomerResponse.observe(viewLifecycleOwner){
             val status = it.peekContent().success
             val userData = it.peekContent().data

@@ -78,4 +78,15 @@
     <string name="recent_transaction">Recent Transaction</string>
     <string name="top_up">Top Up</string>
     <string name="bill_payment">Bill Payment</string>
+    <string name="pending">pending</string>
+    <string name="download_invoice">Download Invoice</string>
+    <string name="status">Status :</string>
+    <string name="_01_02_2025">01/02/2025</string>
+    <string name="end_date">End Date :</string>
+    <string name="greater_noida_noida_zip_223390">Greater Noida, Noida, zip - 223390</string>
+    <string name="start_date">Start Date :</string>
+    <string name="_100">100</string>
+    <string name="consumed_unit">Consumed Unit :</string>
+    <string name="_500">500</string>
+    <string name="request_for_address_update">My Request For Address Update</string>
 </resources>

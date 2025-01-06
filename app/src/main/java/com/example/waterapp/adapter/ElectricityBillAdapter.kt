@@ -46,8 +46,6 @@ class ElectricityBillAdapter(
         holder.status.text = electricityBillList[position].billStatus.toString()
         holder.startDate.text = electricityBillList[position].billPeriod!!.startDate.toString()
         holder.endDate.text = electricityBillList[position].billPeriod!!.endDate.toString()
-
-
         holder.downloadInvoice.setOnClickListener { openBillView(myServiceList) }
 
     }
@@ -65,9 +63,8 @@ class ElectricityBillAdapter(
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
-
-
     override fun getItemCount(): Int {
        return electricityBillList.size
+
     }
 }

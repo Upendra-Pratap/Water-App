@@ -30,6 +30,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.SelectPaymentModeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.RequestForAddressUpdte"
+            android:exported="false" />
+        <activity
             android:name=".Activities.AddBalanceActivity"
             android:exported="false" />
         <activity

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.example.waterapp.BuildConfig
@@ -35,9 +36,7 @@ class AddBalanceActivity : AppCompatActivity() {
 
         progressDialog = CustomProgressDialog(this)
 
-        sharedPreferences = application.getSharedPreferences("PREFERENCE_NAME",
-            MODE_PRIVATE
-        )
+        sharedPreferences = application.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
         binding.arrowBack.setOnClickListener { finish() }
@@ -63,10 +62,9 @@ class AddBalanceActivity : AppCompatActivity() {
     private fun addBalanceValidation(enterAmount: String): Boolean {
         return when {
             enterAmount.isEmpty() -> {
-                binding.enterAmount.error = "Please Enter Amount"
+                binding.enterAmount.error = "Enter Amount"
                 false
             }
-
             else -> true
         }
     }
@@ -76,12 +74,10 @@ class AddBalanceActivity : AppCompatActivity() {
         }
         addBalanceViewModel.mRejectResponse.observe(this){
             val status = it.peekContent().success
-            val message = it.peekContent().message
             if (status == true){
                 val intent = Intent(this@AddBalanceActivity, DashboardActivity::class.java)
                 startActivity(intent)
                 finish()
-
             }else{
 
             }
@@ -116,8 +112,7 @@ class AddBalanceActivity : AppCompatActivity() {
 
                 }else{
                     val url = it.peekContent().data?.profileImage
-                    Glide.with(this).load(BuildConfig.IMAGE_KEY + url).into(binding.profileImg)
-
+                    Glide.with(this).load(BuildConfig.IMAGE_KEY +url).into(binding.profileImg)
                 }
             }
         }

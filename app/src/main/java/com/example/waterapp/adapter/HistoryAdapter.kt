@@ -26,6 +26,7 @@ class HistoryAdapter(
             return HistoryAdapter.HistoryViewHolder(itemView)
 
         }
+
     override fun onBindViewHolder(holder: HistoryAdapter.HistoryViewHolder, position: Int) {
         val transactionStatus = transactionHistoryList[position].transactionStatus.toString()
         holder.userTransaction.text = transactionHistoryList[position].serviceType.toString()

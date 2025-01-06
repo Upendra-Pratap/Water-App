@@ -4,6 +4,7 @@ import com.example.waterapp.FaqModel.FaqResponse
 import com.example.waterapp.SignUpModel.SignUpResponse
 import com.example.waterapp.addBalanceModel.AddBalanceBody
 import com.example.waterapp.addBalanceModel.AddBalanceResponse
+import com.example.waterapp.addressUpdateModel.MyAllRequestForAddressUpdateResponse
 import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.billWaterElectricity.BillElectricityResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
@@ -28,6 +29,7 @@ import com.example.waterapp.resetPasswordModel.ResetPasswordBody
 import com.example.waterapp.resetPasswordModel.ResetPasswordResponse
 import com.example.waterapp.serviceModel.ServiceResponse
 import com.example.waterapp.transactionHistory.TransactionHistoryResponse
+import com.example.waterapp.updateAddressModel.UpdateAddressResponse
 import com.example.waterapp.updateProfileModel.GetUpdateProfileResponse
 import com.example.waterapp.updateProfileModel.UpdateProfileResponse
 import io.reactivex.Observable
@@ -168,12 +170,6 @@ interface ApiServices {
     ): Observable<DeleteNotificationResponse>
 
     @Headers("Accept:application/json")
-    @POST("request_for_address_update/{Id}")
-    fun addressUpdate(
-        @Path("Id") id: String
-    ): Observable<NotificationResponse>
-
-    @Headers("Accept:application/json")
     @DELETE("delete_all_notification_by_userId/{Id}")
     fun deleteAllNotification(
         @Path("Id") id: String
@@ -217,4 +213,22 @@ interface ApiServices {
         @Body addBalanceBody: AddBalanceBody
     ): Observable<AddBalanceResponse>
 
+    @Multipart
+    @Headers("Accept:application/json")
+    @POST("request_for_address_update/{Id}")
+    suspend fun updateAddress(
+        @Path("Id") id: String,
+        @Part("street") street: RequestBody,
+        @Part("city") city: RequestBody,
+        @Part("zip") zip: RequestBody,
+        @Part id_proof: MultipartBody.Part,
+
+        ): Response<UpdateAddressResponse>
+
+    @Headers("Accept:application/json")
+    @GET("get_request_for_address_update_for_user/{Id}")
+    fun myRequestForAddressUpdate(
+        @Path("Id") id: String
+
+    ): Observable<MyAllRequestForAddressUpdateResponse>
 }

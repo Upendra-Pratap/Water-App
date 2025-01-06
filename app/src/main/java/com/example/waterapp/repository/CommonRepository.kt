@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import com.example.waterapp.SignUpModel.SignUpResponse
 import com.example.waterapp.addBalanceModel.AddBalanceBody
 import com.example.waterapp.addBalanceModel.AddBalanceResponse
+import com.example.waterapp.addressUpdateModel.MyAllRequestForAddressUpdateResponse
 import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.billWaterElectricity.BillElectricityResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
@@ -30,6 +31,7 @@ import com.example.waterapp.resetPasswordModel.ResetPasswordResponse
 import com.example.waterapp.serviceModel.ServiceResponse
 import com.example.waterapp.services.ApiServices
 import com.example.waterapp.transactionHistory.TransactionHistoryResponse
+import com.example.waterapp.updateAddressModel.UpdateAddressResponse
 import com.example.waterapp.updateProfileModel.GetUpdateProfileResponse
 import com.example.waterapp.updateProfileModel.UpdateProfileResponse
 import okhttp3.MultipartBody
@@ -135,5 +137,17 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
     }
     fun addBalance(id: String, addBalanceBody: AddBalanceBody): Observable<AddBalanceResponse>{
         return apiServices.addBalance(id, addBalanceBody)
+    }
+    suspend fun updateAddress(
+        id: String,
+        street: RequestBody,
+        city: RequestBody,
+        zip: RequestBody,
+        id_proof: MultipartBody.Part,
+    ): Response<UpdateAddressResponse> {
+        return apiServices.updateAddress(id, street, city, zip, id_proof)
+    }
+    fun myAllRequestAddressUpdate(id: String): Observable<MyAllRequestForAddressUpdateResponse>{
+        return apiServices.myRequestForAddressUpdate(id)
     }
 }
