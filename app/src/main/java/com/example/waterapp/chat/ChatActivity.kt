@@ -2,6 +2,7 @@ package com.example.waterapp.chat
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.MediaRecorder
@@ -12,6 +13,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,10 +21,12 @@ import com.bumptech.glide.Glide
 import com.example.waterapp.BuildConfig
 import com.example.waterapp.R
 import com.example.waterapp.chat.chatadapter.ChatAdapter
+import com.example.waterapp.chatModel.AllClearChatViewModel
 import com.example.waterapp.chatModel.DoChatBody
 import com.example.waterapp.chatModel.DoChatViewModel
 import com.example.waterapp.chatModel.GetDoChatResponse
 import com.example.waterapp.chatModel.GetDoChatViewModel
+import com.example.waterapp.chatModel.SingleChatDeleteViewModel
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityChatBinding
 import com.example.waterapp.updateProfileModel.GetUpdateProfileViewModel
@@ -39,6 +43,8 @@ class ChatActivity : AppCompatActivity() {
     private val doChatViewModel: DoChatViewModel by viewModels()
     private val getDoChatViewModel: GetDoChatViewModel by viewModels()
     private val getUpdateProfileViewModel: GetUpdateProfileViewModel by viewModels()
+    private val allClearChatViewModel: AllClearChatViewModel by viewModels()
+    private val singleChatDeleteViewModel: SingleChatDeleteViewModel by viewModels()
     private val IMAGE_PICK_CODE = 1000
     private var mediaRecorder: MediaRecorder? = null
     private var audioFile: File? = null
@@ -64,10 +70,13 @@ class ChatActivity : AppCompatActivity() {
         progressDialog = CustomProgressDialog(this)
         activity = this
 
+
+        allChatClearObserver()
         //observer and api
         getUpdateProfileApi(userId)
         getUpdateProfileObserver()
         getChatListApi(userId)
+
 
         handler = Handler(Looper.getMainLooper())
 
@@ -77,7 +86,7 @@ class ChatActivity : AppCompatActivity() {
         binding.placeRecord.setOnClickListener { startRecording() }
         binding.threedots.setOnClickListener { menuPopup() }
 
-        chatAdapter = ChatAdapter(messageList)
+        chatAdapter = ChatAdapter(this, singleChatDeleteViewModel ,messageList)
         binding.chatRecycler.layoutManager = LinearLayoutManager(this)
         binding.chatRecycler.adapter = chatAdapter
 
@@ -93,6 +102,23 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    private fun allChatClearObserver() {
+        allClearChatViewModel.progressIndicator.observe(this){
+
+        }
+        allClearChatViewModel.mRejectResponse.observe(this){
+            val status = it.peekContent().success
+            val message = it.peekContent().message
+            if (status == true){
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                getChatListApi(userId)
+            }
+        }
+        allClearChatViewModel.errorResponse.observe(this){
+            ErrorUtil.handlerGeneralError(this@ChatActivity, it)
+        }
+    }
+
     private fun menuPopup() {
         val popupMenu = PopupMenu(this, binding.threedots)
 
@@ -105,18 +131,24 @@ class ChatActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.clear_data -> {
                     //call here api of clear data
-                    //clearDataApi()
+                    clearAllChatApi(userId)
+
                     true
                 }
+
                 else -> false
             }
         }
     }
 
+    private fun clearAllChatApi(userId: String) {
+        allClearChatViewModel.clearAllChat(userId, this)
+
+    }
+
     private fun getUpdateProfileApi(userId: String) {
         getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog, activity)
     }
-
     private fun getUpdateProfileObserver() {
         getUpdateProfileViewModel.progressIndicator.observe(this) {
 
@@ -129,8 +161,7 @@ class ChatActivity : AppCompatActivity() {
                 if (userData?.userName == null) {
 
                 } else {
-                    binding.nameTextView.text =
-                        Editable.Factory.getInstance().newEditable(userData.userName.toString())
+                    binding.nameTextView.text = Editable.Factory.getInstance().newEditable(userData.userName.toString())
                 }
                 if (userData?.profileImage == null) {
 

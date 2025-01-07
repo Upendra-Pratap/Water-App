@@ -20,15 +20,17 @@ class ServiceAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ServiceViewHolder {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.service_adapter, parent, false)
-        return ServiceViewHolder(itemView)    }
+    ): ServiceViewHolder { val itemView =
+        LayoutInflater.from(context).inflate(R.layout.service_adapter, parent, false)
+        return ServiceViewHolder(itemView)
+    }
 
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
         val myFaqList = serviceList[position]
         holder.serviceName.text = serviceList[position].serviceType.toString()
         holder.productListCons.setOnClickListener {
             val intent = Intent(context, SelectPaymentModeActivity::class.java)
+            intent.putExtra("userType", 1)
             context.startActivity(intent)
         }
     }

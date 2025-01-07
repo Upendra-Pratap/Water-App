@@ -97,9 +97,7 @@ class LoginActivity : AppCompatActivity() {
                     editor.apply()
                     finish()
                 }
-
             }
-
         }
         loginViewModel.errorResponse.observe(this){
             ErrorUtil.handlerGeneralError(this@LoginActivity , it)

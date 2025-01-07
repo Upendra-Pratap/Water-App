@@ -44,14 +44,11 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
         val view = binding.root
         setContentView(view)
 
-
         progressDialog = CustomProgressDialog(this)
         activity = this
 
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
-
-
 
         binding.arrowBack.setOnClickListener { finish() }
 
@@ -106,9 +103,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             yesBtnAcceptNDel.setOnClickListener {
                 //calling api all notification delete
                 notificationListApi(userId)
-
                 allNotificationDeleteApi(userId)
-
                 myOrderAdapter?.notifyDataSetChanged()
                 dialog.dismiss()
             }
@@ -125,7 +120,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             val message = response.peekContent().message!!
 
             if (response.peekContent().success == false) {
-                Toast.makeText(this, "failed: $message", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             } else {
                 notificationListApi(userId)
                 notificationCountApi(userId)
@@ -161,7 +156,6 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
         notificationViewModel.mRejectResponse.observe(this) {
             val status = it.peekContent().success
             notificationList = it.peekContent().allNotification!!
-
 
             if (status == true) {
                 if (notificationList.isNotEmpty()) {

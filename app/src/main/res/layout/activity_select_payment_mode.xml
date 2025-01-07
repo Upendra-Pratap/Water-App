@@ -27,15 +27,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Payment Model"
-            android:textSize="18dp"
+            android:text="@string/select_payment_model"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -83,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="10dp"
-                android:text="Credit Card"
+                android:text="@string/credit_card"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -140,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="10dp"
-                android:text="Debit Card"
+                android:text="@string/debit_card"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -196,7 +195,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="10dp"
-                android:text="Online Payment"
+                android:text="@string/online_payment"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -205,9 +204,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/onlinePaymentImageCons" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

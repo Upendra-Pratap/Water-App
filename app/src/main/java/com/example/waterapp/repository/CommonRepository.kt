@@ -10,9 +10,11 @@ import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.billWaterElectricity.BillElectricityResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
+import com.example.waterapp.chatModel.AllClearChatResponse
 import com.example.waterapp.chatModel.DoChatBody
 import com.example.waterapp.chatModel.DoChatResponse
 import com.example.waterapp.chatModel.GetDoChatResponse
+import com.example.waterapp.chatModel.SingleChatDeleteResponse
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordBody
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordResponse
 import com.example.waterapp.generateReportModel.GenerateReportResponse
@@ -149,5 +151,13 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
     }
     fun myAllRequestAddressUpdate(id: String): Observable<MyAllRequestForAddressUpdateResponse>{
         return apiServices.myRequestForAddressUpdate(id)
+    }
+
+    fun allClearChat(id: String): Observable<AllClearChatResponse>{
+        return apiServices.clearAllChat(id)
+    }
+
+    fun singleChatDelete(id: String): Observable<SingleChatDeleteResponse>{
+        return apiServices.singleChatDelete(id)
     }
 }

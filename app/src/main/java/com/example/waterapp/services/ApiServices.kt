@@ -9,9 +9,11 @@ import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.billWaterElectricity.BillElectricityResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
+import com.example.waterapp.chatModel.AllClearChatResponse
 import com.example.waterapp.chatModel.DoChatBody
 import com.example.waterapp.chatModel.DoChatResponse
 import com.example.waterapp.chatModel.GetDoChatResponse
+import com.example.waterapp.chatModel.SingleChatDeleteResponse
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordBody
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordResponse
 import com.example.waterapp.generateReportModel.GenerateReportResponse
@@ -182,7 +184,7 @@ interface ApiServices {
     ): Observable<DoChatResponse>
 
     @Headers("Accept:application/json")
-    @POST("get_chat_support_by_id/{Id}")
+    @GET("get_chat_support_by_id/{Id}")
     fun getDoChat(
         @Path("Id") id: String
     ): Observable<GetDoChatResponse>
@@ -231,4 +233,17 @@ interface ApiServices {
         @Path("Id") id: String
 
     ): Observable<MyAllRequestForAddressUpdateResponse>
+
+    @Headers("Accept:application/json")
+    @DELETE("delete_all_chat/{Id}")
+    fun clearAllChat(
+        @Path("Id") id: String
+
+    ): Observable<AllClearChatResponse>
+
+    @Headers("Accept:application/json")
+    @DELETE("delete_single_chat/{Id}")
+    fun singleChatDelete(
+        @Path("Id") id: String
+    ): Observable<SingleChatDeleteResponse>
 }
