@@ -22,6 +22,7 @@ import com.example.waterapp.notificationModel.CountNotificationModel.Notificatio
 import com.example.waterapp.notificationModel.NotificationResponse
 import com.example.waterapp.notificationModel.NotificationViewModel
 import com.example.waterapp.notificationModel.allNotificationDelete.AllNotificationDeleteVewModel
+import com.example.waterapp.notificationModel.seeNotification.SeeNotificationViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +33,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
     private val notificationCountViewModel: NotificationCountViewModel by viewModels()
     private val deleteNotificationViewModel: DeleteNotificationViewModel by viewModels()
     private val allNotificationDeleteVewModel: AllNotificationDeleteVewModel by viewModels()
+    private val seeNotificationViewModel: SeeNotificationViewModel by viewModels()
     private var myOrderAdapter: NotificationAdapter? = null
     private var notificationList: List<NotificationResponse.AllNotification> = ArrayList()
     private lateinit var sharedPreferences: SharedPreferences
@@ -62,7 +64,24 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
         notificationCountObserver()
         deleteNotificationObserver()
         allNotificationDeleteObserver()
+        seeNotificationObserver()
 
+    }
+
+    private fun seeNotificationObserver() {
+        seeNotificationViewModel.progressIndicator.observe(this){
+
+        }
+        seeNotificationViewModel.mRejectResponse.observe(this){
+            val status = it.peekContent().success
+            val message = it.peekContent().message
+            if (status == true){
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        }
+        seeNotificationViewModel.errorResponse.observe(this){
+            ErrorUtil.handlerGeneralError(this@NotificationActivity, it)
+        }
     }
 
     private fun allNotificationDeleteObserver() {
@@ -116,6 +135,10 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
     }
 
     private fun deleteNotificationObserver() {
+        deleteNotificationViewModel.progressIndicator.observe(this){
+
+        }
+
         deleteNotificationViewModel.mDeleteNotificationResponse.observe(this) { response ->
             val message = response.peekContent().message!!
 
@@ -126,6 +149,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
                 notificationCountApi(userId)
             }
         }
+
         deleteNotificationViewModel.errorResponse.observe(this) {
             ErrorUtil.handlerGeneralError(this, it)
         }
@@ -189,6 +213,14 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
 
     override fun deleteNotification(position: Int, id: String) {
         deleteNotificationApi(id)
+    }
+
+    override fun seeNotification(position: Int, id: String) {
+        seenNotificationApi(id)
+    }
+
+    private fun seenNotificationApi(id: String) {
+        seeNotificationViewModel.seeNotification(id, activity, progressDialog)
     }
 
     private fun deleteNotificationApi(notificationId: String) {

@@ -23,6 +23,7 @@ import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNoti
 import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountResponse
 import com.example.waterapp.notificationModel.NotificationResponse
 import com.example.waterapp.notificationModel.allNotificationDelete.AllNotificationDeleteResponse
+import com.example.waterapp.notificationModel.seeNotification.SeeNotificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerifiicationBody
 import com.example.waterapp.reportModel.ReportResponse
@@ -246,4 +247,10 @@ interface ApiServices {
     fun singleChatDelete(
         @Path("Id") id: String
     ): Observable<SingleChatDeleteResponse>
+
+    @Headers("Accept:application/json")
+    @GET("seen_notification/{Id}")
+    fun seeNotifications(
+        @Path("Id") id: String
+    ): Observable<SeeNotificationResponse>
 }

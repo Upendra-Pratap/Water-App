@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.waterapp.Activities.NotificationClickListener
 import com.example.waterapp.R
@@ -31,15 +32,19 @@ class NotificationAdapter(
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val notificationId = notificationList[position].notificationId
-
         holder.timeTextView.text = notificationList[position].message.toString()
         holder.messageTextView.text= notificationList[position].date.toString()
-
         holder.deleteNotification.setOnClickListener {
             openDeleteDialog(position, notificationId!!)
         }
+        holder.notificationLayout.setOnClickListener { seenNotification(position, notificationId) }
     }
-
+    private fun seenNotification(position: Int, notificationId: String?) {
+        if (notificationId != null) {
+            onItemClick.seeNotification(position, notificationId)
+            notifyDataSetChanged()
+        }
+    }
     @SuppressLint("MissingInflatedId")
     private fun openDeleteDialog(position: Int, id: String) {
         val builder = AlertDialog.Builder(context, R.style.Style_Dialog_Rounded_Corner)
@@ -60,16 +65,17 @@ class NotificationAdapter(
             notifyDataSetChanged()
             dialog.dismiss()
         }
-
         dialog.show()
     }
 
     override fun getItemCount(): Int {
         return notificationList.size
     }
+
     class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val timeTextView: TextView = itemView.findViewById(R.id.descriptionMsg)
         val messageTextView: TextView = itemView.findViewById(R.id.dateText)
         val deleteNotification: ImageView = itemView.findViewById(R.id.deleteNotification)
+        val notificationLayout: ConstraintLayout = itemView.findViewById(R.id.notificationMsgConst)
     }
 }

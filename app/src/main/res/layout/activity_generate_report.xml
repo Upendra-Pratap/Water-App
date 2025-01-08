@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Activities.GenerateReportActivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -54,8 +53,6 @@
             android:layout_height="match_parent"
             >
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/spinnerSection"
         android:layout_width="0dp"
@@ -65,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.9">
+        app:layout_constraintWidth_percent="0.85">
 
         <Spinner
             android:id="@+id/coursesspinner"
@@ -96,12 +93,12 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reportDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reportDetails"
-        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintWidth_percent=".85"
         tools:ignore="MissingConstraints">
 
         <EditText
@@ -126,12 +123,12 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/contact_user_name_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contact_user_name_container"
-        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintWidth_percent=".85"
         tools:ignore="MissingConstraints">
 
         <ImageView
@@ -168,12 +165,12 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reportDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_of_incident"
-        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintWidth_percent=".85"
         tools:ignore="MissingConstraints">
 
         <EditText
@@ -198,12 +195,12 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reportDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/streett"
-        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintWidth_percent=".85"
         tools:ignore="MissingConstraints">
 
         <EditText
@@ -228,12 +225,12 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reportDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/city"
-        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintWidth_percent=".85"
         tools:ignore="MissingConstraints">
 
         <EditText
@@ -259,7 +256,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:background="@drawable/only_button_corner"
         android:text="@string/upload_image"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/pinCode"
         app:layout_constraintTop_toBottomOf="@+id/pinCode" />
 

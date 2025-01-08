@@ -37,8 +37,6 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -59,7 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reportDetails"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +87,7 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/contact_user_name_container"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +119,7 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reportDetails"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,18 +140,18 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     <Button
         android:id="@+id/imageUploadBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="@drawable/all_border_circle"
+        android:background="@drawable/only_button_corner"
         android:textColor="@color/white"
         android:text="@string/upload_image"
         app:layout_constraintStart_toStartOf="@+id/streett"

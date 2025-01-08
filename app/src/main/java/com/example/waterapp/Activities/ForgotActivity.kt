@@ -22,7 +22,6 @@ class ForgotActivity : AppCompatActivity() {
     private lateinit var activity: Activity
     private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotBinding.inflate(layoutInflater)

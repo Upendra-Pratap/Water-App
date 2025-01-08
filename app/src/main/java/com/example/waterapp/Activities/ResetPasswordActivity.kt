@@ -1,6 +1,5 @@
 package com.example.waterapp.Activities
 
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -20,7 +19,6 @@ class ResetPasswordActivity : AppCompatActivity() {
     private val resetPasswordViewModel: ResetPasswordViewModel by viewModels()
     private var userId =""
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var activity: Activity
     private lateinit var progressDialog: CustomProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,25 +26,18 @@ class ResetPasswordActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        progressDialog = CustomProgressDialog(this)
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-        progressDialog = CustomProgressDialog(this)
-        activity = this
-
         resetPasswordObserver()
 
-        binding.arrowBack.setOnClickListener { finish() }
-
-        binding.submitButton.setOnClickListener {
-            formVelidation()
-        }
+        binding.arrowBack.setOnClickListener {finish()}
+        binding.submitButton.setOnClickListener {formVelidation()}
     }
 
     private fun resetPasswordObserver() {
-        resetPasswordViewModel.progressIndicator.observe(this){
-
-        }
+        resetPasswordViewModel.progressIndicator.observe(this){}
         resetPasswordViewModel.mRejectResponse.observe(this){
             val status = it.peekContent().success
             val message = it.peekContent().message
@@ -71,20 +62,17 @@ class ResetPasswordActivity : AppCompatActivity() {
 
         }
     }
-
     private fun resetPasswordApi(newPassword: String, confirmPassword: String, userId: String) {
         val resetPasswordBody = ResetPasswordBody(
             newPassword= newPassword,
             confirmPassword = confirmPassword,
-
         )
-        resetPasswordViewModel.resetPassword(resetPasswordBody, userId, activity, progressDialog)
+        resetPasswordViewModel.resetPassword(resetPasswordBody, userId, this, progressDialog)
     }
-
     private fun VelidationInputs(newPassword: String, confirmPassword: String): Boolean {
         return when{
             newPassword.isEmpty()->{
-                binding.oldPassword.error = "Please New Password"
+                binding.oldPassword.error = "Please Enter New Password"
                 false
             }
             confirmPassword.isEmpty()->{

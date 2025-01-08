@@ -16,7 +16,6 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import com.example.waterapp.R
 
-
 @SuppressLint("MissingInflatedId")
 class CustomProgressDialog(context: Context) {
 

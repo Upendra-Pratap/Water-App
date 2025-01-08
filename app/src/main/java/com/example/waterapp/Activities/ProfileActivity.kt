@@ -79,6 +79,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.chooseImage.setOnClickListener {
             requestCameraPermission()
         }
+
         binding.updateHere.setOnClickListener {
             profilVelidation()
         }
@@ -106,7 +107,8 @@ class ProfileActivity : AppCompatActivity() {
                 }
                 if (userData?.phoneNo == null){
 
-                }else{
+                }
+                else{
                     binding.phoneNumber.text = Editable.Factory.getInstance().newEditable(userData.phoneNo.toString())
                 }
                 if (userAddress?.city == null){
@@ -133,12 +135,10 @@ class ProfileActivity : AppCompatActivity() {
                     Glide.with(this).load(BuildConfig.IMAGE_KEY + url).into(binding.profileImg)
                 }
             }
-
         }
         getUpdateProfileViewModel.errorResponse.observe(this){
             ErrorUtil.handlerGeneralError(this@ProfileActivity, it)
         }
-
     }
 
     private fun getUpdateProfileApi(userId: String) {

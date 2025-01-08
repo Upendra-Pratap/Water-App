@@ -49,13 +49,10 @@ class AccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME",
-            AppCompatActivity.MODE_PRIVATE
-        )
+        sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME", AppCompatActivity.MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
         progressDialog = CustomProgressDialog(requireActivity())
@@ -63,7 +60,6 @@ class AccountFragment : Fragment() {
 
         getUpdateProfileApi(userId)
         getUpdateProfileObserver()
-
 
         binding.nextApp.setOnClickListener {
             val intent = Intent(requireActivity(), ChangePasswordActivity::class.java)
@@ -113,7 +109,6 @@ class AccountFragment : Fragment() {
             val intent = Intent(requireActivity(), RequestForAddressUpdte::class.java)
             startActivity(intent)
         }
-
         return view
     }
 
@@ -136,7 +131,6 @@ class AccountFragment : Fragment() {
                 }else{
                     val url = it.peekContent().data?.profileImage
                     Glide.with(this).load(BuildConfig.IMAGE_KEY + url).into(binding.userProfile)
-
                 }
             }
         }
@@ -144,11 +138,9 @@ class AccountFragment : Fragment() {
             ErrorUtil.handlerGeneralError(requireActivity(), it)
         }
     }
-
     private fun getUpdateProfileApi(userId: String) {
         getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog,activity)
     }
-
     private fun openLogoutPopup() {
         val builder = AlertDialog.Builder(context, R.style.Style_Dialog_Rounded_Corner)
         val dialogView = layoutInflater.inflate(R.layout.logout_popup, null)
@@ -167,7 +159,6 @@ class AccountFragment : Fragment() {
         yesLogoutBtn.setOnClickListener {
             //Call Api
            logoutApi()
-
         }
     }
     private fun logoutApi() {
@@ -178,8 +169,6 @@ class AccountFragment : Fragment() {
         val intent = Intent(requireActivity(), LoginActivity::class.java)
         startActivity(intent)
     }
-
-
     override fun onResume() {
         super.onResume()
         getUpdateProfileApi(userId)

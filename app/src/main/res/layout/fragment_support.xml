@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.SupportFragment">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/supportCons"
         android:layout_width="match_parent"
@@ -44,7 +43,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <TextView
                 android:id="@+id/faq"
                 android:layout_width="wrap_content"
@@ -68,7 +66,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/customerSupportCons"
             android:layout_width="0dp"
@@ -76,12 +73,11 @@
             app:layout_constraintStart_toEndOf="@+id/faqCons"
             app:layout_constraintTop_toTopOf="parent">
 
-
         <TextView
             android:id="@+id/customerSupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Customer Support"
+            android:text="Customer Supports"
             android:textSize="16dp"
             android:layout_marginEnd="50dp"
             app:layout_constraintEnd_toEndOf="parent"

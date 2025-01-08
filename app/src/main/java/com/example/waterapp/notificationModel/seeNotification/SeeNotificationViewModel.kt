@@ -1,4 +1,4 @@
-package com.example.waterapp.reportModel
+package com.example.waterapp.notificationModel.seeNotification
 
 import android.app.Activity
 import android.app.Application
@@ -16,16 +16,17 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class ReportViewModel @Inject constructor(private val application: Application, private val repository: CommonRepository
-): AndroidViewModel(application){
+class SeeNotificationViewModel @Inject constructor(application: Application, private val repository: CommonRepository
+): AndroidViewModel(application) {
     val progressIndicator = MutableLiveData<Boolean>()
     val errorResponse = MutableLiveData<Throwable>()
-    val mRejectResponse = MutableLiveData<Event<ReportResponse>>()
+    val mRejectResponse = MutableLiveData<Event<SeeNotificationResponse>>()
     var context: Context? = null
 
-    fun reportList(
+    fun seeNotification(
         id: String,
         activity: Activity,
         progressDialog: CustomProgressDialog
@@ -33,11 +34,11 @@ class ReportViewModel @Inject constructor(private val application: Application, 
         progressDialog.start(activity.getString(R.string.please_wait))
 
         progressIndicator.value = true
-        repository.getReport(
+        repository.seeNotification(
             id
         ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : DisposableObserver<ReportResponse>() {
-                override fun onNext(value: ReportResponse) {
+            .subscribe(object : DisposableObserver<SeeNotificationResponse>() {
+                override fun onNext(value: SeeNotificationResponse) {
                     progressIndicator.value = false
                     progressDialog.stop()
                     mRejectResponse.value = Event(value)

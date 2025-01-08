@@ -2,11 +2,10 @@ package com.example.waterapp.Activities
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.waterapp.BuildConfig
 import com.example.waterapp.Dashboard.DashboardActivity
@@ -39,6 +38,9 @@ class AddBalanceActivity : AppCompatActivity() {
         sharedPreferences = application.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
+        //observer
+        addBalanceObserver()
+
         binding.arrowBack.setOnClickListener { finish() }
 
         binding.addBalanceButton.setOnClickListener {
@@ -46,23 +48,29 @@ class AddBalanceActivity : AppCompatActivity() {
         }
         setContentView(view)
 
-        //observer
+        //observers
         getUpdateProfileApi(userId)
         getUpdateProfileObserver()
         addBalanceObserver()
 
     }
-    private fun formValidation() {
-        val enterAmount = binding.enterAmount.text.toString().toInt()
-        if (addBalanceValidation(enterAmount.toString())){
-                addBalanceApi(userId, enterAmount)
 
+    private fun formValidation() {
+        val amountText = binding.enterAmount.text.toString()
+        val enterAmount: Int? = amountText.toIntOrNull()
+
+        if (enterAmount != null && enterAmount > 0) {
+            if (addBalanceValidation(amountText)) {
+                addBalanceApi(userId, enterAmount)
+            }
+        } else {
+            addBalanceValidation(amountText)
         }
     }
     private fun addBalanceValidation(enterAmount: String): Boolean {
         return when {
             enterAmount.isEmpty() -> {
-                binding.enterAmount.error = "Enter Amount"
+                binding.enterAmount.error = "Please enter valid amount"
                 false
             }
             else -> true

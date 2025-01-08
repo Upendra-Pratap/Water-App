@@ -66,6 +66,7 @@ class SignUpActivity : AppCompatActivity() {
         binding.chooseImage.setOnClickListener{
             requestCameraPermission()
         }
+        binding.arrowBack.setOnClickListener { finish() }
     }
 
     private fun velidationInputs(

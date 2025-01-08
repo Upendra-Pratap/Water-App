@@ -108,7 +108,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/personalDetails"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/emailIcon"
@@ -149,7 +149,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textContainer"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/emailImage"
@@ -188,7 +188,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textContainer2"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/phoneImage"
@@ -228,7 +228,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textContainer3"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/addressImage"
@@ -267,14 +267,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textContainer4"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/cityImage"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:src="@drawable/passwordlock"
+                    android:src="@drawable/pin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -306,14 +306,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cityContainer4"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/streetImage"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:src="@drawable/passwordlock"
+                    android:src="@drawable/pin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -345,14 +345,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/streetContainer4"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/pinImage"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:src="@drawable/passwordlock"
+                    android:src="@drawable/pin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

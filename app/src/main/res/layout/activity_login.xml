@@ -57,7 +57,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/loginText"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/phoneIcon"
@@ -97,7 +97,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutCustom"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/passwordImage"
@@ -160,7 +160,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutPassword"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <Button
                     android:id="@+id/loginBtnCus"

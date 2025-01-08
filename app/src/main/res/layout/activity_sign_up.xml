@@ -18,6 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
+            <ImageView
+                android:id="@+id/arrowBack"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/leftarrow"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImg"
                 android:layout_width="120dp"
@@ -75,7 +85,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logintext"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/userIcon"
@@ -114,7 +124,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout1"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/lastnameIcon"
@@ -155,7 +165,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout2"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/password"
@@ -196,14 +206,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout5"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/passwordIcon"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:src="@drawable/pin"
+                    android:src="@drawable/passwword"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -235,7 +245,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/passwordlayout"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/cityIcon"
@@ -274,7 +284,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/citylayout"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/streetIcon"
@@ -313,7 +323,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/streetlayout"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <ImageView
                     android:id="@+id/pinIcon"
@@ -353,7 +363,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pinlayout"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintWidth_percent="0.85">
 
                 <Button
                     android:id="@+id/sendOtp"

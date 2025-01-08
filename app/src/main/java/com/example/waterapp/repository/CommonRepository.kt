@@ -24,6 +24,7 @@ import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNoti
 import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountResponse
 import com.example.waterapp.notificationModel.NotificationResponse
 import com.example.waterapp.notificationModel.allNotificationDelete.AllNotificationDeleteResponse
+import com.example.waterapp.notificationModel.seeNotification.SeeNotificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerificationResponse
 import com.example.waterapp.otpVerificationModel.OtpVerifiicationBody
 import com.example.waterapp.reportModel.ReportResponse
@@ -159,5 +160,8 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
 
     fun singleChatDelete(id: String): Observable<SingleChatDeleteResponse>{
         return apiServices.singleChatDelete(id)
+    }
+    fun seeNotification(id: String): Observable<SeeNotificationResponse>{
+        return apiServices.seeNotifications(id)
     }
 }

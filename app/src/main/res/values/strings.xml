@@ -10,8 +10,8 @@
     <string name="dashboard">Dashboard</string>
     <string name="electricity">Electricity</string>
     <string name="water">Water</string>
-    <string name="support">Support</string>
-    <string name="account">Account</string>
+    <string name="support">Supports</string>
+    <string name="account">Accounts</string>
     <string name="enter_email">Enter Email</string>
     <string name="change_password">Change Password</string>
     <string name="update_profile">Update Profile</string>
@@ -71,8 +71,6 @@
     <string name="please_wait">Please Wait…\n</string>
     <string name="OK">OK</string>
     <string name="are_your_sure_you_want_to_delete">are your sure you want to delete</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_mesage">PLease Enter Message</string>
     <string name="balance">Balance</string>
     <string name="recent_transaction">Recent Transaction</string>
