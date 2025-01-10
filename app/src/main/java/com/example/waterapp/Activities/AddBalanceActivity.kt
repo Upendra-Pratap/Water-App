@@ -23,7 +23,7 @@ class AddBalanceActivity : AppCompatActivity() {
     private val getUpdateProfileViewModel: GetUpdateProfileViewModel by viewModels()
     private val addBalanceViewModel: AddBalanceViewModel by viewModels()
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit  var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var userId = ""
     private var userType = 1
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +32,6 @@ class AddBalanceActivity : AppCompatActivity() {
         val view = binding.root
 
         userType = intent.getIntExtra("userType", 0)
-
-        progressDialog = CustomProgressDialog(this)
 
         sharedPreferences = application.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()

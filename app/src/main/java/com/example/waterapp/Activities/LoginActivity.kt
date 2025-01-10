@@ -1,12 +1,12 @@
 package com.example.waterapp.Activities
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,17 +17,20 @@ import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.loginModel.LoginBody
 import com.example.waterapp.loginModel.LoginViewModel
 import com.example.waterapp.utils.ErrorUtil
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val loginViewModel: LoginViewModel by viewModels()
-    private lateinit var progressDialog: CustomProgressDialog
-    private lateinit var activity: Activity
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var isPasswordVisible = true
     private var userId =""
     private var adminId = ""
+    private var token = ""
+    private lateinit var auth: FirebaseAuth
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,36 +38,44 @@ class LoginActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        progressDialog = CustomProgressDialog(this)
-        activity = this
+        auth = FirebaseAuth.getInstance()
 
         loginObserver()
 
-        checkLoginStatus()
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@addOnCompleteListener
+            }
+            // Get new FCM registration token
+            token = task.result
+            Log.e("languageIdAA", "languageId...token$token")
+        }
+
+        //checkLoginStatus()
 
         binding.signUpBtnCustomer.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
-
         binding.loginBtnCus.setOnClickListener {
             formValidation()
 
         }
-
         binding.moveNextForgot.setOnClickListener {
             val intent = Intent(this@LoginActivity, ForgotActivity::class.java)
             startActivity(intent)
         }
-
         binding.passwordHide.setOnClickListener {
             passwordShow()
         }
     }
 
+/*
     private fun checkLoginStatus() {
         sharedPreferences = this@LoginActivity.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         val userId = sharedPreferences.getString("userId", null)
+
+        Toast.makeText(this, "here is the user id $userId", Toast.LENGTH_SHORT).show()
 
         if (userId != null) {
             val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
@@ -72,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
     }
-
+*/
     private fun loginObserver() {
         loginViewModel.progressIndicator.observe(this){
 
@@ -134,7 +145,7 @@ class LoginActivity : AppCompatActivity() {
             user_email = email,
             password = password
         )
-        loginViewModel.loginAccount(loginBody, activity, progressDialog)
+        loginViewModel.loginAccount(loginBody, this, progressDialog)
     }
 
     @SuppressLint("SuspiciousIndentation")

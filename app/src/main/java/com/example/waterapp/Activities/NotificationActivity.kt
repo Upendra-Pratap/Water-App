@@ -1,7 +1,6 @@
 package com.example.waterapp.Activities
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.waterapp.R
 import com.example.waterapp.databinding.ActivityNotificationBinding
 import com.example.waterapp.adapter.NotificationAdapter
+import com.example.waterapp.application.WaterApp
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNotificationViewModel
 import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountViewModel
@@ -25,6 +25,7 @@ import com.example.waterapp.notificationModel.allNotificationDelete.AllNotificat
 import com.example.waterapp.notificationModel.seeNotification.SeeNotificationViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class NotificationActivity : AppCompatActivity(), NotificationClickListener {
@@ -37,37 +38,33 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
     private var myOrderAdapter: NotificationAdapter? = null
     private var notificationList: List<NotificationResponse.AllNotification> = ArrayList()
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var progressDialog: CustomProgressDialog
-    private lateinit var activity: Activity
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var userId = ""
+    private var id =""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        progressDialog = CustomProgressDialog(this)
-        activity = this
-
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
+        id = sharedPreferences.getString("id", id).toString().trim()
 
         binding.arrowBack.setOnClickListener { finish() }
 
-        binding.allClear.setOnClickListener {
-            allDeletePopup()
-        }
+        binding.allClear.setOnClickListener { allDeletePopup() }
 
-        //Observer
+        //Observer and api
         notificationListApi(userId)
         notificationObserver()
         notificationCountObserver()
         deleteNotificationObserver()
-        allNotificationDeleteObserver()
         seeNotificationObserver()
 
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun seeNotificationObserver() {
         seeNotificationViewModel.progressIndicator.observe(this){
 
@@ -84,18 +81,22 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun allNotificationDeleteObserver() {
         allNotificationDeleteVewModel.progressIndicator.observe(this){
 
         }
         allNotificationDeleteVewModel.mDeleteNotificationResponse.observe(this){
             val status = it.peekContent().success
+            val message = it.peekContent().message
             if (status == true){
+                Toast.makeText(this@NotificationActivity, message, Toast.LENGTH_SHORT).show()
+                progressDialog!!.stop()
                 notificationListApi(userId)
                 notificationCountApi(userId)
 
             }else{
-
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
         allNotificationDeleteVewModel.errorResponse.observe(this){
@@ -121,8 +122,8 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
 
             yesBtnAcceptNDel.setOnClickListener {
                 //calling api all notification delete
-                notificationListApi(userId)
                 allNotificationDeleteApi(userId)
+                allNotificationDeleteObserver()
                 myOrderAdapter?.notifyDataSetChanged()
                 dialog.dismiss()
             }
@@ -130,10 +131,13 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             dialog.show()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun allNotificationDeleteApi(userId: String) {
-        allNotificationDeleteVewModel.allNotificationDelete(userId, progressDialog, activity)
+        allNotificationDeleteVewModel.allNotificationDelete(userId, progressDialog, this)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun deleteNotificationObserver() {
         deleteNotificationViewModel.progressIndicator.observe(this){
 
@@ -141,12 +145,15 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
 
         deleteNotificationViewModel.mDeleteNotificationResponse.observe(this) { response ->
             val message = response.peekContent().message!!
+            val status = response.peekContent().success
 
-            if (response.peekContent().success == false) {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-            } else {
+            if(status == true) {
                 notificationListApi(userId)
                 notificationCountApi(userId)
+                myOrderAdapter!!.notifyDataSetChanged()
+            }else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
             }
         }
 
@@ -155,6 +162,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun notificationCountObserver() {
         notificationCountViewModel.progressIndicator.observe(this) {
 
@@ -166,13 +174,17 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
 
             if (status == true) {
                 binding.notificationCount.text = notificationCount.toString()
+                myOrderAdapter!!.notifyDataSetChanged()
+            }else{
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
         notificationCountViewModel.errorResponse.observe(this) {
             ErrorUtil.handlerGeneralError(this@NotificationActivity, it)
         }
     }
-
+    @SuppressLint("NotifyDataSetChanged")
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun notificationObserver() {
         notificationViewModel.progressIndicator.observe(this, androidx.lifecycle.Observer {
             // Show progress if needed
@@ -191,6 +203,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
                     binding.recyclerNotification.adapter = myOrderAdapter
 
                     notificationCountApi(userId)
+                    myOrderAdapter!!.notifyDataSetChanged()
 
                 }
             }else {
@@ -202,13 +215,12 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             ErrorUtil.handlerGeneralError(this@NotificationActivity, it)
         }
     }
-
     private fun notificationCountApi(userId: String) {
-        notificationCountViewModel.notificationCount(userId, progressDialog, activity)
+        notificationCountViewModel.notificationCount(userId, progressDialog, this)
     }
 
     private fun notificationListApi(userId: String) {
-        notificationViewModel.notificationList(userId, activity, progressDialog)
+        notificationViewModel.notificationList(userId, this, progressDialog)
     }
 
     override fun deleteNotification(position: Int, id: String) {
@@ -220,14 +232,13 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
     }
 
     private fun seenNotificationApi(id: String) {
-        seeNotificationViewModel.seeNotification(id, activity, progressDialog)
+        seeNotificationViewModel.seeNotification(id, this, progressDialog)
     }
 
     private fun deleteNotificationApi(notificationId: String) {
-        deleteNotificationViewModel.getDeleteNotifications(notificationId, progressDialog, activity)
+        deleteNotificationViewModel.getDeleteNotifications(notificationId, progressDialog, this)
 
     }
-
     override fun onResume() {
         super.onResume()
         notificationListApi(userId)

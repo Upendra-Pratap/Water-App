@@ -84,9 +84,8 @@ class RequestForSupportActivity : AppCompatActivity() {
                 val intent = Intent(this@RequestForSupportActivity, AccountFragment::class.java)
                 startActivity(intent)
                 finish()
-
             }else{
-
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
         updateAddressViewModel.errorResponse.observe(this){
@@ -97,15 +96,15 @@ class RequestForSupportActivity : AppCompatActivity() {
     private fun validationInputs(street: String, city: String, pin: String): Boolean {
         return when{
             street.isEmpty()->{
-                binding.emailtext.error = "Enter Your Street Line"
+                binding.emailtext.error = "Enter your street line"
                 false
             }
             city.isEmpty()->{
-                binding.datepickertext.error = "Enter Your City Name"
+                binding.datepickertext.error = "Enter your city name"
                 false
             }
             pin.isEmpty()->{
-                binding.streettext.error = "Enter Your Pin Code"
+                binding.streettext.error = "Enter your pin code"
                 false
             }
             else-> true

@@ -1,17 +1,13 @@
 package com.example.waterapp.Activities
 
-import android.app.Activity
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.waterapp.Fragment.HomeFragment
 import com.example.waterapp.R
-import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityCheckBalanceBinding
 import com.example.waterapp.transactionHistory.TransactionHistoryViewModel
 import com.example.waterapp.transactionfragment.HistoryFragment
@@ -22,9 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CheckBalanceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCheckBalanceBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var activity: Activity
     private val transactionHistoryViewModel: TransactionHistoryViewModel by viewModels()
-    private lateinit var progressDialog: CustomProgressDialog
     private var navItemIndex = 0
     private val TAG_NEXT = "next"
     private val TAG_DASH_BOARD = "dashboard"
@@ -40,12 +34,8 @@ class CheckBalanceActivity : AppCompatActivity() {
 
         binding.arrowBack.setOnClickListener { finish() }
 
-        activity = this
-        progressDialog = CustomProgressDialog(this)
-
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
-
 
         replaceFragment(HistoryFragment())
 

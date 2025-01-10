@@ -27,5 +27,4 @@ class AllClearChatResponse: Serializable {
         @Expose
         var deletedCount: Int? = null
     }
-
 }

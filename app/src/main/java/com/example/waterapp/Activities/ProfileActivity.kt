@@ -51,8 +51,7 @@ class ProfileActivity : AppCompatActivity() {
     private val CAMERA_PERMISSION_CODE = 101
     private val updateProfileViewModel: UpdateProfileViewModel by viewModels()
     private val getUpdateProfileViewModel: GetUpdateProfileViewModel by viewModels()
-    private lateinit var progressDialog: CustomProgressDialog
-    private lateinit var activity: Activity
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var userId = ""
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -70,8 +69,6 @@ class ProfileActivity : AppCompatActivity() {
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-        progressDialog = CustomProgressDialog(this)
-        activity = this
 
         getUpdateProfileApi(userId)
         getUpdateProfileObserver()
@@ -143,7 +140,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun getUpdateProfileApi(userId: String) {
 
-        getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog, activity)
+        getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog, this)
     }
 
     private fun setupObservers() {
@@ -186,32 +183,32 @@ class ProfileActivity : AppCompatActivity() {
     ): Boolean {
         return when {
             userName.isEmpty() -> {
-                binding.userName.error = "Please Enter Your Name"
+                binding.userName.error = "Please enter your name"
                 false
             }
             email.isEmpty() -> {
-                binding.email.error = "Please Enter Your Email"
+                binding.email.error = "Please enter your email"
                 false
             }
             phoneNumber.isEmpty() -> {
-                binding.phoneNumber.error = "Please Enter Your Phone Number"
+                binding.phoneNumber.error = "Please enter your phone number"
                 false
 
             }
             address.isEmpty() -> {
-                binding.addressText.error = "Please Enter Your Phone Number"
+                binding.addressText.error = "Please enter your phone number"
                 false
             }
             city.isEmpty() -> {
-                binding.cityText.error = "Please Enter Your City"
+                binding.cityText.error = "Please enter your city"
                 false
             }
             street.isEmpty() -> {
-                binding.streetText.error = "Please ENter Your Street"
+                binding.streetText.error = "Please enter your street"
                 false
             }
             pin.isEmpty() -> {
-                binding.pinText.error = "Please Enter Your Pin"
+                binding.pinText.error = "Please enter your pin"
                 false
             }
             else -> true
@@ -258,7 +255,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         if (imagePart != null) {
-            activity?.let {
+            this?.let {
                 updateProfileViewModel.updateProfile(
                     nameBody,
                     emailBody,

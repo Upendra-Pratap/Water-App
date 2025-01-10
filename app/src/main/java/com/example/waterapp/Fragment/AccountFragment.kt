@@ -2,7 +2,6 @@ package com.example.waterapp.Fragment
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -78,9 +77,8 @@ class AccountFragment : Fragment() {
             val intent = Intent(requireActivity(), GenerateReportActivity::class.java)
             startActivity(intent)
         }
-        binding.faqApp.setOnClickListener {
-            openLogoutPopup()
-        }
+        binding.faqApp.setOnClickListener {openLogoutPopup()}
+
         binding.myenquiryCons.setOnClickListener {
             val intent = Intent(requireActivity(), NotificationActivity::class.java)
             startActivity(intent)
@@ -162,10 +160,6 @@ class AccountFragment : Fragment() {
         }
     }
     private fun logoutApi() {
-        sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
         val intent = Intent(requireActivity(), LoginActivity::class.java)
         startActivity(intent)
     }

@@ -43,7 +43,7 @@
     <string name="check_balance">Check Balance</string>
     <string name="logout_app">Logout App</string>
     <string name="old_password">Old Password</string>
-    <string name="yuor_service_request_has_been_placed_successfully">yuor service request has been placed successfully</string>
+    <string name="yuor_service_request_has_been_placed_successfully">your service request has been placed successfully</string>
     <string name="hello_users">Hello Users</string>
     <string name="message">Message :</string>
     <string name="announcement">Announcements</string>
@@ -54,7 +54,7 @@
     <string name="home">Home</string>
 
     <string-array name="courses">
-        <item>Problem Type</item>
+        <item>Problem Types</item>
         <item>Fallen Pole</item>
         <item>Damaged Cable</item>
         <item>Power Outage</item>
@@ -71,7 +71,7 @@
     <string name="please_wait">Please Wait…\n</string>
     <string name="OK">OK</string>
     <string name="are_your_sure_you_want_to_delete">are your sure you want to delete</string>
-    <string name="enter_mesage">PLease Enter Message</string>
+    <string name="enter_mesage">Please enter message</string>
     <string name="balance">Balance</string>
     <string name="recent_transaction">Recent Transaction</string>
     <string name="top_up">Top Up</string>

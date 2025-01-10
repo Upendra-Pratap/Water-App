@@ -19,14 +19,13 @@ class ResetPasswordActivity : AppCompatActivity() {
     private val resetPasswordViewModel: ResetPasswordViewModel by viewModels()
     private var userId =""
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResetPasswordBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        progressDialog = CustomProgressDialog(this)
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 

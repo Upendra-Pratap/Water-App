@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.waterapp.Activities.SelectPaymentModeActivity
+import com.example.waterapp.billpayment.SelectPaymentModeActivity
 import com.example.waterapp.R
 import com.example.waterapp.serviceModel.ServiceResponse
 
@@ -26,12 +26,24 @@ class ServiceAdapter(
     }
 
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
-        val myFaqList = serviceList[position]
+        val serviceType = serviceList[position].serviceType
         holder.serviceName.text = serviceList[position].serviceType.toString()
-        holder.productListCons.setOnClickListener {
-            val intent = Intent(context, SelectPaymentModeActivity::class.java)
-            intent.putExtra("userType", 1)
-            context.startActivity(intent)
+
+
+        if (serviceType == "Electricity"){
+            holder.productListCons.setOnClickListener {
+                val intent = Intent(context, SelectPaymentModeActivity::class.java)
+                intent.putExtra("userType", 1)
+                intent.putExtra("serviceType", "electricity")
+                context.startActivity(intent)
+            }
+        }else{
+            holder.productListCons.setOnClickListener {
+                val intent = Intent(context, SelectPaymentModeActivity::class.java)
+                intent.putExtra("userType", 1)
+                intent.putExtra("serviceType", "water")
+                context.startActivity(intent)
+            }
         }
     }
     override fun getItemCount(): Int {

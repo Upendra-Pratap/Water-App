@@ -1,8 +1,7 @@
 package com.example.waterapp.Activities
 
-import android.app.Activity
+
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,8 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class OtpVerificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOtpVerificationBinding
     private val otpVerifiicationViewModel: OtpVerificationViewModel by viewModels()
-    private lateinit var progressDialog: CustomProgressDialog
-    private lateinit var activity: Activity
+    private val progressDialog by lazy { CustomProgressDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +30,6 @@ class OtpVerificationActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.arrowBack.setOnClickListener { finish() }
-
-        progressDialog = CustomProgressDialog(this)
-        activity = this
 
         binding.verifyBtn.setOnClickListener {
             val otpFields = listOf(
@@ -239,6 +234,6 @@ class OtpVerificationActivity : AppCompatActivity() {
         val otpVerifiicationBody = OtpVerifiicationBody(
             otp = verificationCode
         )
-        otpVerifiicationViewModel.otpVerificationAccount(otpVerifiicationBody, activity, progressDialog)
+        otpVerifiicationViewModel.otpVerificationAccount(otpVerifiicationBody, this, progressDialog)
     }
 }

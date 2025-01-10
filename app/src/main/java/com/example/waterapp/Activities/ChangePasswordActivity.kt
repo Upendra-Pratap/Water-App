@@ -22,8 +22,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
     private val changePasswordViewModel: ChangePasswordViewModel by viewModels()
     private var isPasswordVisible = true
-    private lateinit var activity: Activity
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private lateinit var sharedPreferences: SharedPreferences
     private var userId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +30,6 @@ class ChangePasswordActivity : AppCompatActivity() {
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        progressDialog = CustomProgressDialog(this)
-        activity = this
 
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
@@ -120,7 +116,7 @@ class ChangePasswordActivity : AppCompatActivity() {
             confirmNewPassword = confirmPassword,
 
         )
-        changePasswordViewModel.changePassword(userId, changePasswordBody, activity, progressDialog)
+        changePasswordViewModel.changePassword(userId, changePasswordBody, this, progressDialog)
     }
 
     private fun newPasswordShow() {

@@ -5,11 +5,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.waterapp.FaqModel.FaqResponse
 import com.example.waterapp.databinding.ActivityAnnouncementBinding
 import com.example.waterapp.adapter.AnnouncementAdapter
-import com.example.waterapp.adapter.FaqAdapter
 import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.announcementModel.AnnouncementViewModel
 import com.example.waterapp.classes.CustomProgressDialog
@@ -20,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AnnouncementActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnnouncementBinding
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private lateinit var activity: Activity
     private var myOrderAdapter: AnnouncementAdapter? = null
     private var announcementList: List<AnnouncementResponse.Datum> = ArrayList()
@@ -30,9 +27,6 @@ class AnnouncementActivity : AppCompatActivity() {
         binding = ActivityAnnouncementBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        progressDialog = CustomProgressDialog(this)
-        activity = this
 
         getAnnouncementApi()
         getAnnouncementObserver()
@@ -75,6 +69,6 @@ class AnnouncementActivity : AppCompatActivity() {
 
 
     private fun getAnnouncementApi() {
-        announcementViewModel.getAnnouncement(activity, progressDialog)
+        announcementViewModel.getAnnouncement(this, progressDialog)
     }
 }

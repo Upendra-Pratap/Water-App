@@ -18,8 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ForgotActivity : AppCompatActivity() {
     private lateinit var binding: ActivityForgotBinding
-    private lateinit var progressDialog: CustomProgressDialog
-    private lateinit var activity: Activity
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +26,6 @@ class ForgotActivity : AppCompatActivity() {
         binding = ActivityForgotBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-
-        progressDialog = CustomProgressDialog(this)
-        activity = this
 
         forgotPasswordObserver()
 
@@ -85,7 +80,7 @@ class ForgotActivity : AppCompatActivity() {
         val forgotPasswordBody = ForgotPasswordBody(
             user_email = email
         )
-        forgotPasswordViewModel.forgotPasswordAccount(forgotPasswordBody, activity, progressDialog)
+        forgotPasswordViewModel.forgotPasswordAccount(forgotPasswordBody, this, progressDialog)
     }
 
 

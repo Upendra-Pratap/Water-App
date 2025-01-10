@@ -16,8 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FaqActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFqaBinding
-    private lateinit var activity: Activity
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var myOrderAdapter: FaqAdapter? = null
     private var serviceList: List<FaqResponse.Faq> = ArrayList()
     private val faqViewModel: FaqViewModel by viewModels()
@@ -29,9 +28,6 @@ class FaqActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.arrowBack.setOnClickListener { finish() }
-
-        progressDialog = CustomProgressDialog(this)
-        activity = this
 
         getFaqListApi()
 
@@ -68,8 +64,7 @@ class FaqActivity : AppCompatActivity() {
         }
     }
 
-
     private fun getFaqListApi() {
-        faqViewModel.setFaq(activity, progressDialog)
+        faqViewModel.setFaq(this, progressDialog)
     }
 }

@@ -34,7 +34,6 @@ class PreferenceManager(context: Context) {
         return mPrefs!!
     }
 
-    // region "Getters & Setters"
     var isFirstTime: Boolean
         get() = prefs.getBoolean(IS_FIRST_TIME, true)
         set(isFirstTime) {
@@ -48,7 +47,6 @@ class PreferenceManager(context: Context) {
             editor.putString(USER_LANG, appLanguage)
             editor.apply()
         }
-
 
     var token: String
         get() = prefs.getString(RefreshToken, "") ?: ""
@@ -68,19 +66,6 @@ class PreferenceManager(context: Context) {
         get() = prefs.getString(BEARER_USER_TOKEN, "") ?: ""
         set(userToken) {
             editor.putString(BEARER_USER_TOKEN, userToken)
-            editor.apply()
-        }
-    var approvedId: String
-        get() = prefs.getString(APPROVEDID, "") ?: ""
-        set(approvedId) {
-            editor.putString(APPROVEDID, approvedId)
-            editor.apply()
-        }
-
-    var driverApprovedId: String
-        get() = prefs.getString(DRIVERAPPROVEDID, "") ?: ""
-        set(driverApprovedId) {
-            editor.putString(DRIVERAPPROVEDID, driverApprovedId)
             editor.apply()
         }
 
@@ -149,7 +134,6 @@ class PreferenceManager(context: Context) {
         private const val UserType = "UserType"
         private const val DRIVERAPPROVEDID = "DRIVERAPPROVEDID"
 
-
         private const val USER_ID = "USER_ID"
         private const val hostTypes = "hostType"
         private const val Code = "Code"
@@ -168,7 +152,6 @@ class PreferenceManager(context: Context) {
         private const val USER_LANG = "USER_LANG"
 
         private const val DEVICE_ID = "DEVICE_ID"
-
 
         private const val FCM_TOKEN = "FCM_TOKEN"
         private const val APPROVEDID = "APPROVEDID"

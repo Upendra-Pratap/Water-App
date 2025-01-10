@@ -49,7 +49,7 @@ class GenerateReportActivity : AppCompatActivity() {
     private val CAMERA_PERMISSION_CODE = 101
     private var selectedDate = ""
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var userId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +58,6 @@ class GenerateReportActivity : AppCompatActivity() {
         binding = ActivityGenerateReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        progressDialog = CustomProgressDialog(this)
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", "").toString().trim()
 
@@ -120,7 +119,6 @@ class GenerateReportActivity : AppCompatActivity() {
                 finish()
             }
         }
-
         generateReportViewModel.errorResponse.observe(this) {
             ErrorUtil.handlerGeneralError(this, it)
         }
@@ -142,23 +140,23 @@ class GenerateReportActivity : AppCompatActivity() {
         var isValid = true
 
         if (description.isEmpty()) {
-            binding.emailtext.error = "Please Enter Description"
+            binding.emailtext.error = "Please enter description"
             isValid = false
         }
         if (date.isEmpty()) {
-            binding.datepickertext.error = "Please Enter Date"
+            binding.datepickertext.error = "Please enter date"
             isValid = false
         }
         if (street.isEmpty()) {
-            binding.streettext.error = "Please Enter Street Line"
+            binding.streettext.error = "Please enter street line"
             isValid = false
         }
         if (city.isEmpty()) {
-            binding.citytext.error = "Please Enter Your City"
+            binding.citytext.error = "Please enter your city"
             isValid = false
         }
         if (pinCode.isEmpty()) {
-            binding.pinCodeText.error = "Please Enter Your Pin Code"
+            binding.pinCodeText.error = "Please enter your pin code"
             isValid = false
         }
 

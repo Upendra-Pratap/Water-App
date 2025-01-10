@@ -1,17 +1,13 @@
 package com.example.waterapp.chat
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.text.Editable
-import android.util.Log
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -32,8 +28,6 @@ import com.example.waterapp.databinding.ActivityChatBinding
 import com.example.waterapp.updateProfileModel.GetUpdateProfileViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.io.IOException
 
 @AndroidEntryPoint
 class ChatActivity : AppCompatActivity() {
@@ -46,13 +40,10 @@ class ChatActivity : AppCompatActivity() {
     private val allClearChatViewModel: AllClearChatViewModel by viewModels()
     private val singleChatDeleteViewModel: SingleChatDeleteViewModel by viewModels()
     private val IMAGE_PICK_CODE = 1000
-    private var mediaRecorder: MediaRecorder? = null
-    private var audioFile: File? = null
     private var userId = ""
     private var adminId = ""
     private lateinit var chatAdapter: ChatAdapter
-    private lateinit var activity: Activity
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private lateinit var handler: Handler
 
     @SuppressLint("ClickableViewAccessibility")
@@ -66,24 +57,17 @@ class ChatActivity : AppCompatActivity() {
         userId = sharedPreferences.getString("userId", userId).toString().trim()
         adminId = sharedPreferences.getString("adminId", adminId).toString().trim()
 
-
-        progressDialog = CustomProgressDialog(this)
-        activity = this
-
-
-        allChatClearObserver()
         //observer and api
         getUpdateProfileApi(userId)
         getUpdateProfileObserver()
         getChatListApi(userId)
-
+        allChatClearObserver()
 
         handler = Handler(Looper.getMainLooper())
 
         binding.arrowBack.setOnClickListener { finish() }
         binding.sendBtn.setOnClickListener { sendMessage() }
         binding.selectImg.setOnClickListener { pickImageFromGallery() }
-        binding.placeRecord.setOnClickListener { startRecording() }
         binding.threedots.setOnClickListener { menuPopup() }
 
         chatAdapter = ChatAdapter(this, singleChatDeleteViewModel ,messageList)
@@ -96,12 +80,9 @@ class ChatActivity : AppCompatActivity() {
                 handler.postDelayed(this, 2000)
             }
         }, 2000)
-
         doChatObserver()
         getChatListObserver()
-
     }
-
     private fun allChatClearObserver() {
         allClearChatViewModel.progressIndicator.observe(this){
 
@@ -118,7 +99,6 @@ class ChatActivity : AppCompatActivity() {
             ErrorUtil.handlerGeneralError(this@ChatActivity, it)
         }
     }
-
     private fun menuPopup() {
         val popupMenu = PopupMenu(this, binding.threedots)
 
@@ -132,10 +112,8 @@ class ChatActivity : AppCompatActivity() {
                 R.id.clear_data -> {
                     //call here api of clear data
                     clearAllChatApi(userId)
-
                     true
                 }
-
                 else -> false
             }
         }
@@ -147,7 +125,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun getUpdateProfileApi(userId: String) {
-        getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog, activity)
+        getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog, this)
     }
     private fun getUpdateProfileObserver() {
         getUpdateProfileViewModel.progressIndicator.observe(this) {
@@ -218,7 +196,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun getChatListApi(userId: String) {
-        getDoChatViewModel.getDoChat(userId, activity)
+        getDoChatViewModel.getDoChat(userId, this)
     }
 
     private fun sendMessage() {
@@ -230,7 +208,6 @@ class ChatActivity : AppCompatActivity() {
             }
 
             send_Message(messageText)
-
             binding.messageInput.text.clear()
             binding.messageInput.requestFocus()
 
@@ -244,7 +221,7 @@ class ChatActivity : AppCompatActivity() {
             message = messages,
 
             )
-        doChatViewModel.doChat(doChatBody, activity)
+        doChatViewModel.doChat(doChatBody, this)
     }
 
     private fun pickImageFromGallery() {
@@ -252,32 +229,6 @@ class ChatActivity : AppCompatActivity() {
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    private fun startRecording() {
-        val storageDir: File = externalCacheDir!!
-        try {
-            audioFile = File.createTempFile("audio", ".3gp", storageDir)
-            mediaRecorder = MediaRecorder().apply {
-                setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-                setOutputFile(audioFile?.absolutePath)
-                prepare()
-                start()
-            }
-            binding.placeRecord.text = "Stop"
-            binding.placeRecord.setOnClickListener { stopRecording() }
-        } catch (e: IOException) {
-            Log.e("AudioRecording", "prepare() failed")
-        }
-    }
-
-    private fun stopRecording() {
-        mediaRecorder?.apply {
-            stop()
-            release()
-        }
-        mediaRecorder = null
-    }
 
     override fun onResume() {
         super.onResume()

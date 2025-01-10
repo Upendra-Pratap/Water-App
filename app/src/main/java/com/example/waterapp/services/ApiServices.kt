@@ -7,6 +7,8 @@ import com.example.waterapp.addBalanceModel.AddBalanceResponse
 import com.example.waterapp.addressUpdateModel.MyAllRequestForAddressUpdateResponse
 import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.billWaterElectricity.BillElectricityResponse
+import com.example.waterapp.billpayment.model.BillPaymentBody
+import com.example.waterapp.billpayment.model.BillPaymentResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
 import com.example.waterapp.chatModel.AllClearChatResponse
@@ -253,4 +255,11 @@ interface ApiServices {
     fun seeNotifications(
         @Path("Id") id: String
     ): Observable<SeeNotificationResponse>
+
+    @Headers("Accept:application/json")
+    @POST("pay_bill/{Id}")
+    fun billPayment(
+        @Path("Id") id: String,
+        @Body billPaymentBody: BillPaymentBody
+    ): Observable<BillPaymentResponse>
 }

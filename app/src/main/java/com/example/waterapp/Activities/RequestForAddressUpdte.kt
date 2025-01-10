@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RequestForAddressUpdte : AppCompatActivity() {
     private lateinit var binding: ActivityRequestForAddressUpdteBinding
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private lateinit var sharedPreferences: SharedPreferences
     private var userId = ""
     private val myAllRequestForAddressUpdateViewModel: MyAllRequestForAddressUpdateViewModel by viewModels()
@@ -33,8 +33,6 @@ class RequestForAddressUpdte : AppCompatActivity() {
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
         binding.backArrow.setOnClickListener { finish() }
-
-        progressDialog = CustomProgressDialog(this)
 
         //Observer
         myRequestForAddressUpdate(userId)

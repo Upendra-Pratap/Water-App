@@ -42,7 +42,7 @@ import java.io.InputStream
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private  val signUpViewModel: SignUpViewModel by viewModels()
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var selectedImageFile: File? = null
     private val CAMERA_PERMISSION_CODE = 101
     @RequiresApi(Build.VERSION_CODES.P)
@@ -51,8 +51,6 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        progressDialog = CustomProgressDialog(this)
 
         setupObservers()
 
@@ -80,31 +78,31 @@ class SignUpActivity : AppCompatActivity() {
     ): Boolean {
         return when{
             userName.isEmpty()->{
-                binding.userName.error = "Please Enter User Name"
+                binding.userName.error = "Please enter user name"
                 false
             }
             userEmail.isEmpty()->{
-                binding.lastName.error = "Please Enter Your Email"
+                binding.lastName.error = "Please enter your email"
                 false
             }
             userPhone.isEmpty()->{
-                binding.passwordTxt.error = "Please Enter Your Phone Number"
+                binding.passwordTxt.error = "Please enter your phone Number"
                 false
             }
             password.isEmpty()->{
-                binding.passwordName.error = "Please Enter Your Password"
+                binding.passwordName.error = "Please enter your password"
                 false
             }
             city.isEmpty()->{
-                binding.cityName.error = "Please Enter Your City"
+                binding.cityName.error = "Please enter your city"
                 false
             }
             street.isEmpty()->{
-                binding.streetName.error = "Please Enter Your Street"
+                binding.streetName.error = "Please enter your street"
                 false
             }
             pin.isEmpty()->{
-                binding.pinName.error = "Please Enter Your Pin"
+                binding.pinName.error = "Please enter your pin"
                 false
             }
             else -> true

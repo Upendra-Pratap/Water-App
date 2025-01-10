@@ -8,6 +8,8 @@ import com.example.waterapp.addBalanceModel.AddBalanceResponse
 import com.example.waterapp.addressUpdateModel.MyAllRequestForAddressUpdateResponse
 import com.example.waterapp.announcementModel.AnnouncementResponse
 import com.example.waterapp.billWaterElectricity.BillElectricityResponse
+import com.example.waterapp.billpayment.model.BillPaymentBody
+import com.example.waterapp.billpayment.model.BillPaymentResponse
 import com.example.waterapp.changePasswordModel.ChangePasswordBody
 import com.example.waterapp.changePasswordModel.ChangePasswordResponse
 import com.example.waterapp.chatModel.AllClearChatResponse
@@ -163,5 +165,8 @@ class CommonRepository @Inject constructor(private val apiServices: ApiServices)
     }
     fun seeNotification(id: String): Observable<SeeNotificationResponse>{
         return apiServices.seeNotifications(id)
+    }
+    fun billPayment(id: String, billPaymentBody: BillPaymentBody): Observable<BillPaymentResponse>{
+        return apiServices.billPayment(id, billPaymentBody)
     }
 }

@@ -18,8 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class GetRequestForSupportActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGetRequestForSupportBinding
     private val getRequestForSupportViewModel: GetRequestForSupportViewModel by viewModels()
-    private lateinit var activity: Activity
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var myOrderAdapter: MyRequestAdapter? = null
     private var myRequestList: List<GetRequestForSupportResponse.UserRequest> = ArrayList()
     private lateinit var sharedPreferences: SharedPreferences
@@ -34,9 +33,6 @@ class GetRequestForSupportActivity : AppCompatActivity() {
 
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
-
-        activity = this
-        progressDialog = CustomProgressDialog(this)
 
         //observer
         getRequestSupportApi(userId)
@@ -71,6 +67,6 @@ class GetRequestForSupportActivity : AppCompatActivity() {
     }
 
     private fun getRequestSupportApi(userId: String) {
-        getRequestForSupportViewModel.getRequestForSupport(userId, activity, progressDialog)
+        getRequestForSupportViewModel.getRequestForSupport(userId, this, progressDialog)
     }
 }

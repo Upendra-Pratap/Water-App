@@ -23,8 +23,7 @@ class MyReportActivity : AppCompatActivity() {
     private var reportList: List<ReportResponse.AllReport> = ArrayList()
     private var userId = ""
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var progressDialog: CustomProgressDialog
-    private lateinit var activity: Activity
+    private val progressDialog by lazy { CustomProgressDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +33,6 @@ class MyReportActivity : AppCompatActivity() {
 
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
-
-        progressDialog = CustomProgressDialog(this)
-        activity = this
 
         reportListApi(userId)
         reportListObserver()
@@ -75,6 +71,6 @@ class MyReportActivity : AppCompatActivity() {
         }
     }
     private fun reportListApi(userId: String) {
-        reportViewModel.reportList(userId, activity, progressDialog)
+        reportViewModel.reportList(userId, this, progressDialog)
     }
 }

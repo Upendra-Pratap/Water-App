@@ -6,6 +6,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.gms.google-services")
 
+
 }
 
 android {
@@ -38,17 +39,13 @@ android {
                     isDebuggable = true
                     isMinifyEnabled = false
                     isShrinkResources = false
-                    proguardFiles(
-                        getDefaultProguardFile("proguard-android-optimize.txt"),
-                        "proguard-rules.pro"
-                    )
+                    proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                     buildConfigField("boolean", "IS_DEBUG", "true")
                     buildConfigField("String", "API_KEY", "\"http://192.168.1.40:3300/api/\"")
                     buildConfigField("String", "IMAGE_KEY", "\"http://192.168.1.40:3300/\"")
                 }
             }
         }
-
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
