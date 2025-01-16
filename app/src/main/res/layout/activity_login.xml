@@ -20,7 +20,7 @@
                 android:id="@+id/imgConst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="80dp"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -34,18 +34,51 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <RadioGroup
+                android:id="@+id/language_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/imgConst"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <RadioButton
+                    android:id="@+id/french_lang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/green"
+                    android:tag="fr-rFR"
+                    android:text="@string/french"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/english_lang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:buttonTint="@color/green"
+                    android:tag="English"
+                    android:text="@string/english"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
 
             <TextView
                 android:id="@+id/loginText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/login"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgConst"/>
+                app:layout_constraintTop_toBottomOf="@+id/language_group"/>
+
+
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,7 +108,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint=" Email"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"

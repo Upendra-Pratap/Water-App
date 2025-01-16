@@ -61,13 +61,7 @@ class OtpVerificationActivity : AppCompatActivity() {
                     binding.box1.requestFocus()
                 }
             }
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
@@ -78,14 +72,7 @@ class OtpVerificationActivity : AppCompatActivity() {
                 }
             }
 
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
@@ -96,14 +83,7 @@ class OtpVerificationActivity : AppCompatActivity() {
                 }
             }
 
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
@@ -114,14 +94,7 @@ class OtpVerificationActivity : AppCompatActivity() {
                 }
             }
 
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
@@ -132,14 +105,7 @@ class OtpVerificationActivity : AppCompatActivity() {
                 }
             }
 
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
@@ -150,14 +116,7 @@ class OtpVerificationActivity : AppCompatActivity() {
                 }
             }
 
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
@@ -227,9 +186,7 @@ class OtpVerificationActivity : AppCompatActivity() {
         otpVerifiicationViewModel.errorResponse.observe(this){
             ErrorUtil.handlerGeneralError(this@OtpVerificationActivity, it)
         }
-
     }
-
     private fun otpVerificationApi(verificationCode: String) {
         val otpVerifiicationBody = OtpVerifiicationBody(
             otp = verificationCode

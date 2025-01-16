@@ -34,6 +34,7 @@ import com.example.waterapp.updateProfileModel.UpdateProfileViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import okhttp3.MediaType.Companion.get
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -42,7 +43,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
-
 
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
@@ -69,17 +69,12 @@ class ProfileActivity : AppCompatActivity() {
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-
         getUpdateProfileApi(userId)
         getUpdateProfileObserver()
 
-        binding.chooseImage.setOnClickListener {
-            requestCameraPermission()
-        }
+        binding.chooseImage.setOnClickListener { requestCameraPermission() }
 
-        binding.updateHere.setOnClickListener {
-            profilVelidation()
-        }
+        binding.updateHere.setOnClickListener { profilVelidation() }
     }
     private fun getUpdateProfileObserver() {
         getUpdateProfileViewModel.progressIndicator.observe(this){
@@ -104,8 +99,7 @@ class ProfileActivity : AppCompatActivity() {
                 }
                 if (userData?.phoneNo == null){
 
-                }
-                else{
+                } else{
                     binding.phoneNumber.text = Editable.Factory.getInstance().newEditable(userData.phoneNo.toString())
                 }
                 if (userAddress?.city == null){
@@ -183,32 +177,32 @@ class ProfileActivity : AppCompatActivity() {
     ): Boolean {
         return when {
             userName.isEmpty() -> {
-                binding.userName.error = "Please enter your name"
+                binding.userName.error = getString(R.string.error_user_name)
                 false
             }
             email.isEmpty() -> {
-                binding.email.error = "Please enter your email"
+                binding.email.error = getString(R.string.error_user_email)
                 false
             }
             phoneNumber.isEmpty() -> {
-                binding.phoneNumber.error = "Please enter your phone number"
+                binding.phoneNumber.error = getString(R.string.error_user_phone)
                 false
 
             }
             address.isEmpty() -> {
-                binding.addressText.error = "Please enter your phone number"
+                binding.addressText.error = getString(R.string.error_user_address)
                 false
             }
             city.isEmpty() -> {
-                binding.cityText.error = "Please enter your city"
+                binding.cityText.error = getString(R.string.error_user_city)
                 false
             }
             street.isEmpty() -> {
-                binding.streetText.error = "Please enter your street"
+                binding.streetText.error = getString(R.string.error_user_street)
                 false
             }
             pin.isEmpty() -> {
-                binding.pinText.error = "Please enter your pin"
+                binding.pinText.error = getString(R.string.error_user_pin)
                 false
             }
             else -> true

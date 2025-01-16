@@ -15,7 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.9">
 
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userProfile"
             android:layout_width="40dp"
@@ -34,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
-            android:text="Upendra Pratap Singh"
+            android:text="@string/upendra_pratap_singh"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -46,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Nov 13"
+            android:text="@string/nov_13"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -58,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Juice"
+            android:text="@string/juice"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -72,7 +71,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="3dp"
-            android:text="$10"
+            android:text="@string/_10"
             android:textStyle="bold"
             android:textColor="@color/green"
             android:textSize="20sp"

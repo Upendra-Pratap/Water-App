@@ -38,26 +38,9 @@ class SupportFragment : Fragment() {
             navItemIndex = 1
             CURRENT_TAG = TAG_NEXT
             binding.faq.setTextColor(ContextCompat.getColor(requireActivity(), R.color.green))
-            binding.faqView.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireActivity(),
-                    R.color.green
-                )
-            )
-
-            binding.customerSupportView.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireActivity(),
-                    R.color.black
-                )
-            )
-
-            binding.customerSupport.setTextColor(
-                ContextCompat.getColor(
-                    requireActivity(),
-                    R.color.black
-                )
-            )
+            binding.faqView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.green))
+            binding.customerSupportView.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.black))
+            binding.customerSupport.setTextColor(ContextCompat.getColor(requireActivity(), R.color.black))
         }
 
         binding.customerSupportCons.setOnClickListener {
@@ -65,26 +48,11 @@ class SupportFragment : Fragment() {
             navItemIndex = 2
             CURRENT_TAG = TAG_NEXT
             binding.faq.setTextColor(ContextCompat.getColor(requireActivity(), R.color.black))
-            binding.faqView.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireActivity(),
-                    R.color.black
-                )
-            )
-            binding.customerSupportView.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireActivity(),
-                    R.color.green
-                )
-            )
-            binding.customerSupport.setTextColor(
-                ContextCompat.getColor(
-                    requireActivity(),
-                    R.color.green
-                )
-            )
-
+            binding.faqView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.black))
+            binding.customerSupportView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.green))
+            binding.customerSupport.setTextColor(ContextCompat.getColor(requireActivity(), R.color.green))
         }
+
         return view
     }
 
@@ -106,8 +74,7 @@ class SupportFragment : Fragment() {
 
                 doubleBackToExitPressedOnce = true
                 Toast.makeText(
-                    requireActivity(),
-                    "Please click BACK again to exit",
+                    requireActivity(), getString(R.string.click_to_back),
                     Toast.LENGTH_SHORT
                 ).show()
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -120,18 +87,8 @@ class SupportFragment : Fragment() {
     private fun replaceFragment(fragment: Fragment) {
         binding.faq.setTextColor(ContextCompat.getColor(requireActivity(), R.color.green))
         binding.faqView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.green))
-        binding.customerSupportView.setBackgroundColor(
-            ContextCompat.getColor(
-                requireActivity(),
-                R.color.black
-            )
-        )
-        binding.customerSupport.setTextColor(
-            ContextCompat.getColor(
-                requireActivity(),
-                R.color.black
-            )
-        )
+        binding.customerSupportView.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.black))
+        binding.customerSupport.setTextColor(ContextCompat.getColor(requireActivity(), R.color.black))
 
         val fragmentManager = parentFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

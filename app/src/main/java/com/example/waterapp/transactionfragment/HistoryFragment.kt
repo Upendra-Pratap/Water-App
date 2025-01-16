@@ -7,12 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.waterapp.FaqModel.FaqResponse
 import com.example.waterapp.adapter.HistoryAdapter
-import com.example.waterapp.adapter.TransactionAdapter
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.FragmentHistoryBinding
 import com.example.waterapp.transactionHistory.TransactionHistoryResponse
@@ -27,7 +26,7 @@ class HistoryFragment : Fragment() {
     private val transactionHistoryViewModel: TransactionHistoryViewModel by viewModels()
     private var transactionHistoryList: List<TransactionHistoryResponse.Datum> = ArrayList()
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog( activity ) }
     private lateinit var activity: Activity
     private var userId = ""
 
@@ -38,11 +37,9 @@ class HistoryFragment : Fragment() {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
         activity = requireActivity()
-        progressDialog = CustomProgressDialog(requireActivity())
 
         sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME", AppCompatActivity.MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
-
 
         getTransactionHistory(userId)
         getTransactionHistoryObserver()
@@ -54,26 +51,27 @@ class HistoryFragment : Fragment() {
         transactionHistoryViewModel.progressIndicator.observe(viewLifecycleOwner){
 
         }
-        transactionHistoryViewModel.mRejectResponse.observe(viewLifecycleOwner){
+        transactionHistoryViewModel.mRejectResponse.observe(viewLifecycleOwner) {
             val status = it.peekContent().success
-            transactionHistoryList = it.peekContent().data!!
+            val message = it.peekContent().message
 
-            if (transactionHistoryList.isNotEmpty()){
-
-                binding.historyRecyclerView.isVerticalScrollBarEnabled = true
-                binding.historyRecyclerView.isVerticalFadingEdgeEnabled= true
-                binding.historyRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-                myOrderAdapter = HistoryAdapter(requireContext(), transactionHistoryList)
-                binding.historyRecyclerView.adapter = myOrderAdapter
-            }else{
-
+            if (status == true) {
+                transactionHistoryList = it.peekContent().data!!
+                if (transactionHistoryList.isNotEmpty()) {
+                    binding.historyRecyclerView.isVerticalScrollBarEnabled = true
+                    binding.historyRecyclerView.isVerticalFadingEdgeEnabled = true
+                    binding.historyRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
+                    myOrderAdapter = HistoryAdapter(requireContext(), transactionHistoryList)
+                    binding.historyRecyclerView.adapter = myOrderAdapter
+                } else {
+                    binding.historyRecyclerView.adapter = myOrderAdapter
+                }
             }
         }
         transactionHistoryViewModel.errorResponse.observe(viewLifecycleOwner){
             ErrorUtil.handlerGeneralError(requireActivity(), it)
         }
     }
-
     private fun getTransactionHistory(userId: String) {
         transactionHistoryViewModel.transactionHistory(
             userId,

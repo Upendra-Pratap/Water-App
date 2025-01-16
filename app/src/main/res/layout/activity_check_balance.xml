@@ -61,7 +61,7 @@
                     android:id="@+id/totalbalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Available Balance"
+                    android:text="@string/available_balance"
                     android:textColor="@color/white"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -71,7 +71,7 @@
                 android:id="@+id/accountBalanceDri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="$100"
+                android:text="@string/_100"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -91,7 +91,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:text="Add"
+                android:text="@string/add"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="12dp"
@@ -126,7 +126,7 @@
                 android:textSize="16dp"
                 android:background="@drawable/debit_background"
                 android:layout_weight="1"
-                android:text="History"/>
+                android:text="@string/history"/>
 
 
             <TextView
@@ -140,7 +140,7 @@
                 android:background="@drawable/creditback"
                 android:textSize="16dp"
                 android:layout_weight="1"
-                android:text="Transactions"/>
+                android:text="@string/transactions"/>
 
         </LinearLayout>
 

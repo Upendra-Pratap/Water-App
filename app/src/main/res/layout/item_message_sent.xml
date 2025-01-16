@@ -29,7 +29,7 @@
                 android:layout_marginRight="65dp"
                 android:background="@drawable/chatbackground"
                 android:padding="8dp"
-                android:text="hello ??"
+                android:text="@string/hello"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -65,7 +65,7 @@
                 android:backgroundTint="@color/green_cyan"
                 android:gravity="right"
                 android:padding="8dp"
-                android:text="hello dsfsadsaf"
+                android:text="@string/hello_what_about_you"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 

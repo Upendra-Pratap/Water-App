@@ -23,6 +23,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.waterapp.Fragment.AccountFragment
+import com.example.waterapp.R
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityRequestForSupportBinding
 import com.example.waterapp.updateAddressModel.UpdateAddressViewModel
@@ -58,9 +59,7 @@ class RequestForSupportActivity : AppCompatActivity() {
         //observer
         updateAddressObserver()
 
-        binding.imageUploadBtn.setOnClickListener {
-            requestCameraPermission()
-        }
+        binding.imageUploadBtn.setOnClickListener { requestCameraPermission() }
 
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId= sharedPreferences.getString("userId", userId).toString().trim()
@@ -96,15 +95,15 @@ class RequestForSupportActivity : AppCompatActivity() {
     private fun validationInputs(street: String, city: String, pin: String): Boolean {
         return when{
             street.isEmpty()->{
-                binding.emailtext.error = "Enter your street line"
+                binding.emailtext.error = getString(R.string.error_user_street)
                 false
             }
             city.isEmpty()->{
-                binding.datepickertext.error = "Enter your city name"
+                binding.datepickertext.error = getString(R.string.error_user_city)
                 false
             }
             pin.isEmpty()->{
-                binding.streettext.error = "Enter your pin code"
+                binding.streettext.error = getString(R.string.error_user_pin)
                 false
             }
             else-> true

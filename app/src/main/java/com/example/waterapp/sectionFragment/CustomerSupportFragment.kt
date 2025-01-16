@@ -24,8 +24,6 @@ class CustomerSupportFragment : Fragment() {
             startActivity(intent)
         }
 
-
-
         binding.emailSupport.setOnClickListener {
             openComposeEmail()
         }
@@ -39,7 +37,6 @@ class CustomerSupportFragment : Fragment() {
             startActivity(intent)
 
         }
-
 
         return binding.root
     }

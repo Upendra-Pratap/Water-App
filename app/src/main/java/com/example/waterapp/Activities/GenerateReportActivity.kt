@@ -104,19 +104,22 @@ class GenerateReportActivity : AppCompatActivity() {
 
     private fun generateReportObserver() {
         generateReportViewModel.progressIndicator.observe(this) { isLoading ->
-            if (isLoading) progressDialog.start()
-            else progressDialog.stop()
+
+            if (isLoading){ progressDialog.start()}
+
+            else{ progressDialog.stop()}
         }
 
-        generateReportViewModel.mRejectResponse.observe(this) {
-            val message = it.peekContent().message
-            val status = it.peekContent().success
+        generateReportViewModel.mRejectResponse.observe(this) {response ->
+            val message = response.peekContent().message
+            val status = response.peekContent().success
 
             if (status == true) {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@GenerateReportActivity, DashboardActivity::class.java)
                 startActivity(intent)
-                finish()
+            }else{
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
         generateReportViewModel.errorResponse.observe(this) {
@@ -159,19 +162,12 @@ class GenerateReportActivity : AppCompatActivity() {
             binding.pinCodeText.error = "Please enter your pin code"
             isValid = false
         }
-
         return isValid
     }
 
     private fun generateReportApi(description: String, selectedDate: String, street: String, city: String, pinCode: String) {
         val selectedCourse = binding.coursesspinner.selectedItem.toString()
-        val requestBodyMap = mapOf(
-            "course" to selectedCourse,
-            "description" to description,
-            "date" to selectedDate,
-            "street" to street,
-            "city" to city,
-            "pinCode" to pinCode
+        val requestBodyMap = mapOf("course" to selectedCourse, "description" to description, "date" to selectedDate, "street" to street, "city" to city, "pinCode" to pinCode
         ).mapValues { (key, value) -> RequestBody.create("text/plain".toMediaTypeOrNull(), value) }
 
         val imagePart = selectedImageFile?.let {
@@ -229,7 +225,6 @@ class GenerateReportActivity : AppCompatActivity() {
             Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
         }
     }
-
     private fun convertUriToFile(uri: Uri): File? {
         return try {
             val inputStream: InputStream? = contentResolver.openInputStream(uri)
@@ -292,5 +287,4 @@ class GenerateReportActivity : AppCompatActivity() {
                 }
             }
         }
-
 }

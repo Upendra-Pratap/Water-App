@@ -66,7 +66,7 @@ class ChatActivity : AppCompatActivity() {
         handler = Handler(Looper.getMainLooper())
 
         binding.arrowBack.setOnClickListener { finish() }
-        binding.sendBtn.setOnClickListener { sendMessage() }
+        binding.sendBtn.setOnClickListener   { sendMessage() }
         binding.selectImg.setOnClickListener { pickImageFromGallery() }
         binding.threedots.setOnClickListener { menuPopup() }
 
@@ -123,7 +123,6 @@ class ChatActivity : AppCompatActivity() {
         allClearChatViewModel.clearAllChat(userId, this)
 
     }
-
     private fun getUpdateProfileApi(userId: String) {
         getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog, this)
     }
@@ -162,15 +161,13 @@ class ChatActivity : AppCompatActivity() {
         getDoChatViewModel.mRejectResponse.observe(this) {
             val status = it.peekContent().success
             val response = it.peekContent().response
-            messageList = response!!
 
             if (status == true) {
-                if (messageList != null) {
-                    if (messageList.isNotEmpty()) {
-                        binding.chatRecycler.smoothScrollToPosition(messageList.size - 1)
-                        chatAdapter!!.notifyDataSetChanged()
-                        chatAdapter?.addChat(messageList)
-                    }
+                messageList = response!!
+                if (messageList.isNotEmpty()) {
+                    binding.chatRecycler.smoothScrollToPosition(messageList.size - 1)
+                    chatAdapter!!.notifyDataSetChanged()
+                    chatAdapter?.addChat(messageList)
                 }
             }
         }
@@ -228,7 +225,6 @@ class ChatActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
-
 
     override fun onResume() {
         super.onResume()

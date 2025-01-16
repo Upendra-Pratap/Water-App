@@ -25,7 +25,7 @@
     <string name="new_password">New Password</string>
     <string name="submit">Submit</string>
     <string name="forgot_password">Forgot Password</string>
-    <string name="no_worries_we_ll_send_you_reset_instruction">No worries, we\'ll send you reset instruction</string>
+    <string name="no_worries_we_ll_send_you_reset_instruction">No worries, we\'ll send you reset instruction  No worries, we\'ll send you reset instruction</string>
     <string name="reset_password">Reset Password</string>
     <string name="send_otp">Send Otp</string>
     <string name="notification">Notifications</string>
@@ -52,19 +52,9 @@
     <string name="yes_a_detailed_breakdown_is_available_on_your_bill_statement_you_can_also_view_it_in_your_account_dashboard_under_billing_details">Yes, a detailed breakdown is available on your bill statement. You can also view it in your account dashboard under \'Billing Details</string>
     <string name="service_request">Service Request</string>
     <string name="home">Home</string>
-
-    <string-array name="courses">
-        <item>Problem Types</item>
-        <item>Fallen Pole</item>
-        <item>Damaged Cable</item>
-        <item>Power Outage</item>
-        <item>Water Leak</item>
-    </string-array>
-
     <style name="Style_Dialog_Rounded_Corner" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowMinWidthMinor">75%</item>`
     </style>
-
     <string name="Please_enter_OTP">Please Enter OTP</string>
     <string name="unable_to_connect">Unable to connect to the internet please try again\n</string>
     <string name="server_error">Server Error</string>
@@ -91,4 +81,89 @@
     <string name="select_payment_model">Select Payment Model</string>
     <string name="credit_card">Credit Card</string>
     <string name="online_payment">Online Payment</string>
+    <string name="french">French</string>
+    <string name="english">English</string>
+    <string name="email">Email</string>
+    <string name="my_request_for_support">My Request For Support</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="city">City</string>
+    <string name="street">Street</string>
+    <string name="pin">Pin</string>
+    <string name="update">Update</string>
+    <string name="enter_street_line">Enter Street Line</string>
+    <string name="update_address">Update Address</string>
+    <string name="address_update">Address Update</string>
+    <string name="enter_pin">Enter Pin</string>
+    <string name="error_user_name">Please enter a user name</string>
+    <string name="error_user_email">Please enter your email</string>
+    <string name="error_user_phone">Please enter your phone Number</string>
+    <string name="error_user_password">Please enter your password</string>
+    <string name="error_user_city">Please enter your city</string>
+    <string name="error_user_street">Please enter your street</string>
+    <string name="error_user_pin">Please enter your pin</string>
+    <string name="error_user_address">Please enter your address</string>
+    <string name="error_user_old_password">Please enter old password</string>
+    <string name="error_user_new_password">Please enter new password</string>
+    <string name="error_user_confirm_password">Please enter confirm password</string>
+    <string name="click_to_back">Please click BACK again to exit</string>
+    <string name="upendra_pratap_singh">Upendra Pratap Singh</string>
+    <string name="nov_13">Nov 13</string>
+    <string name="juice">Juice</string>
+    <string name="_10">$10</string>
+    <string name="add_balance">Add Balance</string>
+    <string name="_10000000">₹10000000</string>
+    <string name="add">Add</string>
+    <string name="a">A....</string>
+    <string name="available_balance">Available Balance</string>
+    <string name="history">History</string>
+    <string name="transactions">Transactions</string>
+    <string name="my_reports">My Reports</string>
+    <string name="_0">0</string>
+    <string name="all_clear">All Clear</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="profile">Profile</string>
+    <string name="user_name">User Name</string>
+    <string name="_91_000_000_0000">+91-000-000-0000</string>
+    <string name="title">Title :</string>
+    <string name="_2024">2024</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="service_types">Service Types :</string>
+    <string name="total_amount">Total Amount :</string>
+    <string name="my_address_update_request">My Address Update Request</string>
+    <string name="chat_supports">Chat Supports</string>
+    <string name="email_supports">Email Supports</string>
+    <string name="phone_supports">Phone Supports</string>
+    <string name="request_for_customer_supports">Request For Customer Supports</string>
+    <string name="our_services">Our Services</string>
+    <string name="current_balances">Current Balances</string>
+    <string name="available_balance_of_electricity">Available Balance Of Electricity</string>
+    <string name="available_balance_of_water">Available Balance Of Water</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="customer_supports">Customer Supports</string>
+    <string name="cashback_from_purchase">Cashback from purchase</string>
+    <string name="purchase_from_amazon">Purchase from Amazon</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="_685746354219">685746354219</string>
+    <string name="_100_00">$ 100.00</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="_12_nov_2024">12 Nov 2024</string>
+    <string name="_3_36_pm">3:36 PM</string>
+    <string name="hello">hello ??</string>
+    <string name="hello_what_about_you">hello what about you</string>
+    <string name="confirm_logout">Confirm Logout</string>
+    <string name="are_you_sure_to_logout">Are you sure to Logout?</string>
+    <string name="name">Name :</string>
+    <string name="problem_types">Problem Types :</string>
+    <string name="date_of_incident">Date Of Incident :</string>
+    <string name="address">Address :</string>
+    <string name="view_problem">View Problem</string>
+    <string name="emailforaddressupdate">Email :</string>
+    <string name="upendra9076_gmail_com">Upendra9076@gmail.com</string>
+    <string name="write_something_here">write something here</string>
+    <string name="statuss">Status :</string>
+    <string name="_9076692189">9076692189</string>
+    <string name="service_name">Service Name :</string>
+    <string name="fallen_pole">Fallen Pole</string>
 </resources>

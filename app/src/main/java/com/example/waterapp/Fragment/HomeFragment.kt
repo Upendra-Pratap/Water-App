@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,7 +37,7 @@ class HomeFragment : Fragment() {
     private var transactionAdapter: HistoryAdapter? =null
     private var transactionHistoryList: List<TransactionHistoryResponse.Datum> = ArrayList()
     private lateinit var activity: Activity
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(activity) }
     private lateinit var sharedPreferences: SharedPreferences
     private var userId =""
     override fun onCreateView(
@@ -50,21 +51,18 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME", AppCompatActivity.MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-        progressDialog = CustomProgressDialog(requireActivity())
         activity = requireActivity()
 
-        // For the Electricity Account (pass 1)
         binding.withDrawBtn.setOnClickListener {
             val intent = Intent(requireActivity(), AddBalanceActivity::class.java)
             intent.putExtra("userType", 1)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
 
-        // For the Water Account (pass 2)
         binding.withDrawBtnWater.setOnClickListener {
             val intent = Intent(requireActivity(), AddBalanceActivity::class.java)
             intent.putExtra("userType", 2)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
 
         //services observer
@@ -85,7 +83,6 @@ class HomeFragment : Fragment() {
         getUpdateProfileViewModel.progressIndicator.observe(viewLifecycleOwner){
 
         }
-
         getUpdateProfileViewModel.mCustomerResponse.observe(viewLifecycleOwner){
             val status = it.peekContent().success
             val userData = it.peekContent().data
@@ -116,25 +113,26 @@ class HomeFragment : Fragment() {
 
         }
         transactionHistoryViewModel.mRejectResponse.observe(viewLifecycleOwner){
-            transactionHistoryList = it.peekContent().data!!
+            val status = it.peekContent().success
 
-            if (transactionHistoryList.isNotEmpty()){
+            if (status == true) {
+                transactionHistoryList = it.peekContent().data!!
+                if (transactionHistoryList.isNotEmpty()) {
+                    binding.recyclerViewTransaction.isVerticalScrollBarEnabled = true
+                    binding.recyclerViewTransaction.isVerticalFadingEdgeEnabled = true
+                    binding.recyclerViewTransaction.layoutManager = GridLayoutManager(requireContext(), 1)
+                    transactionAdapter = HistoryAdapter(requireContext(), transactionHistoryList)
+                    binding.recyclerViewTransaction.adapter = transactionAdapter
 
-                binding.recyclerViewTransaction.isVerticalScrollBarEnabled = true
-                binding.recyclerViewTransaction.isVerticalFadingEdgeEnabled = true
-                binding.recyclerViewTransaction.layoutManager = GridLayoutManager(requireContext(), 1)
-                transactionAdapter = HistoryAdapter(requireContext(), transactionHistoryList)
-                binding.recyclerViewTransaction.adapter = transactionAdapter
-
-            }else{
-
+                } else {
+                    binding.recyclerViewTransaction.adapter = transactionAdapter
+                }
             }
         }
         transactionHistoryViewModel.errorResponse.observe(viewLifecycleOwner){
             ErrorUtil.handlerGeneralError(requireActivity(), it)
         }
     }
-
     private fun transactionHistoryApi(userId: String) {
         transactionHistoryViewModel.transactionHistory(userId, activity)
 
@@ -147,24 +145,23 @@ class HomeFragment : Fragment() {
 
         servicesViewModel.mRejectResponse.observe(viewLifecycleOwner) {
             val status = it.peekContent().success
-            val message = it.peekContent().message
-            serviceList = it.peekContent().allServices!!
 
-            if (serviceList.isNotEmpty()) {
+            if (status == true) {
+                serviceList = it.peekContent().allServices!!
+                if (serviceList.isNotEmpty()) {
+                    binding.recyclerView.isVerticalScrollBarEnabled = true
+                    binding.recyclerView.isVerticalFadingEdgeEnabled = true
+                    binding.recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
+                    myOrderAdapter = ServiceAdapter(requireContext(), serviceList)
 
-                binding.recyclerView.isVerticalScrollBarEnabled = true
-                binding.recyclerView.isVerticalFadingEdgeEnabled = true
-                binding.recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
-                myOrderAdapter = ServiceAdapter(requireContext(), serviceList)
+                    // Set the adapter to RecyclerView
+                    binding.recyclerView.adapter = myOrderAdapter
 
-                // Set the adapter to RecyclerView
-                binding.recyclerView.adapter = myOrderAdapter
+                } else {
 
-            } else {
-
+                }
             }
         }
-
         servicesViewModel.errorResponse.observe(viewLifecycleOwner) {
             ErrorUtil.handlerGeneralError(requireActivity(), it)
         }

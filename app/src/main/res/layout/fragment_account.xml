@@ -272,13 +272,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="My Reports"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/my_reports"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/reportAppImage"
                         app:layout_constraintStart_toEndOf="@+id/reportAppImage"
-                        app:layout_constraintTop_toTopOf="@+id/reportAppImage" />
+                        app:layout_constraintTop_toTopOf="@+id/reportAppImage"
+                        app:layout_constraintVertical_bias="0.0" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -308,7 +309,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:text="My Request For Support"
+                        android:text="@string/my_request_for_support"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/myRequestAppImage"
@@ -413,7 +414,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:text="Update Address"
+                        android:text="@string/update_address"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/billSectionImage"
@@ -448,7 +449,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:text="My Address Update Request"
+                        android:text="@string/my_address_update_request"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/myAddressUpdateImage"

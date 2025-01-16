@@ -45,9 +45,11 @@ class RequestForAddressUpdte : AppCompatActivity() {
         myAllRequestForAddressUpdateViewModel.progressIndicator.observe(this){
 
         }
-        myAllRequestForAddressUpdateViewModel.mRejectResponse.observe(this){
+        myAllRequestForAddressUpdateViewModel.mRejectResponse.observe(this) {
             val status = it.peekContent().success
-            myRequestList = listOf(it.peekContent().Data())
+
+            if (status == true) {
+                myRequestList = listOf(it.peekContent().Data())
                 if (myRequestList.isNotEmpty()) {
                     binding.addressUpdateRecyclerView.isVerticalFadingEdgeEnabled = true
                     binding.addressUpdateRecyclerView.isVerticalScrollBarEnabled = true
@@ -56,10 +58,11 @@ class RequestForAddressUpdte : AppCompatActivity() {
 
                     binding.addressUpdateRecyclerView.adapter = myRequestForAddressUpdate
 
-                }else{
+                } else {
 
                 }
             }
+        }
         myAllRequestForAddressUpdateViewModel.errorResponse.observe(this){
             ErrorUtil.handlerGeneralError(this@RequestForAddressUpdte, it)
 

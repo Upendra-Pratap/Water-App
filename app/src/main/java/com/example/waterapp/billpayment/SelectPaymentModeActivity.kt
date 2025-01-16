@@ -20,7 +20,7 @@ class SelectPaymentModeActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySelectPaymentModeBinding
     private val billPaymentViewModel: BillPaymentViewModel by viewModels()
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(this) }
     private var billId: String? = null
     private val electricityBill = "6776280d99b3051d79fa7149"
 
@@ -30,13 +30,12 @@ class SelectPaymentModeActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        progressDialog = CustomProgressDialog(this)
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", AppCompatActivity.MODE_PRIVATE)
         billId = sharedPreferences.getString("billId", null)
 
         val serviceType = intent.getStringExtra("serviceType")
 
-        binding.leftArrow.setOnClickListener {finish()}
+        binding.leftArrow.setOnClickListener{finish()}
 
         if (serviceType == "electricity") {
             binding.cardOne.setOnClickListener {
@@ -86,7 +85,6 @@ class SelectPaymentModeActivity : AppCompatActivity() {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@SelectPaymentModeActivity, DashboardActivity::class.java)
                 startActivity(intent)
-                finish()
             } else {
                 Toast.makeText(this, "Payment failed. Please try again.", Toast.LENGTH_SHORT).show()
             }

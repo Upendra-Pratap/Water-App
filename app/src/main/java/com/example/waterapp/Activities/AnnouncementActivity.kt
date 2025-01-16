@@ -1,7 +1,8 @@
 package com.example.waterapp.Activities
 
-import android.app.Activity
+
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,12 +14,10 @@ import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class AnnouncementActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnnouncementBinding
     private val progressDialog by lazy { CustomProgressDialog(this) }
-    private lateinit var activity: Activity
     private var myOrderAdapter: AnnouncementAdapter? = null
     private var announcementList: List<AnnouncementResponse.Datum> = ArrayList()
     private val announcementViewModel: AnnouncementViewModel by viewModels()
@@ -31,11 +30,9 @@ class AnnouncementActivity : AppCompatActivity() {
         getAnnouncementApi()
         getAnnouncementObserver()
 
-        binding.backArrow.setOnClickListener { finish() }
-
+        binding.backArrow.setOnClickListener {finish()}
 
     }
-
     private fun getAnnouncementObserver() {
         announcementViewModel.progressIndicator.observe(this, androidx.lifecycle.Observer {
             // Show progress if needed
@@ -44,30 +41,26 @@ class AnnouncementActivity : AppCompatActivity() {
         announcementViewModel.mRejectResponse.observe(this) {
             val status = it.peekContent().success
             val message = it.peekContent().message
-            announcementList = it.peekContent().data!!
 
-            if (announcementList.isNotEmpty()) {
+            if (status == true){
+                announcementList = it.peekContent().data!!
+                if (announcementList.isNotEmpty()) {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    binding.announcementRecyclerView.isVerticalScrollBarEnabled = true
+                    binding.announcementRecyclerView.isVerticalFadingEdgeEnabled = true
+                    binding.announcementRecyclerView.layoutManager = GridLayoutManager(this, 1)
+                    myOrderAdapter = AnnouncementAdapter(this, announcementList)
+                    binding.announcementRecyclerView.adapter = myOrderAdapter
 
-                binding.announcementRecyclerView.isVerticalScrollBarEnabled = true
-                binding.announcementRecyclerView.isVerticalFadingEdgeEnabled = true
-                binding.announcementRecyclerView.layoutManager = GridLayoutManager(this, 1)
-                myOrderAdapter = AnnouncementAdapter(this, announcementList)
+                } else {
 
-                // Set the adapter to RecyclerView
-                binding.announcementRecyclerView.adapter = myOrderAdapter
-
-
-            } else {
-
+                }
             }
         }
-
         announcementViewModel.errorResponse.observe(this) {
             ErrorUtil.handlerGeneralError(this@AnnouncementActivity, it)
         }
     }
-
-
     private fun getAnnouncementApi() {
         announcementViewModel.getAnnouncement(this, progressDialog)
     }

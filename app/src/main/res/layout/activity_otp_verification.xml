@@ -96,7 +96,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintWidth_percent=".95">
 
-
         <EditText
             android:id="@+id/box5"
             android:layout_width="0dp"

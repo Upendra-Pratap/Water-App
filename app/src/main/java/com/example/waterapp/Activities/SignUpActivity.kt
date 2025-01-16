@@ -78,31 +78,31 @@ class SignUpActivity : AppCompatActivity() {
     ): Boolean {
         return when{
             userName.isEmpty()->{
-                binding.userName.error = "Please enter user name"
+                binding.userName.error =  getString(R.string.error_user_name)
                 false
             }
             userEmail.isEmpty()->{
-                binding.lastName.error = "Please enter your email"
+                binding.lastName.error = getString(R.string.error_user_email)
                 false
             }
             userPhone.isEmpty()->{
-                binding.passwordTxt.error = "Please enter your phone Number"
+                binding.passwordTxt.error = getString(R.string.error_user_phone)
                 false
             }
             password.isEmpty()->{
-                binding.passwordName.error = "Please enter your password"
+                binding.passwordName.error = getString(R.string.error_user_password)
                 false
             }
             city.isEmpty()->{
-                binding.cityName.error = "Please enter your city"
+                binding.cityName.error = getString(R.string.error_user_city)
                 false
             }
             street.isEmpty()->{
-                binding.streetName.error = "Please enter your street"
+                binding.streetName.error = getString(R.string.error_user_street)
                 false
             }
             pin.isEmpty()->{
-                binding.pinName.error = "Please enter your pin"
+                binding.pinName.error = getString(R.string.error_user_pin)
                 false
             }
             else -> true

@@ -40,7 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
     private lateinit var activity: Activity
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(requireActivity()) }
     private lateinit var sharedPreferences: SharedPreferences
     private val getUpdateProfileViewModel: GetUpdateProfileViewModel by viewModels()
     private var userId = ""
@@ -54,7 +54,6 @@ class AccountFragment : Fragment() {
         sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME", AppCompatActivity.MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-        progressDialog = CustomProgressDialog(requireActivity())
         activity = requireActivity()
 
         getUpdateProfileApi(userId)
@@ -62,50 +61,50 @@ class AccountFragment : Fragment() {
 
         binding.nextApp.setOnClickListener {
             val intent = Intent(requireActivity(), ChangePasswordActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         binding.logoutApp.setOnClickListener {
             val intent = Intent(requireActivity(), CheckBalanceActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
 
         }
         binding.notificationCons.setOnClickListener {
             val intent = Intent(requireActivity(), ProfileActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         binding.shareApp.setOnClickListener {
             val intent = Intent(requireActivity(), GenerateReportActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         binding.faqApp.setOnClickListener {openLogoutPopup()}
 
         binding.myenquiryCons.setOnClickListener {
             val intent = Intent(requireActivity(), NotificationActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         binding.changePasswordApp.setOnClickListener {
             val intent = Intent(requireActivity(), AnnouncementActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         binding.nextApp1.setOnClickListener {
             val intent = Intent(requireActivity(), AccountHistoryActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         binding.billSectionApp.setOnClickListener {
             val intent = Intent(requireActivity(), RequestForSupportActivity::class.java)
-            startActivity(intent)
+           activity.startActivity(intent)
         }
         binding.myRequestApp.setOnClickListener {
             val intent = Intent(requireActivity(), GetRequestForSupportActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         binding.reportApp.setOnClickListener {
             val intent = Intent(requireActivity(), MyReportActivity::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         binding.myAddressUpdateRequest.setOnClickListener {
             val intent = Intent(requireActivity(), RequestForAddressUpdte::class.java)
-            startActivity(intent)
+            activity.startActivity(intent)
         }
         return view
     }

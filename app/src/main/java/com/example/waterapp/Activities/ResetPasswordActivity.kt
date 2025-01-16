@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.waterapp.R
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityResetPasswordBinding
 import com.example.waterapp.resetPasswordModel.ResetPasswordBody
@@ -31,8 +32,8 @@ class ResetPasswordActivity : AppCompatActivity() {
 
         resetPasswordObserver()
 
-        binding.arrowBack.setOnClickListener {finish()}
-        binding.submitButton.setOnClickListener {formVelidation()}
+        binding.arrowBack.setOnClickListener { finish() }
+        binding.submitButton.setOnClickListener { formVelidation() }
     }
 
     private fun resetPasswordObserver() {
@@ -71,11 +72,11 @@ class ResetPasswordActivity : AppCompatActivity() {
     private fun VelidationInputs(newPassword: String, confirmPassword: String): Boolean {
         return when{
             newPassword.isEmpty()->{
-                binding.oldPassword.error = "Please Enter New Password"
+                binding.oldPassword.error = getString(R.string.error_user_new_password)
                 false
             }
             confirmPassword.isEmpty()->{
-                binding.confirmPassword.error = "Please Enter Confirm Password"
+                binding.confirmPassword.error = getString(R.string.error_user_confirm_password)
                 false
             }
             else -> true

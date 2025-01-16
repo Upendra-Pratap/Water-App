@@ -38,9 +38,7 @@ class GetRequestForSupportActivity : AppCompatActivity() {
         getRequestSupportApi(userId)
         requestSupportObserver()
 
-
     }
-
     private fun requestSupportObserver() {
         getRequestForSupportViewModel.progressIndicator.observe(this) {
 

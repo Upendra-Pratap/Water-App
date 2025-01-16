@@ -30,19 +30,13 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         val intent = Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
-
         val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PendingIntent.getActivity(
                 this,
                 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
             )
         } else {
-            PendingIntent.getActivity(
-                this,
-                0 ,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            PendingIntent.getActivity(this,0 ,intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
         val builder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.notificationforwater)
@@ -54,11 +48,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         val notificationManager = NotificationManagerCompat.from(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
+            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
             notificationManager.createNotificationChannel(channel)
         }
 

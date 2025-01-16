@@ -70,10 +70,5 @@
             android:padding="15dp"
             android:text="@string/yes_a_detailed_breakdown_is_available_on_your_bill_statement_you_can_also_view_it_in_your_account_dashboard_under_billing_details" />
 
-
-
-
     </androidx.cardview.widget.CardView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

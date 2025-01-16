@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.waterapp.FaqModel.FaqResponse
 import com.example.waterapp.FaqModel.FaqViewModel
-import com.example.waterapp.R
 import com.example.waterapp.adapter.FaqAdapter
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.FragmentFaqBinding
@@ -22,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FaqFragment : Fragment() {
     private lateinit var binding: FragmentFaqBinding
     private lateinit var activity: Activity
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(activity) }
     private var myOrderAdapter: FaqAdapter? = null
     private var serviceList: List<FaqResponse.Faq> = ArrayList()
     private val faqViewModel: FaqViewModel by viewModels()
@@ -33,16 +31,14 @@ class FaqFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentFaqBinding.inflate(inflater, container, false)
 
-        progressDialog = CustomProgressDialog(requireActivity())
         activity = requireActivity()
 
+        //observer and api
         getFaqListApi()
-
         getFaqListObserver()
 
         return binding.root
     }
-
     private fun getFaqListObserver() {
         faqViewModel.progressIndicator.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             // Show progress if needed
@@ -50,21 +46,21 @@ class FaqFragment : Fragment() {
 
         faqViewModel.mRejectResponse.observe(viewLifecycleOwner) {
             val status = it.peekContent().success
-            val message = it.peekContent().message
-            serviceList = it.peekContent().faq!!
 
-            if (serviceList.isNotEmpty()) {
+            if (status == true){
+                serviceList = it.peekContent().faq!!
+                if (serviceList.isNotEmpty()) {
+                    binding.faqRecyclerView.isVerticalScrollBarEnabled = true
+                    binding.faqRecyclerView.isVerticalFadingEdgeEnabled = true
+                    binding.faqRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
+                    myOrderAdapter = FaqAdapter(requireContext(), serviceList)
 
-                binding.faqRecyclerView.isVerticalScrollBarEnabled = true
-                binding.faqRecyclerView.isVerticalFadingEdgeEnabled = true
-                binding.faqRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-                myOrderAdapter = FaqAdapter(requireContext(), serviceList)
+                    binding.faqRecyclerView.adapter = myOrderAdapter
 
-                // Set the adapter to RecyclerView
-                binding.faqRecyclerView.adapter = myOrderAdapter
+                } else {
+                    binding.faqRecyclerView.adapter = myOrderAdapter
 
-            } else {
-
+                }
             }
         }
         faqViewModel.errorResponse.observe(viewLifecycleOwner) {
@@ -72,9 +68,7 @@ class FaqFragment : Fragment() {
         }
     }
 
-
     private fun getFaqListApi() {
         faqViewModel.setFaq(activity, progressDialog)
     }
-
 }

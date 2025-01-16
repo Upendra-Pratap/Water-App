@@ -64,7 +64,7 @@
                         android:id="@+id/services"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Our Services"
+                        android:text="@string/our_services"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -134,7 +134,7 @@
                         android:id="@+id/electricityAndWater"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Current Balances"
+                        android:text="@string/current_balances"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -176,7 +176,7 @@
                             android:id="@+id/totalbalance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Available Balance Of Electricity"
+                            android:text="@string/available_balance_of_electricity"
                             android:textColor="@color/white"
                             android:textSize="16dp"
                             android:textStyle="bold" />
@@ -207,7 +207,7 @@
                         android:layout_marginBottom="15dp"
                         android:backgroundTint="#A63AB8"
                         android:gravity="center"
-                        android:text="Add"
+                        android:text="@string/add"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="12dp"
@@ -239,7 +239,7 @@
                             android:id="@+id/waterbalance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Available Balance Of Water"
+                            android:text="@string/available_balance_of_water"
                             android:textColor="@color/white"
                             android:textSize="16dp"
                             android:textStyle="bold" />
@@ -258,7 +258,6 @@
                         android:textSize="22dp"
                         android:textStyle="bold" />
 
-
                     <Button
                         android:id="@+id/withDrawBtnWater"
                         android:layout_width="wrap_content"
@@ -271,14 +270,13 @@
                         android:layout_marginBottom="15dp"
                         android:backgroundTint="#A63AB8"
                         android:gravity="center"
-                        android:text="Add"
+                        android:text="@string/add"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="12dp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
-
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/ourRecentTransaction"
@@ -294,7 +292,7 @@
                         android:id="@+id/recentTransactionText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Recent Transactions"
+                        android:text="@string/recent_transactions"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold"

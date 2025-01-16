@@ -1,7 +1,7 @@
 package com.example.waterapp.Activities
 
-import android.app.Activity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,15 +29,15 @@ class FaqActivity : AppCompatActivity() {
 
         binding.arrowBack.setOnClickListener { finish() }
 
+        //observer and api
         getFaqListApi()
-
         getFaqListObserver()
 
     }
 
     private fun getFaqListObserver() {
         faqViewModel.progressIndicator.observe(this, androidx.lifecycle.Observer {
-            // Show progress if needed
+
         })
 
         faqViewModel.mRejectResponse.observe(this) {
@@ -45,18 +45,21 @@ class FaqActivity : AppCompatActivity() {
             val message = it.peekContent().message
             serviceList = it.peekContent().faq!!
 
-            if (serviceList.isNotEmpty()) {
+            if (status == true) {
+                if (serviceList.isNotEmpty()) {
 
-                binding.faqRecyclerView.isVerticalScrollBarEnabled = true
-                binding.faqRecyclerView.isVerticalFadingEdgeEnabled = true
-                binding.faqRecyclerView.layoutManager = GridLayoutManager(this, 1)
-                myOrderAdapter = FaqAdapter(this, serviceList)
+                    binding.faqRecyclerView.isVerticalScrollBarEnabled = true
+                    binding.faqRecyclerView.isVerticalFadingEdgeEnabled = true
+                    binding.faqRecyclerView.layoutManager = GridLayoutManager(this, 1)
+                    myOrderAdapter = FaqAdapter(this, serviceList)
 
-                // Set the adapter to RecyclerView
+                    binding.faqRecyclerView.adapter = myOrderAdapter
+
+                }else{
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            }else {
                 binding.faqRecyclerView.adapter = myOrderAdapter
-
-            } else {
-
             }
         }
         faqViewModel.errorResponse.observe(this) {
@@ -66,5 +69,9 @@ class FaqActivity : AppCompatActivity() {
 
     private fun getFaqListApi() {
         faqViewModel.setFaq(this, progressDialog)
+    }
+    override fun onResume() {
+        super.onResume()
+        getFaqListApi()
     }
 }

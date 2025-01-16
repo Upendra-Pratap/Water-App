@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot Password"
+            android:text="@string/forgot_password"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -73,15 +73,17 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/no_worries_we_ll_send_you_reset_instruction"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView1"/>
+        app:layout_constraintTop_toBottomOf="@id/textView1"
+        app:layout_constraintWidth_percent="0.9"/>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

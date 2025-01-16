@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="10dp"
-                android:text="Name :"
+                android:text="@string/name"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -43,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Upendra Pratap Singh"
+                android:text="@string/upendra_pratap_singh"
                 android:textColor="@color/green"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Service Name :"
+                android:text="@string/service_name"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:text="Fallen Pole"
+                android:text="@string/fallen_pole"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintWidth_percent="0.68"
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Email :"
+                android:text="@string/email"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:text="Upendra9076@gmail.com"
+                android:text="@string/upendra9076_gmail_com"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintWidth_percent="0.68"
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Phone Number :"
+                android:text="@string/phone_number"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -126,13 +126,12 @@
                 app:layout_constraintStart_toEndOf="@+id/phoneNumberText"
                 app:layout_constraintTop_toBottomOf="@+id/emailSupport" />
 
-
             <TextView
                 android:id="@+id/customerPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Message :"
+                android:text="@string/message"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -143,20 +142,19 @@
                 android:id="@+id/servicesNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="write something here"
+                android:text="@string/write_something_here"
                 android:layout_marginStart="5dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/customerPhone"
                 app:layout_constraintTop_toTopOf="@+id/customerPhone" />
 
-
             <TextView
                 android:id="@+id/servicePrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Address :"
+                android:text="@string/address"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -168,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="Greater Noida, Noida, zip - 223390"
+                android:text="@string/greater_noida_noida_zip_223390"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/servicePrice"
@@ -180,7 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Status :"
+                android:text="@string/status"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -192,7 +190,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="pending"
+                android:text="@string/pending"
                 android:textColor="@color/green_cyan"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -201,21 +199,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/servicePrice"
                 app:layout_constraintWidth_percent="0.59" />
 
-
             <Button
                 android:id="@+id/viewImageOfProblem"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:text="View Problem"
+                android:text="@string/view_problem"
                 android:textColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@+id/custStatus"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

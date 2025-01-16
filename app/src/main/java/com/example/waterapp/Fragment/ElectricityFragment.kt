@@ -25,7 +25,7 @@ class ElectricityFragment : Fragment() {
     private var electricityBillAdapter: ElectricityBillAdapter? = null
     private var electricityBillList: List<BillElectricityResponse.Bill> = ArrayList()
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var progressDialog: CustomProgressDialog
+    private val progressDialog by lazy { CustomProgressDialog(activity) }
     private lateinit var activity: Activity
     private var serviceType = "Electricity"
     private var userId =""
@@ -35,13 +35,10 @@ class ElectricityFragment : Fragment() {
     ): View? {
         binding = FragmentElectricityBinding.inflate(inflater, container, false)
 
-        sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME",
-            AppCompatActivity.MODE_PRIVATE
-        )
+        sharedPreferences = requireContext().getSharedPreferences("PREFERENCE_NAME", AppCompatActivity.MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
         activity = requireActivity()
-        progressDialog = CustomProgressDialog(requireActivity())
 
         electricityBillApi(userId, serviceType)
         electricityBillObserver()
@@ -54,20 +51,24 @@ class ElectricityFragment : Fragment() {
         }
         billElectricityViewModel.mRejectResponse.observe(viewLifecycleOwner){
             val status = it.peekContent().success
-            electricityBillList = it.peekContent().bill!!
 
-            if (electricityBillList.isNotEmpty()){
-                binding.electricityRecyclerView.isVerticalScrollBarEnabled = true
-                binding.electricityRecyclerView.isVerticalFadingEdgeEnabled = true
-                binding.electricityRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-                electricityBillAdapter = ElectricityBillAdapter(requireContext(), electricityBillList)
-                binding.electricityRecyclerView.adapter = electricityBillAdapter
+            if (status == true){
+                electricityBillList = it.peekContent().bill!!
+                if (electricityBillList.isNotEmpty()){
+                    binding.electricityRecyclerView.isVerticalScrollBarEnabled = true
+                    binding.electricityRecyclerView.isVerticalFadingEdgeEnabled = true
+                    binding.electricityRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
+                    electricityBillAdapter = ElectricityBillAdapter(requireContext(), electricityBillList)
+                    binding.electricityRecyclerView.adapter = electricityBillAdapter
+                }else{
+
+                }
             }
         }
+
         billElectricityViewModel.errorResponse.observe(viewLifecycleOwner){
             ErrorUtil.handlerGeneralError(requireActivity(), it)
         }
-
     }
     private fun electricityBillApi(userId: String, serviceType: String) {
         billElectricityViewModel.electricityBill(userId, serviceType, activity, progressDialog)

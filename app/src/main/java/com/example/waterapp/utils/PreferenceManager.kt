@@ -9,12 +9,10 @@ class PreferenceManager(context: Context) {
 
     private var mPrefs: PreferenceManager? = null
 
-
     private val masterKeyAlias: String = MasterKey.DEFAULT_MASTER_KEY_ALIAS
     private val masterKey: MasterKey =
         MasterKey.Builder(context, masterKeyAlias).setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
-
 
     private val prefs = EncryptedSharedPreferences.create(
         context, "myPrefs",
@@ -76,7 +74,7 @@ class PreferenceManager(context: Context) {
             editor.apply()
         }
 
-    var CheckedType: String
+    var checkedType: String
         get() = prefs.getString(CHECKED_TYPE, "") ?: ""
         set(checkedType) {
             editor.putString(CHECKED_TYPE, checkedType)

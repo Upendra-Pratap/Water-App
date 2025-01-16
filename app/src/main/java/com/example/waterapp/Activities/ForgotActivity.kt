@@ -1,19 +1,17 @@
 package com.example.waterapp.Activities
 
-import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.waterapp.R
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityForgotBinding
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordBody
 import com.example.waterapp.forgotPasswordModel.ForgotPasswordViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class ForgotActivity : AppCompatActivity() {
@@ -31,9 +29,7 @@ class ForgotActivity : AppCompatActivity() {
 
         binding.arrowBack.setOnClickListener { finish() }
 
-        binding.forgotbutton.setOnClickListener {
-            formVelidation()
-        }
+        binding.forgotbutton.setOnClickListener { formValidation() }
     }
 
     private fun forgotPasswordObserver() {
@@ -48,6 +44,8 @@ class ForgotActivity : AppCompatActivity() {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@ForgotActivity, OtpVerificationActivity::class.java)
                 startActivity(intent)
+            }else{
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
         forgotPasswordViewModel.errorResponse.observe(this) {
@@ -55,10 +53,10 @@ class ForgotActivity : AppCompatActivity() {
         }
     }
 
-    private fun VelidationInputs(email: String): Boolean {
+    private fun ValidationInputs(email: String): Boolean {
         return when {
             email.isEmpty() -> {
-                binding.emailtext.error = "Please enter your email"
+                binding.emailtext.error = getString(R.string.error_user_email)
                 false
             }
 
@@ -66,10 +64,10 @@ class ForgotActivity : AppCompatActivity() {
         }
     }
 
-    private fun formVelidation() {
+    private fun formValidation() {
        val email = binding.emailtext.text.toString().trim()
 
-        if (VelidationInputs(email)) {
+        if (ValidationInputs(email)) {
             //calling api here
             forgotPasswordApi(email)
 

@@ -6,7 +6,6 @@ plugins {
     id("kotlin-kapt")
     id("com.google.gms.google-services")
 
-
 }
 
 android {
@@ -59,6 +58,13 @@ android {
         dataBinding =true
         buildConfig =true
     }
+    sourceSets {
+        getByName("main") {
+            res {
+                srcDirs("src\\main\\res", "src\\main\\res\\2strings")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -75,9 +81,7 @@ dependencies {
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-
     implementation("androidx.security:security-crypto:1.1.0-alpha04")
-
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     /* Alert dependency*/
@@ -87,9 +91,6 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
-
-    //ViewPager2
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
 
     //Image compress
     implementation("id.zelory:compressor:3.0.1")
@@ -103,10 +104,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-database:20.0.4")
     implementation ("com.google.firebase:firebase-storage:20.0.1")
 
-
     //user permission
     implementation("com.karumi:dexter:6.2.2")
-
 
     // spinner
     implementation("com.github.skydoves:powerspinner:1.2.4")
@@ -124,13 +123,6 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxjava:2.2.10")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
-
-    //Dagger Hilt
-    /*    implementation 'com.google.dagger:hilt-android:2.51'
-       // classpath "com.google.dagger:hilt-android-gradle-plugin:2.45"
-        kapt 'com.google.dagger:hilt-compiler:2.46'*//*
-    implementation 'com.google.dagger:hilt-android:2.39.1'
-    kapt 'com.google.dagger:hilt-compiler:2.39.1'*/
     //Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.46")
     kapt("com.google.dagger:hilt-compiler:2.46")
@@ -148,8 +140,6 @@ dependencies {
 
     //  implementation 'com.google.code.gson:gson:2.10'
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
-
-
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.android.libraries.places:places:3.4.0")

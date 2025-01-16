@@ -1,6 +1,5 @@
 package com.example.waterapp.Activities
 
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -34,22 +33,16 @@ class ChangePasswordActivity : AppCompatActivity() {
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
-
+        //observer
         changePasswordObserver()
 
         binding.arrowBack.setOnClickListener { finish() }
 
-        binding.emailIcon.setOnClickListener {
-            passwordShow()
-        }
+        binding.emailIcon.setOnClickListener {passwordShow()}
 
-        binding.newpassword.setOnClickListener {
-            newPasswordShow()
-        }
+        binding.newpassword.setOnClickListener { newPasswordShow() }
 
-        binding.loginBtn.setOnClickListener {
-            changePasswordVelidation()
-        }
+        binding.loginBtn.setOnClickListener { changePasswordValidation() }
     }
 
     private fun changePasswordObserver() {
@@ -59,13 +52,14 @@ class ChangePasswordActivity : AppCompatActivity() {
         changePasswordViewModel.mRejectResponse.observe(this){
             val status = it.peekContent().success
             val message = it.peekContent().message
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
             if (status == true){
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@ChangePasswordActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
+            }else{
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -75,34 +69,34 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     }
 
-    private fun VelidationInputs(
+    private fun ValidationInputs(
         oldPassword: String,
         newPassword: String,
         confirmPassword: String
     ): Boolean {
         return when{
             oldPassword.isEmpty()->{
-                binding.oldPassword.error = "Enter old password"
+                binding.oldPassword.error = getString(R.string.error_user_old_password)
                 false
             }
             newPassword.isEmpty()->{
-                binding.newpass.error = "Enter new password"
+                binding.newpass.error = getString(R.string.error_user_new_password)
                 false
             }
             confirmPassword.isEmpty()->{
-                binding.confirmPassword.error = "Enter confirm password"
+                binding.confirmPassword.error = getString(R.string.error_user_confirm_password)
                 false
             }
             else-> true
         }
     }
 
-    private fun changePasswordVelidation() {
+    private fun changePasswordValidation() {
         val oldPassword = binding.oldPassword.text.toString().trim()
         val newPassword = binding.newpass.text.toString().trim()
         val confirmPassword = binding.confirmPassword.text.toString().trim()
 
-        if (VelidationInputs(oldPassword, newPassword, confirmPassword)){
+        if (ValidationInputs(oldPassword, newPassword, confirmPassword)){
             //calling Api here
             changePasswordApi(oldPassword, newPassword, confirmPassword,userId)
 
@@ -133,7 +127,6 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
         binding.newpass.setSelection(binding.newpass.text.length)
     }
-
     private fun passwordShow() {
         isPasswordVisible = !isPasswordVisible
         if (isPasswordVisible) {
@@ -148,5 +141,4 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
         binding.oldPassword.setSelection(binding.oldPassword.text.length)
     }
-
 }

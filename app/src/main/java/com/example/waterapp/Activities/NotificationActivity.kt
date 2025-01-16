@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.waterapp.R
 import com.example.waterapp.databinding.ActivityNotificationBinding
 import com.example.waterapp.adapter.NotificationAdapter
-import com.example.waterapp.application.WaterApp
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.notificationModel.DeleteNotificationModel.DeleteNotificationViewModel
 import com.example.waterapp.notificationModel.CountNotificationModel.NotificationCountViewModel
@@ -80,7 +79,6 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             ErrorUtil.handlerGeneralError(this@NotificationActivity, it)
         }
     }
-
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun allNotificationDeleteObserver() {
         allNotificationDeleteVewModel.progressIndicator.observe(this){
@@ -91,7 +89,7 @@ class NotificationActivity : AppCompatActivity(), NotificationClickListener {
             val message = it.peekContent().message
             if (status == true){
                 Toast.makeText(this@NotificationActivity, message, Toast.LENGTH_SHORT).show()
-                progressDialog!!.stop()
+                progressDialog.stop()
                 notificationListApi(userId)
                 notificationCountApi(userId)
 
