@@ -25,7 +25,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.waterapp.Dashboard.DashboardActivity
-import com.example.waterapp.Fragment.AccountFragment
 import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.databinding.ActivityGenerateReportBinding
 import com.example.waterapp.generateReportModel.GenerateReportViewModel
@@ -92,7 +91,8 @@ class GenerateReportActivity : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
-                selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                // Format the date as YYYY-MM-DD
+                selectedDate = "${selectedYear}-${selectedMonth + 1}-${selectedDay}"
                 binding.datepickertext.setText(selectedDate)
             },
             calendar.get(Calendar.YEAR),

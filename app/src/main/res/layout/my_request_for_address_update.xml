@@ -51,7 +51,6 @@
                 app:layout_constraintStart_toEndOf="@+id/servicesName"
                 app:layout_constraintTop_toTopOf="@+id/servicesName" />
 
-
             <TextView
                 android:id="@+id/emailText"
                 android:layout_width="wrap_content"
@@ -150,7 +149,6 @@
                 app:layout_constraintStart_toEndOf="@+id/servicePrice"
                 app:layout_constraintTop_toTopOf="@+id/servicePrice" />
 
-
             <TextView
                 android:id="@+id/customerstatus"
                 android:layout_width="wrap_content"
@@ -177,7 +175,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/servicePrice"
                 app:layout_constraintWidth_percent="0.59" />
 
-
             <Button
                 android:id="@+id/viewImageOfProblem"
                 android:layout_width="wrap_content"
@@ -189,11 +186,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/custStatus"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

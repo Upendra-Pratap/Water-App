@@ -43,6 +43,10 @@ class LoginResponse: Serializable {
         @Expose
         var status: Int? = null
 
+        @SerializedName("phone_token")
+        @Expose
+        var phoneToken: String? = null
+
         @SerializedName("address")
         @Expose
         var address: Address? = null
@@ -50,7 +54,6 @@ class LoginResponse: Serializable {
         @SerializedName("adminId")
         @Expose
         var adminId: String? = null
-
         inner class Address{
             @SerializedName("street")
             @Expose
