@@ -105,6 +105,10 @@ class SignUpActivity : AppCompatActivity() {
                 binding.pinName.error = getString(R.string.error_user_pin)
                 false
             }
+            selectedImageFile == null ->{
+                Toast.makeText(this, getString(R.string.error_please_upload_image), Toast.LENGTH_SHORT).show()
+                false
+            }
             else -> true
         }
     }

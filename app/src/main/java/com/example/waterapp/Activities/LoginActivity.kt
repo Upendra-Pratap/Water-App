@@ -71,7 +71,6 @@ class LoginActivity : AppCompatActivity() {
                 token = task.result
                 WaterApp.encryptedPrefs.FCMToken = token
                 Log.e("test_sam_token", "   accessToken : $token")
-                Toast.makeText(this, token, Toast.LENGTH_SHORT).show()
             }
 
         getNotificationPermission()

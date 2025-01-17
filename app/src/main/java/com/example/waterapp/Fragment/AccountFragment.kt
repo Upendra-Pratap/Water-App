@@ -35,12 +35,13 @@ import com.example.waterapp.classes.CustomProgressDialog
 import com.example.waterapp.updateProfileModel.GetUpdateProfileViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
     private lateinit var activity: Activity
-    private val progressDialog by lazy { CustomProgressDialog(requireActivity()) }
+    private val progressDialog by lazy { CustomProgressDialog(activity) }
     private lateinit var sharedPreferences: SharedPreferences
     private val getUpdateProfileViewModel: GetUpdateProfileViewModel by viewModels()
     private var userId = ""
@@ -109,6 +110,7 @@ class AccountFragment : Fragment() {
         return view
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun getUpdateProfileObserver() {
         getUpdateProfileViewModel.progressIndicator.observe(viewLifecycleOwner){
 
@@ -127,7 +129,7 @@ class AccountFragment : Fragment() {
 
                 }else{
                     val url = it.peekContent().data?.profileImage
-                    Glide.with(this).load(BuildConfig.IMAGE_KEY + url).into(binding.userProfile)
+                    Glide.with(this).load(BuildConfig.IMAGE_KEY + url).placeholder(R.drawable.electricity).error(R.drawable.water).into(binding.userProfile)
                 }
             }
         }
@@ -135,6 +137,7 @@ class AccountFragment : Fragment() {
             ErrorUtil.handlerGeneralError(requireActivity(), it)
         }
     }
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun getUpdateProfileApi(userId: String) {
         getUpdateProfileViewModel.getUpdateProfile(userId, progressDialog,activity)
     }

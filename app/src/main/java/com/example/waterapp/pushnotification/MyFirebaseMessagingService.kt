@@ -19,7 +19,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.e("info_status", "onMessageReceived123")
         }
 
-        //Check if message contains a notification payload.
         Log.e("BookActivity", "onMessageReceived123  " + remoteMessage.notification!!.title)
         Log.e("BookActivity", "onMessageReceived123  " + remoteMessage.notification!!.body)
         Log.e("BookActivity", "onMessageReceived12313  " + remoteMessage.data)
@@ -32,10 +31,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun sendNotification(
-        messageBody: String?,
-        title: String?
-    ) {
+    private fun sendNotification(messageBody: String?, title: String?) {
         val pendingIntent: PendingIntent
         val intent1 = Intent("ACTION_GOT_IT")
 
@@ -48,11 +44,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             PendingIntent.getActivity(
                 this,
                 REQUEST_CODE,
-                intent1,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                intent1, PendingIntent.FLAG_UPDATE_CURRENT
             )
         }
-
         val channelId = System.currentTimeMillis().toString() + ""
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
         notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
@@ -81,7 +75,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 notificationId,
                 notificationBuilder.build()
             )
-
         }
     }
 }

@@ -54,13 +54,13 @@ class NotificationAdapter(
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val NoBtnAcceptNDel = dialogView.findViewById<TextView>(R.id.NoBtnAcceptNDel)
-        val YesBtnAcceptNdel = dialogView.findViewById<TextView>(R.id.YesBtnAcceptNdel)
+        val noBtnAcceptNDelete = dialogView.findViewById<TextView>(R.id.NoBtnAcceptNDel)
+        val yesBtnAcceptNDelete = dialogView.findViewById<TextView>(R.id.YesBtnAcceptNdel)
 
-        NoBtnAcceptNDel.setOnClickListener {
+        noBtnAcceptNDelete.setOnClickListener {
             dialog.dismiss()
         }
-        YesBtnAcceptNdel.setOnClickListener {
+        yesBtnAcceptNDelete.setOnClickListener {
             onItemClick.deleteNotification(position, id)
             notifyDataSetChanged()
             dialog.dismiss()

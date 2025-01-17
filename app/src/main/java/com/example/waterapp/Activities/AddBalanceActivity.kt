@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.waterapp.BuildConfig
 import com.example.waterapp.Dashboard.DashboardActivity
+import com.example.waterapp.R
 import com.example.waterapp.addBalanceModel.AddBalanceBody
 import com.example.waterapp.addBalanceModel.AddBalanceViewModel
 import com.example.waterapp.classes.CustomProgressDialog
@@ -30,6 +31,7 @@ class AddBalanceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBalanceBinding.inflate(layoutInflater)
         val view = binding.root
+        setContentView(view)
 
         userType = intent.getIntExtra("userType", 0)
 
@@ -39,18 +41,16 @@ class AddBalanceActivity : AppCompatActivity() {
         //observer
         addBalanceObserver()
 
+        //observers and api
+        getUpdateProfileApi(userId)
+        getUpdateProfileObserver()
+        addBalanceObserver()
+
         binding.arrowBack.setOnClickListener { finish() }
 
         binding.addBalanceButton.setOnClickListener {
             formValidation()
         }
-        setContentView(view)
-
-        //observers
-        getUpdateProfileApi(userId)
-        getUpdateProfileObserver()
-        addBalanceObserver()
-
     }
 
     private fun formValidation() {
@@ -68,7 +68,7 @@ class AddBalanceActivity : AppCompatActivity() {
     private fun addBalanceValidation(enterAmount: String): Boolean {
         return when {
             enterAmount.isEmpty() -> {
-                binding.enterAmount.error = "Please enter valid amount"
+                binding.enterAmount.error = getString(R.string.error_enter_amount)
                 false
             }
             else -> true

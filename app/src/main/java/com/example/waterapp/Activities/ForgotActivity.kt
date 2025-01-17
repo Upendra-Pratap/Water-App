@@ -28,7 +28,6 @@ class ForgotActivity : AppCompatActivity() {
         forgotPasswordObserver()
 
         binding.arrowBack.setOnClickListener { finish() }
-
         binding.forgotbutton.setOnClickListener { formValidation() }
     }
 
@@ -44,6 +43,7 @@ class ForgotActivity : AppCompatActivity() {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@ForgotActivity, OtpVerificationActivity::class.java)
                 startActivity(intent)
+                finish()
             }else{
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }

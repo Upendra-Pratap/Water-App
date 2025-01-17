@@ -166,4 +166,11 @@
     <string name="_9076692189">9076692189</string>
     <string name="service_name">Service Name :</string>
     <string name="fallen_pole">Fallen Pole</string>
+    <string name="error_enter_amount">Please enter valid amount</string>
+    <string name="error_please_upload_image">Please upload the image</string>
+    <string name="updated_profile">Profile updated successfully</string>
+    <string name="unexpected_error">An unexpected error occurred</string>
+    <string name="image_captured">Image capture cancelled</string>
+    <string name="no_camera_app_found">No camera app found</string>
+    <string name="failed_load_image">Failed to load image</string>
 </resources>

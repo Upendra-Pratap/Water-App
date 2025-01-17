@@ -58,8 +58,8 @@
     </style>
     <string name="Please_enter_OTP">Veuillez entrer OTP</string>
     <string name="unable_to_connect">Impossible de se connecter à Internet, veuillez réessayer</string>
-    <string name="server_error">Erreur de serveur</string>
-    <string name="please_wait">S\'il vous plaît, attendez…\n</string>
+    <string name="server_error">Server Error</string>
+    <string name="please_wait">Please Wait…\n</string>
     <string name="OK">D\'ACCORD</string>
     <string name="are_your_sure_you_want_to_delete">es-tu sûr de vouloir supprimer</string>
     <string name="enter_mesage">Veuillez entrer un message</string>
@@ -127,8 +127,8 @@
     <string name="_91_000_000_0000">+91–000-000-0000</string>
     <string name="title">Titre :</string>
     <string name="_2024">2024</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
+    <string name="no">Non</string>
+    <string name="yes">Oui</string>
     <string name="service_types">Types de prestations :</string>
     <string name="total_amount">Montant total :</string>
     <string name="my_address_update_request">Demande de mise à jour de mon adresse</string>
@@ -166,6 +166,8 @@
     <string name="_9076692189">9076692189</string>
     <string name="service_name">Nom du service :</string>
     <string name="fallen_pole">Fallen Pole</string>
+    <string name="error_enter_amount">Please enter valid amount</string>
+    <string name="error_please_upload_image">Please upload the image</string>
 
     <string name="french">French</string>
     <string name="english">English</string>

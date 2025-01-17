@@ -28,6 +28,7 @@ import com.example.waterapp.databinding.ActivityChatBinding
 import com.example.waterapp.updateProfileModel.GetUpdateProfileViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class ChatActivity : AppCompatActivity() {

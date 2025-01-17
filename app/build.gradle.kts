@@ -97,9 +97,7 @@ dependencies {
 
     //firebase
     implementation("com.google.firebase:firebase-messaging:23.4.1")
-
     implementation("androidx.work:work-runtime-ktx:2.9.0")
-
     implementation ("com.google.firebase:firebase-auth:21.0.3")
     implementation ("com.google.firebase:firebase-database:20.0.4")
     implementation ("com.google.firebase:firebase-storage:20.0.1")

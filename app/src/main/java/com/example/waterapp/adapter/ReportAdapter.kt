@@ -44,11 +44,7 @@ class ReportAdapter(
             val imageUrl = baseUrl + imageFilename
 
             val imageView = ImageView(context).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-
-                )
+                layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,)
                 scaleType = ImageView.ScaleType.FIT_CENTER
             }
 

@@ -34,7 +34,6 @@ import com.example.waterapp.updateProfileModel.UpdateProfileViewModel
 import com.example.waterapp.utils.ErrorUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import okhttp3.MediaType.Companion.get
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -69,65 +68,75 @@ class ProfileActivity : AppCompatActivity() {
         sharedPreferences = applicationContext.getSharedPreferences("PREFERENCE_NAME", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", userId).toString().trim()
 
+        //Observer and Api
         getUpdateProfileApi(userId)
         getUpdateProfileObserver()
 
         binding.chooseImage.setOnClickListener { requestCameraPermission() }
-
-        binding.updateHere.setOnClickListener { profilVelidation() }
+        binding.updateHere.setOnClickListener { profileValidation() }
     }
+
     private fun getUpdateProfileObserver() {
-        getUpdateProfileViewModel.progressIndicator.observe(this){
+        getUpdateProfileViewModel.progressIndicator.observe(this) {
 
         }
-        getUpdateProfileViewModel.mCustomerResponse.observe(this){
+        getUpdateProfileViewModel.mCustomerResponse.observe(this) {
             val status = it.peekContent().success
             val userData = it.peekContent().data
             val userAddress = it.peekContent().data?.address
 
-            if (status == true){
-
+            if (status == true) {
                 if (userData?.userName == null) {
 
                 } else {
-                    binding.userName.text = Editable.Factory.getInstance().newEditable(userData.userName.toString())
+                    binding.userName.text =
+                        Editable.Factory.getInstance().newEditable(userData.userName.toString())
                 }
-                if (userData?.userEmail == null){
+                if (userData?.userEmail == null) {
 
-                }else{
-                    binding.email.text = Editable.Factory.getInstance().newEditable(userData.userEmail.toString())
+                } else {
+                    binding.email.text =
+                        Editable.Factory.getInstance().newEditable(userData.userEmail.toString())
                 }
-                if (userData?.phoneNo == null){
+                if (userData?.phoneNo == null) {
 
-                } else{
-                    binding.phoneNumber.text = Editable.Factory.getInstance().newEditable(userData.phoneNo.toString())
+                } else {
+                    binding.phoneNumber.text =
+                        Editable.Factory.getInstance().newEditable(userData.phoneNo.toString())
                 }
-                if (userAddress?.city == null){
+                if (userAddress?.city == null) {
 
-                }else{
-                    binding.cityText.text = Editable.Factory.getInstance().newEditable(userAddress.city.toString())
-
-                }
-                if (userAddress?.street == null){
-
-                }else{
-                    binding.streetText.text = Editable.Factory.getInstance().newEditable(userAddress.street.toString())
+                } else {
+                    binding.cityText.text =
+                        Editable.Factory.getInstance().newEditable(userAddress.city.toString())
 
                 }
-                if (userAddress?.zip == null){
+                if (userAddress?.street == null) {
 
-                }else{
-                    binding.pinText.text = Editable.Factory.getInstance().newEditable(userAddress.zip.toString())
+                } else {
+                    binding.streetText.text =
+                        Editable.Factory.getInstance().newEditable(userAddress.street.toString())
+
+                }
+                if (userAddress?.zip == null) {
+
+                } else {
+                    binding.pinText.text =
+                        Editable.Factory.getInstance().newEditable(userAddress.zip.toString())
                 }
                 if (userData?.profileImage == null) {
 
                 } else {
                     val url = it.peekContent().data?.profileImage
-                    Glide.with(this).load(BuildConfig.IMAGE_KEY + url).into(binding.profileImg)
+                    Glide.with(this).load(BuildConfig.IMAGE_KEY + url)
+                        .placeholder(R.drawable.electricity).error(R.drawable.water)
+                        .into(binding.profileImg)
+
+
                 }
             }
         }
-        getUpdateProfileViewModel.errorResponse.observe(this){
+        getUpdateProfileViewModel.errorResponse.observe(this) {
             ErrorUtil.handlerGeneralError(this@ProfileActivity, it)
         }
     }
@@ -138,35 +147,35 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-            updateProfileViewModel.progressIndicator.observe(this) { show ->
-                if (show) progressDialog.start(getString(R.string.please_wait)) else progressDialog.stop()
-            }
-
-            updateProfileViewModel.errorResponse.observe(this) { error ->
-                showToast(error.message ?: "An unexpected error occurred")
-            }
-
-            updateProfileViewModel.mRejectResponse.observe(this) { event ->
-                event.getContentIfNotHandled()?.let { response ->
-                    showToast(response.message ?: "Profile updated successfully")
-                    handleProfileUpdateResponse(response)
-                }
-            }
+        updateProfileViewModel.progressIndicator.observe(this) { show ->
+            if (show) progressDialog.start(getString(R.string.please_wait)) else progressDialog.stop()
         }
 
-        private fun handleProfileUpdateResponse(response: UpdateProfileResponse) {
-            response.Data()?.let {
-                startActivity(Intent(this@ProfileActivity, LoginActivity::class.java))
-                //getProfileApi(customerId)
+        updateProfileViewModel.errorResponse.observe(this) { error ->
+            showToast(error.message ?: getString(R.string.unexpected_error))
+        }
 
+        updateProfileViewModel.mRejectResponse.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { response ->
+                showToast(response.message ?: getString(R.string.updated_profile))
+                handleProfileUpdateResponse(response)
             }
         }
+    }
 
-        private fun showToast(message: String) {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    private fun handleProfileUpdateResponse(response: UpdateProfileResponse) {
+        response.Data()?.let {
+            startActivity(Intent(this@ProfileActivity, LoginActivity::class.java))
+            //getProfileApi(customerId)
+
         }
+    }
 
-    private fun VelidationInputs(
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun ValidationInputs(
         userName: String,
         email: String,
         phoneNumber: String,
@@ -180,36 +189,52 @@ class ProfileActivity : AppCompatActivity() {
                 binding.userName.error = getString(R.string.error_user_name)
                 false
             }
+
             email.isEmpty() -> {
                 binding.email.error = getString(R.string.error_user_email)
                 false
             }
+
             phoneNumber.isEmpty() -> {
                 binding.phoneNumber.error = getString(R.string.error_user_phone)
                 false
 
             }
+
             address.isEmpty() -> {
                 binding.addressText.error = getString(R.string.error_user_address)
                 false
             }
+
             city.isEmpty() -> {
                 binding.cityText.error = getString(R.string.error_user_city)
                 false
             }
+
             street.isEmpty() -> {
                 binding.streetText.error = getString(R.string.error_user_street)
                 false
             }
+
             pin.isEmpty() -> {
                 binding.pinText.error = getString(R.string.error_user_pin)
                 false
             }
+
+            selectedImageFile == null -> {
+                Toast.makeText(
+                    this,
+                    getString(R.string.error_please_upload_image),
+                    Toast.LENGTH_SHORT
+                ).show()
+                false
+            }
+
             else -> true
         }
     }
 
-    private fun profilVelidation() {
+    private fun profileValidation() {
         val userName = binding.userName.text.toString().trim()
         val email = binding.email.text.toString().trim()
         val phoneNumber = binding.phoneNumber.text.toString().trim()
@@ -218,7 +243,7 @@ class ProfileActivity : AppCompatActivity() {
         val street = binding.streetText.text.toString().trim()
         val pin = binding.pinText.text.toString().trim()
 
-        if (VelidationInputs(userName, email, phoneNumber, address, city, street, pin)) {
+        if (ValidationInputs(userName, email, phoneNumber, address, city, street, pin)) {
             //calling Api here
             updateProfileApi(userId)
         }
@@ -241,7 +266,6 @@ class ProfileActivity : AppCompatActivity() {
         val cityBody = RequestBody.create("text/plain".toMediaTypeOrNull(), city)
         val streetBody = RequestBody.create("text/plain".toMediaTypeOrNull(), street)
         val pinBody = RequestBody.create("text/plain".toMediaTypeOrNull(), pin)
-
 
         val imagePart = selectedImageFile?.let {
             val requestBody = it.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -275,7 +299,7 @@ class ProfileActivity : AppCompatActivity() {
                     binding.profileImg.setImageBitmap(it)
                 } ?: Toast.makeText(this, "Failed to capture image", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Image capture cancelled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.image_captured), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -325,7 +349,7 @@ class ProfileActivity : AppCompatActivity() {
     @SuppressLint("IntentReset")
     private fun openGallery() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryIntent.type = "image/*"
+        galleryIntent.type = "image/*" //allow all types image
         selectImageLauncher.launch(galleryIntent)
     }
 
@@ -335,9 +359,10 @@ class ProfileActivity : AppCompatActivity() {
         if (cameraIntent.resolveActivity(this.packageManager) != null) {
             takePictureLauncher.launch(cameraIntent)
         } else {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
         }
     }
+
     private fun convertUriToFile(uri: Uri): File? {
         return try {
             val inputStream: InputStream? = this.contentResolver.openInputStream(uri)
@@ -380,7 +405,11 @@ class ProfileActivity : AppCompatActivity() {
                     selectedImageFile?.let { file ->
                         val bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(file))
                         binding.profileImg.setImageBitmap(bitmap)
-                    } ?: Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
+                    } ?: Toast.makeText(
+                        this,
+                        getString(R.string.failed_load_image),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
